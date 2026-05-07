@@ -67,3 +67,8 @@ export function getPuzzleStats(puzzleId: string) {
   const progress = getProgress();
   return progress.stats[puzzleId] || null;
 }
+
+export function clearAllProgress() {
+  if (typeof window === 'undefined') return;
+  localStorage.removeItem(STORAGE_KEY);
+}

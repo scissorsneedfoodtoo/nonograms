@@ -3,12 +3,13 @@
   import PuzzlePreview from './lib/components/PuzzlePreview.svelte';
   import { ALL_PUZZLES } from './lib/puzzles';
   import type { Puzzle } from './lib/types';
-  import { getProgress } from './lib/storage';
+  import { getProgress, clearAllProgress } from './lib/storage';
   import { formatTime } from './lib/gameLogic';
 
   let view = $state<'level-select' | 'game'>('level-select');
   let selectedPuzzle = $state<Puzzle | null>(null);
   let userProgress = $state(getProgress());
+  let showResetConfirm = $state(false);
 
   function selectPuzzle(puzzle: Puzzle) {
     selectedPuzzle = puzzle;
@@ -19,6 +20,12 @@
     userProgress = getProgress();
     view = 'level-select';
     selectedPuzzle = null;
+  }
+
+  function handleResetAll() {
+    clearAllProgress();
+    userProgress = getProgress();
+    showResetConfirm = false;
   }
 </script>
 
@@ -66,8 +73,28 @@
 
       <footer class="fcc-footer">
         <p>Built with Svelte & freeCodeCamp Design System</p>
+        <button class="reset-all-btn" onclick={() => (showResetConfirm = true)}>
+          Reset All Progress
+        </button>
       </footer>
     </div>
+
+    {#if showResetConfirm}
+      <div class="modal-backdrop">
+        <div class="modal-content" role="dialog" aria-modal="true">
+          <h2>Reset All Progress?</h2>
+          <p>This will permanently delete all your best times and puzzle progress. This action cannot be undone.</p>
+          <div class="modal-actions">
+            <button class="primary danger" onclick={handleResetAll}>
+              Yes, Reset Everything
+            </button>
+            <button onclick={() => (showResetConfirm = false)}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    {/if}
   {:else if view === 'game' && selectedPuzzle}
     <Nonogram puzzle={selectedPuzzle} onBack={goBack} />
   {/if}
@@ -206,5 +233,78 @@
     color: var(--gray-45);
     font-size: 0.9rem;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .reset-all-btn {
+    background: transparent;
+    border-color: var(--error-red);
+    color: var(--error-red);
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .reset-all-btn:hover {
+    background: var(--error-red);
+    color: var(--gray-00);
+  }
+
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(10, 10, 35, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+  }
+
+  .modal-content {
+    background-color: var(--gray-85);
+    border: 5px solid var(--yellow-gold);
+    padding: 3rem;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  }
+
+  .modal-content h2 {
+    color: var(--yellow-gold);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+  }
+
+  .modal-content p {
+    color: var(--gray-00);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  button.danger {
+    background-color: var(--error-red) !important;
+    border-color: var(--error-red) !important;
+    color: var(--gray-00) !important;
+  }
+
+  button.danger:hover {
+    background-color: #a00000 !important;
+    border-color: #a00000 !important;
   }
 </style>
