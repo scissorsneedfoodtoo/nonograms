@@ -1,0 +1,105 @@
+:root {
+  /* freeCodeCamp Official Color Tokens (from Style Guide) */
+  --gray-90: #0a0a23;
+  --gray-85: #1b1b32;
+  --gray-75: #3b3b4f;
+  --gray-45: #858591;
+  --gray-15: #d0d0d5;
+  --gray-10: #dfdfe2;
+  --gray-05: #eeeef0;
+  --gray-00: #ffffff;
+  
+  --yellow-gold: #fecc4c;
+  --yellow-hover: #f1be32;
+  --error-red: #850000;
+  --success-green: #006400;
+  --warning-orange: #ffad33;
+
+  /* Typography */
+  --font-family: 'Lato', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Ubuntu Mono', Monaco, Consolas, monospace;
+
+  /* Design Tokens Mapping */
+  --bg-color: var(--gray-90);
+  --secondary-bg: var(--gray-85);
+  --text-color: var(--gray-15);
+  --heading-color: var(--gray-00);
+  --border-color: var(--gray-00); /* FCC uses high-contrast white borders */
+  
+  font-family: var(--font-family);
+  line-height: 1.6;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#app {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1, h2, h3 {
+  color: var(--heading-color);
+  margin-top: 0;
+  font-weight: 900;
+  text-transform: capitalize;
+}
+
+/* FCC Button Styles */
+button {
+  font-family: var(--font-family);
+  border: 3px solid var(--gray-00);
+  background: var(--gray-85);
+  color: var(--gray-00);
+  padding: 10px 30px;
+  font-size: 1.125rem;
+  font-weight: 400; /* FCC often uses regular weight for secondary */
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button:hover, button:focus-visible {
+  background: var(--gray-00);
+  color: var(--gray-90);
+  outline: none;
+}
+
+button:focus-visible {
+  box-shadow: 0 0 0 5px var(--yellow-gold);
+}
+
+/* Primary Action Button (Yellow Gold on Dark Navy) */
+button.primary {
+  background: var(--yellow-gold);
+  color: var(--gray-90);
+  border-color: var(--yellow-gold);
+  font-weight: 900;
+}
+
+button.primary:hover, button.primary:focus-visible {
+  background: var(--yellow-hover);
+  border-color: var(--yellow-hover);
+  color: var(--gray-90);
+}
