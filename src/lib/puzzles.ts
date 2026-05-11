@@ -276,149 +276,6 @@ export const ENVELOPE_PUZZLE: Puzzle = {
   colClues: [[5], [1, 2], [1, 1, 1], [1, 2], [5]]
 };
 
-export const GHOST_PUZZLE: Puzzle = {
-  id: '14',
-  name: 'Ghost',
-  width: 10,
-  height: 10,
-  solution: [
-    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [0, 1, 1, 0, 1, 1, 0, 1, 1, 0],
-    [0, 1, 1, 0, 1, 1, 0, 1, 1, 0],
-    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [1, 1, 0, 1, 0, 1, 0, 1, 0, 1]
-  ],
-  colorSolution: [
-    [
-      '#1e272e',
-      '#1e272e',
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e',
-      '#1e272e',
-      '#1e272e'
-    ],
-    [
-      '#1e272e',
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e',
-      '#1e272e'
-    ],
-    [
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e'
-    ],
-    [
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e'
-    ],
-    [
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e'
-    ],
-    [
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e'
-    ],
-    [
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e'
-    ],
-    [
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e'
-    ],
-    [
-      '#1e272e',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e'
-    ],
-    [
-      '#f5f6fa',
-      '#f5f6fa',
-      '#1e272e',
-      '#f5f6fa',
-      '#1e272e',
-      '#f5f6fa',
-      '#1e272e',
-      '#f5f6fa',
-      '#1e272e',
-      '#f5f6fa'
-    ]
-  ],
-  rowClues: [[4], [6], [8], [2, 2, 2], [2, 2, 2], [8], [8], [8], [8], [2, 1, 1, 1, 1]],
-  colClues: [[1], [8], [8], [3, 5], [9], [10], [3, 4], [9], [7], [1]]
-};
-
 export const ROCKET_PUZZLE: Puzzle = {
   id: '15',
   name: 'Rocket',
@@ -562,6 +419,149 @@ export const ROCKET_PUZZLE: Puzzle = {
   colClues: [[1], [1], [4, 1], [8], [10], [10], [8], [4, 1], [1], [1]]
 };
 
+export const GHOST_PUZZLE: Puzzle = {
+  id: '14',
+  name: 'Ghost',
+  width: 10,
+  height: 10,
+  solution: [
+    [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 0, 1, 1, 0, 1, 1, 1],
+    [1, 1, 1, 0, 1, 1, 0, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 1, 0, 0, 1]
+  ],
+  colorSolution: [
+    [
+      '#1e272e',
+      '#1e272e',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#1e272e',
+      '#1e272e'
+    ],
+    [
+      '#1e272e',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#1e272e'
+    ],
+    [
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa'
+    ],
+    [
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#1e272e',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#1e272e',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa'
+    ],
+    [
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#1e272e',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#1e272e',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa'
+    ],
+    [
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa'
+    ],
+    [
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa'
+    ],
+    [
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa',
+      '#f5f6fa'
+    ],
+    [
+      '#f5f6fa',
+      '#1e272e',
+      '#1e272e',
+      '#f5f6fa',
+      '#1e272e',
+      '#1e272e',
+      '#f5f6fa',
+      '#1e272e',
+      '#1e272e',
+      '#f5f6fa'
+    ],
+    [
+      '#f5f6fa',
+      '#1e272e',
+      '#1e272e',
+      '#f5f6fa',
+      '#1e272e',
+      '#1e272e',
+      '#f5f6fa',
+      '#1e272e',
+      '#1e272e',
+      '#f5f6fa'
+    ]
+  ],
+  rowClues: [[6], [8], [10], [3, 2, 3], [3, 2, 3], [10], [10], [10], [1, 1, 1, 1], [1, 1, 1, 1]],
+  colClues: [[8], [7], [8], [3, 5], [8], [8], [3, 5], [8], [7], [8]]
+};
+
 export const ALL_PUZZLES: Puzzle[] = [
   CAT_PUZZLE,
   HEART_PUZZLE,
@@ -575,6 +575,6 @@ export const ALL_PUZZLES: Puzzle[] = [
   DUCK_PUZZLE,
   MUSHROOM_PUZZLE,
   ENVELOPE_PUZZLE,
-  GHOST_PUZZLE,
-  ROCKET_PUZZLE
+  ROCKET_PUZZLE,
+  GHOST_PUZZLE
 ];
