@@ -253,31 +253,31 @@ export const MUSHROOM_PUZZLE: Puzzle = {
   colClues: [[2], [4], [5], [4], [2]]
 };
 
-export const ENVELOPE_PUZZLE: Puzzle = {
+export const COFFEE_MUG_PUZZLE: Puzzle = {
   id: '12',
-  name: 'Envelope',
+  name: 'Coffee Mug',
   width: 5,
   height: 5,
   solution: [
+    [1, 1, 1, 1, 0],
     [1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 1],
-    [1, 0, 1, 0, 1],
-    [1, 1, 0, 1, 1],
-    [1, 1, 1, 1, 1]
+    [1, 0, 1, 1, 1],
+    [1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 0]
   ],
   colorSolution: [
-    ['#1e90ff', '#1e90ff', '#1e90ff', '#1e90ff', '#1e90ff'],
-    ['#1e90ff', '#ffffff', '#ffffff', '#ffffff', '#1e90ff'],
-    ['#1e90ff', '#ffffff', '#1e90ff', '#ffffff', '#1e90ff'],
-    ['#1e90ff', '#1e90ff', '#ffffff', '#1e90ff', '#1e90ff'],
-    ['#1e90ff', '#1e90ff', '#1e90ff', '#1e90ff', '#1e90ff']
+    ['#8b5e3c', '#8b5e3c', '#8b5e3c', '#8b5e3c', '#ffffff'],
+    ['#8b5e3c', '#8b5e3c', '#8b5e3c', '#8b5e3c', '#8b5e3c'],
+    ['#8b5e3c', '#c49a6c', '#8b5e3c', '#8b5e3c', '#8b5e3c'],
+    ['#8b5e3c', '#8b5e3c', '#8b5e3c', '#8b5e3c', '#ffffff'],
+    ['#ffffff', '#c49a6c', '#c49a6c', '#c49a6c', '#ffffff']
   ],
-  rowClues: [[5], [1, 1], [1, 1, 1], [2, 2], [5]],
-  colClues: [[5], [1, 2], [1, 1, 1], [1, 2], [5]]
+  rowClues: [[4], [5], [1, 3], [4], [3]],
+  colClues: [[4], [2, 2], [5], [5], [2]]
 };
 
 export const ROCKET_PUZZLE: Puzzle = {
-  id: '15',
+  id: '13',
   name: 'Rocket',
   width: 10,
   height: 10,
@@ -562,6 +562,149 @@ export const GHOST_PUZZLE: Puzzle = {
   colClues: [[8], [7], [8], [3, 5], [8], [8], [3, 5], [8], [7], [8]]
 };
 
+export const CACTUS_PUZZLE: Puzzle = {
+  id: '15',
+  name: 'Cactus',
+  width: 10,
+  height: 10,
+  solution: [
+    [1, 1, 0, 0, 1, 1, 0, 0, 0, 0],
+    [1, 1, 0, 0, 1, 1, 0, 0, 1, 1],
+    [1, 1, 1, 1, 1, 1, 0, 0, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0]
+  ],
+  colorSolution: [
+    [
+      '#2d6a4f',
+      '#2d6a4f',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6'
+    ],
+    [
+      '#2d6a4f',
+      '#2d6a4f',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#2d6a4f',
+      '#2d6a4f'
+    ],
+    [
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#2d6a4f',
+      '#2d6a4f'
+    ],
+    [
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f'
+    ],
+    [
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#2d6a4f'
+    ],
+    [
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#2d6a4f',
+      '#2d6a4f',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6'
+    ],
+    [
+      '#f1f2f6',
+      '#f1f2f6',
+      '#8b5e3c',
+      '#8b5e3c',
+      '#8b5e3c',
+      '#8b5e3c',
+      '#8b5e3c',
+      '#8b5e3c',
+      '#f1f2f6',
+      '#f1f2f6'
+    ],
+    [
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#c1440e',
+      '#c1440e',
+      '#c1440e',
+      '#c1440e',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6'
+    ],
+    [
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#c1440e',
+      '#c1440e',
+      '#c1440e',
+      '#c1440e',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6'
+    ],
+    [
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#c1440e',
+      '#c1440e',
+      '#c1440e',
+      '#c1440e',
+      '#f1f2f6',
+      '#f1f2f6',
+      '#f1f2f6'
+    ]
+  ],
+  rowClues: [[2, 2], [2, 2, 2], [6, 2], [10], [6], [2], [6], [4], [4], [4]],
+  colClues: [[4], [4], [2, 1], [2, 4], [10], [10], [2, 4], [2, 1], [4], [4]]
+};
+
 export const ALL_PUZZLES: Puzzle[] = [
   CAT_PUZZLE,
   HEART_PUZZLE,
@@ -574,7 +717,8 @@ export const ALL_PUZZLES: Puzzle[] = [
   BOAT_PUZZLE,
   DUCK_PUZZLE,
   MUSHROOM_PUZZLE,
-  ENVELOPE_PUZZLE,
+  COFFEE_MUG_PUZZLE,
   ROCKET_PUZZLE,
-  GHOST_PUZZLE
+  GHOST_PUZZLE,
+  CACTUS_PUZZLE
 ];
