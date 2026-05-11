@@ -455,6 +455,7 @@
     justify-content: flex-end;
     align-items: center;
     min-width: 100px;
+    gap: 6px;
     box-shadow: inset 0 -1px 0 var(--gray-75);
   }
 
