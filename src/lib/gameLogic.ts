@@ -60,6 +60,36 @@ export function getSolutionColumn(solution: number[][], colIndex: number): numbe
   return solution.map((row) => row[colIndex]);
 }
 
+export function generateClues(line: number[]): number[] {
+  const clues: number[] = [];
+  let count = 0;
+  for (const cell of line) {
+    if (cell === 1) {
+      count++;
+    } else if (count > 0) {
+      clues.push(count);
+      count = 0;
+    }
+  }
+  if (count > 0) {
+    clues.push(count);
+  }
+  return clues.length > 0 ? clues : [0];
+}
+
+export function generateRowClues(solution: number[][]): number[][] {
+  return solution.map(generateClues);
+}
+
+export function generateColClues(solution: number[][]): number[][] {
+  const width = solution[0].length;
+  const colClues: number[][] = [];
+  for (let c = 0; c < width; c++) {
+    colClues.push(generateClues(getSolutionColumn(solution, c)));
+  }
+  return colClues;
+}
+
 export function formatTime(seconds: number): string {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;

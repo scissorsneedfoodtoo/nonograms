@@ -18,7 +18,7 @@
     getPuzzleProgress,
     clearPuzzleProgress
   } from './lib/storage';
-  import PuzzlePreview from './lib/components/PuzzlePreview.svelte';
+  import WinModal from './lib/components/WinModal.svelte';
 
   interface Props {
     puzzle: Puzzle;
@@ -230,23 +230,6 @@
       </div>
     </div>
 
-    <div aria-live="polite">
-      {#if isWon}
-        <div class="win-message">
-          <h2>Puzzle Completed! 🎉</h2>
-          <div class="win-preview">
-            <PuzzlePreview {puzzle} completed={true} inProgress={false} size={150} />
-          </div>
-          <p>Base Time: {formatTime(seconds)}</p>
-          <p>Penalties: {penalties} ({formatTime(totalPenaltyTime)})</p>
-          <p class="final-total">Total Time: {formatTime(totalTime)}</p>
-          <button class="primary" onclick={handleExit} style="margin-top: 1rem;">
-            Back to Levels
-          </button>
-        </div>
-      {/if}
-    </div>
-
     <div class="nonogram-board" oncontextmenu={handleContextMenu} role="presentation">
       <div class="corner"></div>
 
@@ -295,6 +278,8 @@
               class="cell {cell} cell-{r}-{c}"
               class:error={errorState[r] && errorState[r][c]}
               class:locked={locked[r] && locked[r][c]}
+              class:thick-border-right={(c + 1) % 5 === 0 && c + 1 !== puzzle.width}
+              class:thick-border-bottom={(r + 1) % 5 === 0 && r + 1 !== puzzle.height}
               onclick={(e) => handleCellClick(r, c, e)}
               onkeydown={(e) => handleKeyDown(e, r, c)}
               oncontextmenu={(e) => {
@@ -329,6 +314,17 @@
       </p>
     </div>
   </div>
+
+  {#if isWon}
+    <WinModal
+      {puzzle}
+      {seconds}
+      {penalties}
+      {totalPenaltyTime}
+      {totalTime}
+      onClose={handleExit}
+    />
+  {/if}
 {/if}
 
 <style>
@@ -389,74 +385,44 @@
     margin-left: 5px;
   }
 
-  .win-message {
-    font-size: 1.25rem;
-    color: var(--yellow-gold);
-    margin-bottom: 2rem;
-    text-transform: uppercase;
-    border: 5px solid var(--yellow-gold);
-    padding: 20px;
-    background-color: var(--gray-90);
-    text-align: center;
-  }
-
-  .win-message h2 {
-    margin-bottom: 1rem;
-    color: var(--yellow-gold);
-  }
-
-  .win-preview {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .win-message p {
-    margin: 5px 0;
-    color: var(--gray-00);
-    text-transform: none;
-  }
-
-  .final-total {
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--yellow-gold) !important;
-    margin-top: 10px !important;
-  }
-
   .nonogram-board {
     display: grid;
     grid-template-areas:
       'corner col-clues'
       'row-clues grid';
     gap: 0;
-    border: 3px solid var(--gray-00);
+    border: 4px solid var(--gray-90);
     padding: 20px;
     background-color: var(--gray-85);
   }
 
   .corner {
     grid-area: corner;
+    border-right: 1px solid var(--gray-75);
+    border-bottom: 1px solid var(--gray-75);
   }
 
   .col-clues {
     grid-area: col-clues;
     display: grid;
     align-items: end;
+    background-color: var(--gray-85);
+    border-bottom: 4px solid var(--gray-90);
   }
 
   .row-clues {
     grid-area: row-clues;
     display: grid;
     justify-items: end;
+    background-color: var(--gray-85);
+    border-right: 4px solid var(--gray-90);
   }
 
   .grid {
     grid-area: grid;
     display: grid;
     background-color: var(--gray-00);
-    gap: 1px;
-    border: 1px solid var(--gray-00);
+    gap: 0;
   }
 
   .clue-group {
@@ -467,6 +433,7 @@
     color: var(--gray-00);
     padding: 8px;
     transition: all 0.2s;
+    box-sizing: border-box;
   }
 
   .clue-group.completed {
@@ -480,6 +447,7 @@
     justify-content: flex-end;
     align-items: center;
     min-height: 100px;
+    box-shadow: inset -1px 0 0 var(--gray-75);
   }
 
   .clue-group.row {
@@ -487,13 +455,15 @@
     justify-content: flex-end;
     align-items: center;
     min-width: 100px;
+    gap: 6px;
+    box-shadow: inset 0 -1px 0 var(--gray-75);
   }
 
   .cell {
     width: 45px;
     height: 45px;
     background-color: var(--gray-00);
-    border: 1px solid var(--gray-15);
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -504,17 +474,57 @@
     padding: 0;
     border-radius: 0;
     transition: background-color 0.1s;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 0;
   }
 
+  /* Default thin shadows */
+  .cell {
+    --r-shadow: inset -1px 0 0 var(--gray-15);
+    --b-shadow: inset 0 -1px 0 var(--gray-15);
+    box-shadow: var(--r-shadow), var(--b-shadow);
+  }
+
+  /* Thick overrides and z-index boost */
+  .cell.thick-border-right {
+    --r-shadow: inset -4px 0 0 var(--gray-90);
+    z-index: 1;
+    /* When vertical is thick, prioritize it in the stack */
+    box-shadow: var(--r-shadow), var(--b-shadow);
+  }
+
+  .cell.thick-border-bottom {
+    --b-shadow: inset 0 -4px 0 var(--gray-90);
+    z-index: 1;
+    /* When horizontal is thick, prioritize it in the stack */
+    box-shadow: var(--b-shadow), var(--r-shadow);
+  }
+
+  /* If both are thick, order is less critical but vertical remains primary */
+  .cell.thick-border-right.thick-border-bottom {
+    z-index: 2;
+    box-shadow: var(--r-shadow), var(--b-shadow);
+  }
+
+  /* Handle filled state colors - keep dividers visible */
   .cell.filled {
     background-color: var(--gray-90);
-    border-color: var(--gray-75);
+    --r-shadow: inset -1px 0 0 var(--gray-75);
+    --b-shadow: inset 0 -1px 0 var(--gray-75);
+  }
+
+  .cell.filled.thick-border-right {
+    --r-shadow: inset -4px 0 0 var(--gray-75);
+  }
+
+  .cell.filled.thick-border-bottom {
+    --b-shadow: inset 0 -4px 0 var(--gray-75);
   }
 
   .cell.marked {
     color: var(--gray-90);
   }
-
   .cell.locked {
     cursor: not-allowed;
     background-color: var(--gray-05);
@@ -528,6 +538,7 @@
   .cell.error {
     background-color: var(--error-red) !important;
     color: var(--gray-00) !important;
+    box-shadow: none;
   }
 
   .cell:not(:disabled):hover {
@@ -539,8 +550,8 @@
   }
 
   .cell:focus-visible {
-    outline: 5px solid var(--yellow-gold);
-    outline-offset: -5px;
+    outline: 4px solid var(--yellow-gold);
+    outline-offset: -4px;
     z-index: 10;
   }
 
