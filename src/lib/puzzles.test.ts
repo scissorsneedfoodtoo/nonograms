@@ -23,6 +23,15 @@ describe('puzzles validation', () => {
         });
       });
 
+      it('has no empty rows or columns', () => {
+        puzzle.rowClues.forEach((clues, index) => {
+          expect(clues, `Row ${index} in puzzle "${puzzle.name}" is empty`).not.toEqual([0]);
+        });
+        puzzle.colClues.forEach((clues, index) => {
+          expect(clues, `Column ${index} in puzzle "${puzzle.name}" is empty`).not.toEqual([0]);
+        });
+      });
+
       it('has a unique solution', () => {
         const numSolutions = countSolutions(puzzle.rowClues, puzzle.colClues);
         expect(numSolutions, `Puzzle "${puzzle.name}" should have exactly 1 solution, but found ${numSolutions}`).toBe(1);

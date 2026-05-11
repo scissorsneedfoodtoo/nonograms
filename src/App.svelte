@@ -34,7 +34,7 @@
     <div class="level-select-container">
       <header class="fcc-header">
         <h1>Nonogram Puzzles</h1>
-        <p>Challenge yourself with these 5x5 puzzles. Accurate moves earn you the fastest times!</p>
+        <p>Challenge yourself with these logic puzzles. Accurate moves earn you the fastest times!</p>
       </header>
 
       <div class="puzzle-grid">

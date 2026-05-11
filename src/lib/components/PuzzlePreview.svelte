@@ -23,7 +23,7 @@
         {#each row as _, c (c)}
           <div
             class="mini-cell"
-            style="background-color: {puzzle.colorSolution?.[r][c] || 'var(--gray-00)'}"
+            style="background-color: {puzzle.colorSolution?.[r][c] || (puzzle.solution[r][c] === 1 ? 'var(--gray-90)' : 'transparent')}"
           ></div>
         {/each}
       {/each}
