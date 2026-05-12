@@ -38,7 +38,7 @@
   // Timer and Penalties
   let seconds = $state(0);
   let penalties = $state(0);
-  let timerInterval: number | undefined;
+  let timerInterval: ReturnType<typeof setInterval> | undefined;
 
   // Derived state for completed rows/cols
   // Use getters to ensure reactivity is tracked correctly
