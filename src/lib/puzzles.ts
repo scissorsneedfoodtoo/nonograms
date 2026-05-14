@@ -1,7 +1,7 @@
 import type { Puzzle } from './types';
 
 export const CAT_PUZZLE: Puzzle = {
-  id: '1',
+  id: 1,
   name: 'Cat',
   width: 5,
   height: 5,
@@ -24,7 +24,7 @@ export const CAT_PUZZLE: Puzzle = {
 };
 
 export const HEART_PUZZLE: Puzzle = {
-  id: '2',
+  id: 2,
   name: 'Heart',
   width: 5,
   height: 5,
@@ -47,7 +47,7 @@ export const HEART_PUZZLE: Puzzle = {
 };
 
 export const APPLE_PUZZLE: Puzzle = {
-  id: '3',
+  id: 3,
   name: 'Apple',
   width: 5,
   height: 5,
@@ -70,7 +70,7 @@ export const APPLE_PUZZLE: Puzzle = {
 };
 
 export const TREE_PUZZLE: Puzzle = {
-  id: '4',
+  id: 4,
   name: 'Tree',
   width: 5,
   height: 5,
@@ -93,7 +93,7 @@ export const TREE_PUZZLE: Puzzle = {
 };
 
 export const HOUSE_PUZZLE: Puzzle = {
-  id: '5',
+  id: 5,
   name: 'House',
   width: 5,
   height: 5,
@@ -116,7 +116,7 @@ export const HOUSE_PUZZLE: Puzzle = {
 };
 
 export const STAR_PUZZLE: Puzzle = {
-  id: '6',
+  id: 6,
   name: 'Star',
   width: 5,
   height: 5,
@@ -139,7 +139,7 @@ export const STAR_PUZZLE: Puzzle = {
 };
 
 export const DIAMOND_PUZZLE: Puzzle = {
-  id: '7',
+  id: 7,
   name: 'Diamond',
   width: 5,
   height: 5,
@@ -162,7 +162,7 @@ export const DIAMOND_PUZZLE: Puzzle = {
 };
 
 export const SHIELD_PUZZLE: Puzzle = {
-  id: '8',
+  id: 8,
   name: 'Shield',
   width: 5,
   height: 5,
@@ -185,7 +185,7 @@ export const SHIELD_PUZZLE: Puzzle = {
 };
 
 export const BOAT_PUZZLE: Puzzle = {
-  id: '9',
+  id: 9,
   name: 'Boat',
   width: 5,
   height: 5,
@@ -208,7 +208,7 @@ export const BOAT_PUZZLE: Puzzle = {
 };
 
 export const DUCK_PUZZLE: Puzzle = {
-  id: '10',
+  id: 10,
   name: 'Duck',
   width: 5,
   height: 5,
@@ -231,7 +231,7 @@ export const DUCK_PUZZLE: Puzzle = {
 };
 
 export const MUSHROOM_PUZZLE: Puzzle = {
-  id: '11',
+  id: 11,
   name: 'Mushroom',
   width: 5,
   height: 5,
@@ -254,7 +254,7 @@ export const MUSHROOM_PUZZLE: Puzzle = {
 };
 
 export const COFFEE_MUG_PUZZLE: Puzzle = {
-  id: '12',
+  id: 12,
   name: 'Coffee Mug',
   width: 5,
   height: 5,
@@ -277,7 +277,7 @@ export const COFFEE_MUG_PUZZLE: Puzzle = {
 };
 
 export const ROCKET_PUZZLE: Puzzle = {
-  id: '13',
+  id: 13,
   name: 'Rocket',
   width: 10,
   height: 10,
@@ -420,7 +420,7 @@ export const ROCKET_PUZZLE: Puzzle = {
 };
 
 export const GHOST_PUZZLE: Puzzle = {
-  id: '14',
+  id: 14,
   name: 'Ghost',
   width: 10,
   height: 10,
@@ -563,7 +563,7 @@ export const GHOST_PUZZLE: Puzzle = {
 };
 
 export const CACTUS_PUZZLE: Puzzle = {
-  id: '15',
+  id: 15,
   name: 'Cactus',
   width: 10,
   height: 10,
@@ -706,7 +706,7 @@ export const CACTUS_PUZZLE: Puzzle = {
 };
 
 export const CROWN_PUZZLE: Puzzle = {
-  id: '16',
+  id: 16,
   name: 'Crown',
   width: 10,
   height: 10,
@@ -849,7 +849,7 @@ export const CROWN_PUZZLE: Puzzle = {
 };
 
 export const PIZZA_SLICE_PUZZLE: Puzzle = {
-  id: '17',
+  id: 17,
   name: 'Pizza Slice',
   width: 10,
   height: 10,
@@ -866,16 +866,126 @@ export const PIZZA_SLICE_PUZZLE: Puzzle = {
     [0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
   ],
   colorSolution: [
-    ['#c8860a', '#c8860a', '#c8860a', '#c8860a', '#c8860a', '#c8860a', '#c8860a', '#c8860a', '#c8860a', '#c8860a'],
-    ['#1a1a2e', '#f4d03f', '#c0392b', '#f4d03f', '#f4d03f', '#f4d03f', '#f4d03f', '#27ae60', '#f4d03f', '#1a1a2e'],
-    ['#1a1a2e', '#f4d03f', '#f4d03f', '#f4d03f', '#27ae60', '#f4d03f', '#f4d03f', '#f4d03f', '#c0392b', '#1a1a2e'],
-    ['#1a1a2e', '#1a1a2e', '#f4d03f', '#c0392b', '#f4d03f', '#f4d03f', '#27ae60', '#f4d03f', '#1a1a2e', '#1a1a2e'],
-    ['#1a1a2e', '#1a1a2e', '#27ae60', '#f4d03f', '#f4d03f', '#c0392b', '#f4d03f', '#f4d03f', '#1a1a2e', '#1a1a2e'],
-    ['#1a1a2e', '#1a1a2e', '#1a1a2e', '#f4d03f', '#c0392b', '#f4d03f', '#27ae60', '#1a1a2e', '#1a1a2e', '#1a1a2e'],
-    ['#1a1a2e', '#1a1a2e', '#1a1a2e', '#27ae60', '#f4d03f', '#f4d03f', '#c0392b', '#1a1a2e', '#1a1a2e', '#1a1a2e'],
-    ['#1a1a2e', '#1a1a2e', '#1a1a2e', '#1a1a2e', '#f4d03f', '#f4d03f', '#1a1a2e', '#1a1a2e', '#1a1a2e', '#1a1a2e'],
-    ['#1a1a2e', '#1a1a2e', '#1a1a2e', '#1a1a2e', '#f4d03f', '#f4d03f', '#1a1a2e', '#1a1a2e', '#1a1a2e', '#1a1a2e'],
-    ['#1a1a2e', '#1a1a2e', '#1a1a2e', '#1a1a2e', '#f4d03f', '#f4d03f', '#1a1a2e', '#1a1a2e', '#1a1a2e', '#1a1a2e']
+    [
+      '#c8860a',
+      '#c8860a',
+      '#c8860a',
+      '#c8860a',
+      '#c8860a',
+      '#c8860a',
+      '#c8860a',
+      '#c8860a',
+      '#c8860a',
+      '#c8860a'
+    ],
+    [
+      '#1a1a2e',
+      '#f4d03f',
+      '#c0392b',
+      '#f4d03f',
+      '#f4d03f',
+      '#f4d03f',
+      '#f4d03f',
+      '#27ae60',
+      '#f4d03f',
+      '#1a1a2e'
+    ],
+    [
+      '#1a1a2e',
+      '#f4d03f',
+      '#f4d03f',
+      '#f4d03f',
+      '#27ae60',
+      '#f4d03f',
+      '#f4d03f',
+      '#f4d03f',
+      '#c0392b',
+      '#1a1a2e'
+    ],
+    [
+      '#1a1a2e',
+      '#1a1a2e',
+      '#f4d03f',
+      '#c0392b',
+      '#f4d03f',
+      '#f4d03f',
+      '#27ae60',
+      '#f4d03f',
+      '#1a1a2e',
+      '#1a1a2e'
+    ],
+    [
+      '#1a1a2e',
+      '#1a1a2e',
+      '#27ae60',
+      '#f4d03f',
+      '#f4d03f',
+      '#c0392b',
+      '#f4d03f',
+      '#f4d03f',
+      '#1a1a2e',
+      '#1a1a2e'
+    ],
+    [
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#f4d03f',
+      '#c0392b',
+      '#f4d03f',
+      '#27ae60',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e'
+    ],
+    [
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#27ae60',
+      '#f4d03f',
+      '#f4d03f',
+      '#c0392b',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e'
+    ],
+    [
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#f4d03f',
+      '#f4d03f',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e'
+    ],
+    [
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#f4d03f',
+      '#f4d03f',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e'
+    ],
+    [
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#f4d03f',
+      '#f4d03f',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e'
+    ]
   ],
   rowClues: [[10], [8], [1, 4, 1], [6], [1, 2, 1], [4], [1, 1], [2], [2], [2]],
   colClues: [[1], [3], [2, 2], [4, 2], [6, 3], [6, 3], [4, 2], [2, 2], [3], [1]]

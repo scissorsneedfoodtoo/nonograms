@@ -20,7 +20,7 @@ export function getProgress(): UserProgress {
   }
 }
 
-export function saveBestTime(puzzleId: string, time: number) {
+export function saveBestTime(puzzleId: number, time: number) {
   const progress = getProgress();
   const existing = progress.stats[puzzleId];
 
@@ -34,7 +34,7 @@ export function saveBestTime(puzzleId: string, time: number) {
 }
 
 export function savePuzzleProgress(
-  puzzleId: string,
+  puzzleId: number,
   grid: CellState[][],
   seconds: number,
   penalties: number,
@@ -50,7 +50,7 @@ export function savePuzzleProgress(
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
-export function clearPuzzleProgress(puzzleId: string) {
+export function clearPuzzleProgress(puzzleId: number) {
   const progress = getProgress();
   if (progress.inProgress[puzzleId]) {
     delete progress.inProgress[puzzleId];
@@ -58,12 +58,12 @@ export function clearPuzzleProgress(puzzleId: string) {
   }
 }
 
-export function getPuzzleProgress(puzzleId: string): PuzzleProgress | null {
+export function getPuzzleProgress(puzzleId: number): PuzzleProgress | null {
   const progress = getProgress();
   return progress.inProgress[puzzleId] || null;
 }
 
-export function getPuzzleStats(puzzleId: string) {
+export function getPuzzleStats(puzzleId: number) {
   const progress = getProgress();
   return progress.stats[puzzleId] || null;
 }

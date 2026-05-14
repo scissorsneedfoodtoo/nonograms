@@ -1,7 +1,7 @@
 export type CellState = 'empty' | 'filled' | 'marked';
 
 export interface Puzzle {
-  id: string;
+  id: number;
   name: string;
   width: number;
   height: number;
@@ -24,8 +24,8 @@ export interface PuzzleProgress {
 }
 
 export interface UserProgress {
-  stats: Record<string, PuzzleStats>;
-  inProgress: Record<string, PuzzleProgress>;
+  stats: Record<number, PuzzleStats>;
+  inProgress: Record<number, PuzzleProgress>;
 }
 
 export interface GameState {
