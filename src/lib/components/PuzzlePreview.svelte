@@ -9,6 +9,26 @@
   }
 
   let { puzzle, completed, inProgress, size = 100 }: Props = $props();
+
+  let canvas = $state<HTMLCanvasElement | null>(null);
+
+  $effect(() => {
+    if (!completed || !canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.clearRect(0, 0, puzzle.width, puzzle.height);
+    for (let r = 0; r < puzzle.height; r++) {
+      for (let c = 0; c < puzzle.width; c++) {
+        const color =
+          puzzle.colorSolution?.[r][c] ||
+          (puzzle.solution[r][c] === 1 ? '#4a4a4a' : null);
+        if (color) {
+          ctx.fillStyle = color;
+          ctx.fillRect(c, r, 1, 1);
+        }
+      }
+    }
+  });
 </script>
 
 <div
@@ -18,24 +38,8 @@
   class:in-progress={inProgress && !completed}
 >
   {#if completed}
-    {@const cellSize = size / Math.max(puzzle.width, puzzle.height)}
-    <div
-      class="mini-grid"
-      style="
-        grid-template-columns: repeat({puzzle.width}, {cellSize}px);
-        grid-template-rows: repeat({puzzle.height}, {cellSize}px);
-      "
-    >
-      {#each puzzle.solution as row, r (r)}
-        {#each row as _, c (c)}
-          <div
-            class="mini-cell"
-            style="background-color: {puzzle.colorSolution?.[r][c] ||
-              (puzzle.solution[r][c] === 1 ? 'var(--gray-90)' : 'transparent')}"
-          ></div>
-        {/each}
-      {/each}
-    </div>
+    <canvas bind:this={canvas} width={puzzle.width} height={puzzle.height} class="mini-canvas">
+    </canvas>
   {:else}
     <div class="question-mark">?</div>
   {/if}
@@ -61,20 +65,11 @@
     border-width: 3px;
   }
 
-  .mini-grid {
-    display: grid;
-    gap: 0;
-  }
-
-  .mini-cell {
+  .mini-canvas {
     width: 100%;
     height: 100%;
-  }
-
-  .preview-container:hover .mini-cell {
-    box-shadow:
-      inset -1px 0 0 rgba(0, 0, 0, 0.25),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
   }
 
   .question-mark {

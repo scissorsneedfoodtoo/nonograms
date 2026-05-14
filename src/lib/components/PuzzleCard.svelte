@@ -54,6 +54,7 @@
     color: var(--gray-00);
     position: relative;
     aspect-ratio: 1 / 1.3;
+    will-change: transform;
   }
 
   .puzzle-square:hover {
