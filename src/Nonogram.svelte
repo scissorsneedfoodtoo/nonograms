@@ -316,14 +316,7 @@
   </div>
 
   {#if isWon}
-    <WinModal
-      {puzzle}
-      {seconds}
-      {penalties}
-      {totalPenaltyTime}
-      {totalTime}
-      onClose={handleExit}
-    />
+    <WinModal {puzzle} {seconds} {penalties} {totalPenaltyTime} {totalTime} onClose={handleExit} />
   {/if}
 {/if}
 
