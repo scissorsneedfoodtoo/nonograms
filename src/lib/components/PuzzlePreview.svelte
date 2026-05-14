@@ -18,12 +18,20 @@
   class:in-progress={inProgress && !completed}
 >
   {#if completed}
-    <div class="mini-grid" style="grid-template-columns: repeat({puzzle.width}, 1fr);">
+    {@const cellSize = size / Math.max(puzzle.width, puzzle.height)}
+    <div
+      class="mini-grid"
+      style="
+        grid-template-columns: repeat({puzzle.width}, {cellSize}px);
+        grid-template-rows: repeat({puzzle.height}, {cellSize}px);
+      "
+    >
       {#each puzzle.solution as row, r (r)}
         {#each row as _, c (c)}
           <div
             class="mini-cell"
-            style="background-color: {puzzle.colorSolution?.[r][c] || (puzzle.solution[r][c] === 1 ? 'var(--gray-90)' : 'transparent')}"
+            style="background-color: {puzzle.colorSolution?.[r][c] ||
+              (puzzle.solution[r][c] === 1 ? 'var(--gray-90)' : 'transparent')}"
           ></div>
         {/each}
       {/each}
@@ -55,14 +63,18 @@
 
   .mini-grid {
     display: grid;
-    width: 100%;
-    height: 100%;
     gap: 0;
   }
 
   .mini-cell {
     width: 100%;
     height: 100%;
+  }
+
+  .preview-container:hover .mini-cell {
+    box-shadow:
+      inset -1px 0 0 rgba(0, 0, 0, 0.25),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25);
   }
 
   .question-mark {

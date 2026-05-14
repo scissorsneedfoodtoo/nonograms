@@ -705,6 +705,149 @@ export const CACTUS_PUZZLE: Puzzle = {
   colClues: [[4], [4], [2, 1], [2, 4], [10], [10], [5, 4], [5, 1], [5], [4]]
 };
 
+export const CROWN_PUZZLE: Puzzle = {
+  id: '16',
+  name: 'Crown',
+  width: 10,
+  height: 10,
+  solution: [
+    [1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+    [1, 1, 0, 1, 0, 0, 1, 0, 1, 1],
+    [1, 1, 0, 1, 0, 0, 1, 0, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 0, 0]
+  ],
+  colorSolution: [
+    [
+      '#f39c12',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#f39c12',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#f39c12',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#f39c12'
+    ],
+    [
+      '#f39c12',
+      '#f39c12',
+      '#1a1a2e',
+      '#f39c12',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#f39c12',
+      '#1a1a2e',
+      '#f39c12',
+      '#f39c12'
+    ],
+    [
+      '#f39c12',
+      '#f39c12',
+      '#1a1a2e',
+      '#f39c12',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#f39c12',
+      '#1a1a2e',
+      '#f39c12',
+      '#f39c12'
+    ],
+    [
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f'
+    ],
+    [
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f'
+    ],
+    [
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f'
+    ],
+    [
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f',
+      '#f1c40f'
+    ],
+    [
+      '#1a1a2e',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#1a1a2e'
+    ],
+    [
+      '#1a1a2e',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#1a1a2e'
+    ],
+    [
+      '#1a1a2e',
+      '#1a1a2e',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#d4ac0d',
+      '#1a1a2e',
+      '#1a1a2e'
+    ]
+  ],
+  rowClues: [[1, 1, 1, 1], [2, 1, 1, 2], [2, 1, 1, 2], [10], [10], [10], [10], [8], [8], [6]],
+  colClues: [[7], [8], [7], [10], [7], [7], [10], [7], [8], [7]]
+};
+
 export const ALL_PUZZLES: Puzzle[] = [
   CAT_PUZZLE,
   HEART_PUZZLE,
@@ -720,5 +863,6 @@ export const ALL_PUZZLES: Puzzle[] = [
   COFFEE_MUG_PUZZLE,
   ROCKET_PUZZLE,
   GHOST_PUZZLE,
-  CACTUS_PUZZLE
+  CACTUS_PUZZLE,
+  CROWN_PUZZLE
 ];
