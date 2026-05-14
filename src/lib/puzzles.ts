@@ -848,6 +848,39 @@ export const CROWN_PUZZLE: Puzzle = {
   colClues: [[7], [8], [7], [10], [7], [7], [10], [7], [8], [7]]
 };
 
+export const PIZZA_SLICE_PUZZLE: Puzzle = {
+  id: '17',
+  name: 'Pizza Slice',
+  width: 10,
+  height: 10,
+  solution: [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 0, 1, 1, 1, 1, 0, 1, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 0, 1, 1, 0, 1, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0, 1, 0, 0, 0],
+    [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
+  ],
+  colorSolution: [
+    ['#c8860a', '#c8860a', '#c8860a', '#c8860a', '#c8860a', '#c8860a', '#c8860a', '#c8860a', '#c8860a', '#c8860a'],
+    ['#1a1a2e', '#f4d03f', '#c0392b', '#f4d03f', '#f4d03f', '#f4d03f', '#f4d03f', '#27ae60', '#f4d03f', '#1a1a2e'],
+    ['#1a1a2e', '#f4d03f', '#f4d03f', '#f4d03f', '#27ae60', '#f4d03f', '#f4d03f', '#f4d03f', '#c0392b', '#1a1a2e'],
+    ['#1a1a2e', '#1a1a2e', '#f4d03f', '#c0392b', '#f4d03f', '#f4d03f', '#27ae60', '#f4d03f', '#1a1a2e', '#1a1a2e'],
+    ['#1a1a2e', '#1a1a2e', '#27ae60', '#f4d03f', '#f4d03f', '#c0392b', '#f4d03f', '#f4d03f', '#1a1a2e', '#1a1a2e'],
+    ['#1a1a2e', '#1a1a2e', '#1a1a2e', '#f4d03f', '#c0392b', '#f4d03f', '#27ae60', '#1a1a2e', '#1a1a2e', '#1a1a2e'],
+    ['#1a1a2e', '#1a1a2e', '#1a1a2e', '#27ae60', '#f4d03f', '#f4d03f', '#c0392b', '#1a1a2e', '#1a1a2e', '#1a1a2e'],
+    ['#1a1a2e', '#1a1a2e', '#1a1a2e', '#1a1a2e', '#f4d03f', '#f4d03f', '#1a1a2e', '#1a1a2e', '#1a1a2e', '#1a1a2e'],
+    ['#1a1a2e', '#1a1a2e', '#1a1a2e', '#1a1a2e', '#f4d03f', '#f4d03f', '#1a1a2e', '#1a1a2e', '#1a1a2e', '#1a1a2e'],
+    ['#1a1a2e', '#1a1a2e', '#1a1a2e', '#1a1a2e', '#f4d03f', '#f4d03f', '#1a1a2e', '#1a1a2e', '#1a1a2e', '#1a1a2e']
+  ],
+  rowClues: [[10], [8], [1, 4, 1], [6], [1, 2, 1], [4], [1, 1], [2], [2], [2]],
+  colClues: [[1], [3], [2, 2], [4, 2], [6, 3], [6, 3], [4, 2], [2, 2], [3], [1]]
+};
+
 export const ALL_PUZZLES: Puzzle[] = [
   CAT_PUZZLE,
   HEART_PUZZLE,
@@ -864,5 +897,6 @@ export const ALL_PUZZLES: Puzzle[] = [
   ROCKET_PUZZLE,
   GHOST_PUZZLE,
   CACTUS_PUZZLE,
-  CROWN_PUZZLE
+  CROWN_PUZZLE,
+  PIZZA_SLICE_PUZZLE
 ];
