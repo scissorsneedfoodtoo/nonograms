@@ -24,8 +24,8 @@ export interface PuzzleProgress {
 }
 
 export interface UserProgress {
-  stats: Record<number, PuzzleStats>;
-  inProgress: Record<number, PuzzleProgress>;
+  stats: Record<string, PuzzleStats>;
+  inProgress: Record<string, PuzzleProgress>;
 }
 
 export interface GameState {
