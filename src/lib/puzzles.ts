@@ -1451,6 +1451,149 @@ export const CAMPFIRE_PUZZLE: Puzzle = {
   colClues: [[2], [1, 4], [8], [9], [10], [10], [9], [7], [4], [2]]
 };
 
+export const WHALE_PUZZLE: Puzzle = {
+  id: 21,
+  name: 'Whale',
+  width: 10,
+  height: 10,
+  solution: [
+    [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 1, 1, 1, 1, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+    [0, 0, 1, 1, 1, 1, 1, 0, 0, 0],
+    [0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
+    [0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+  ],
+  colorSolution: [
+    [
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5'
+    ],
+    [
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#cce7f5',
+      '#cce7f5'
+    ],
+    [
+      '#cce7f5',
+      '#cce7f5',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#ffffff',
+      '#1a1a2e',
+      '#cce7f5'
+    ],
+    [
+      '#cce7f5',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e'
+    ],
+    [
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#ffffff',
+      '#ffffff',
+      '#ffffff',
+      '#1a1a2e'
+    ],
+    [
+      '#cce7f5',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#ffffff',
+      '#ffffff',
+      '#ffffff',
+      '#ffffff',
+      '#1a1a2e',
+      '#cce7f5'
+    ],
+    [
+      '#cce7f5',
+      '#cce7f5',
+      '#1a1a2e',
+      '#ffffff',
+      '#ffffff',
+      '#ffffff',
+      '#1a1a2e',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5'
+    ],
+    [
+      '#cce7f5',
+      '#cce7f5',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5'
+    ],
+    [
+      '#cce7f5',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5'
+    ],
+    [
+      '#1a1a2e',
+      '#1a1a2e',
+      '#1a1a2e',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5',
+      '#cce7f5'
+    ]
+  ],
+  rowClues: [[2], [5], [7], [9], [10], [8], [5], [3], [2], [3]],
+  colClues: [[1, 1], [3, 2], [8], [7], [8], [7], [6], [5], [4], [2]]
+};
+
 export const ALL_PUZZLES: Puzzle[] = [
   CAT_PUZZLE,
   HEART_PUZZLE,
@@ -1471,5 +1614,6 @@ export const ALL_PUZZLES: Puzzle[] = [
   PIZZA_SLICE_PUZZLE,
   BUTTERFLY_PUZZLE,
   TROPHY_PUZZLE,
-  CAMPFIRE_PUZZLE
+  CAMPFIRE_PUZZLE,
+  WHALE_PUZZLE
 ];
