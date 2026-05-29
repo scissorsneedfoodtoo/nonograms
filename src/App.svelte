@@ -10,6 +10,7 @@
 
   let view = $state<'level-select' | 'game'>('level-select');
   let selectedPuzzle = $state<Puzzle | null>(null);
+  let selectedPuzzleOrder = $state(0);
   let userProgress = $state(getProgress());
   let showResetConfirm = $state(false);
   let currentPage = $state(0);
@@ -19,8 +20,9 @@
     ALL_PUZZLES.slice(currentPage * PUZZLES_PER_PAGE, (currentPage + 1) * PUZZLES_PER_PAGE)
   );
 
-  function selectPuzzle(puzzle: Puzzle) {
+  function selectPuzzle(puzzle: Puzzle, order: number) {
     selectedPuzzle = puzzle;
+    selectedPuzzleOrder = order;
     view = 'game';
   }
 
@@ -48,17 +50,19 @@
       </header>
 
       <div class="puzzle-grid">
-        {#each visiblePuzzles as puzzle (puzzle.id)}
+        {#each visiblePuzzles as puzzle, i (puzzle.id)}
           {@const stats = userProgress.stats[puzzle.id]}
           {@const inProgress = userProgress.inProgress[puzzle.id]}
           {@const completed = !!stats?.completed}
+          {@const order = currentPage * PUZZLES_PER_PAGE + i + 1}
 
           <PuzzleCard
             {puzzle}
+            {order}
             {stats}
             inProgress={!!inProgress}
             {completed}
-            onclick={() => selectPuzzle(puzzle)}
+            onclick={() => selectPuzzle(puzzle, order)}
           />
         {/each}
       </div>
@@ -107,7 +111,7 @@
       />
     {/if}
   {:else if view === 'game' && selectedPuzzle}
-    <Nonogram puzzle={selectedPuzzle} onBack={goBack} />
+    <Nonogram puzzle={selectedPuzzle} order={selectedPuzzleOrder} onBack={goBack} />
   {/if}
 </main>
 

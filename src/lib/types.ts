@@ -1,7 +1,7 @@
 export type CellState = 'empty' | 'filled' | 'marked';
 
 export interface Puzzle {
-  id: number;
+  id: string;
   name: string;
   width: number;
   height: number;

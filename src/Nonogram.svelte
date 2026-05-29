@@ -22,10 +22,11 @@
 
   interface Props {
     puzzle: Puzzle;
+    order: number;
     onBack: () => void;
   }
 
-  let { puzzle, onBack }: Props = $props();
+  let { puzzle, order, onBack }: Props = $props();
 
   const PENALTY_SECONDS = 15;
 
@@ -239,7 +240,7 @@
   <div class="game-container">
     <div class="header-nav">
       <button class="back-btn" onclick={handleExit}>&larr; Exit to Menu</button>
-      <h1>#{puzzle.id}</h1>
+      <h1>#{order} — {isWon ? puzzle.name : '???'}</h1>
     </div>
 
     <div class="stats-bar">

@@ -1,7 +1,7 @@
 import type { Puzzle } from './types';
 
-export const CAT_PUZZLE: Puzzle = {
-  id: 1,
+export const CAT: Puzzle = {
+  id: '3a7f',
   name: 'Cat',
   width: 5,
   height: 5,
@@ -23,8 +23,8 @@ export const CAT_PUZZLE: Puzzle = {
   colClues: [[4], [1, 2], [4], [1, 2], [4]]
 };
 
-export const HEART_PUZZLE: Puzzle = {
-  id: 2,
+export const HEART: Puzzle = {
+  id: 'b2d4',
   name: 'Heart',
   width: 5,
   height: 5,
@@ -46,8 +46,8 @@ export const HEART_PUZZLE: Puzzle = {
   colClues: [[2], [4], [4], [4], [2]]
 };
 
-export const APPLE_PUZZLE: Puzzle = {
-  id: 3,
+export const APPLE: Puzzle = {
+  id: '9e1c',
   name: 'Apple',
   width: 5,
   height: 5,
@@ -69,8 +69,8 @@ export const APPLE_PUZZLE: Puzzle = {
   colClues: [[2], [4], [5], [4], [2]]
 };
 
-export const TREE_PUZZLE: Puzzle = {
-  id: 4,
+export const TREE: Puzzle = {
+  id: 'f45a',
   name: 'Tree',
   width: 5,
   height: 5,
@@ -92,8 +92,8 @@ export const TREE_PUZZLE: Puzzle = {
   colClues: [[1], [2], [5], [2], [1]]
 };
 
-export const HOUSE_PUZZLE: Puzzle = {
-  id: 5,
+export const HOUSE: Puzzle = {
+  id: '2b8e',
   name: 'House',
   width: 5,
   height: 5,
@@ -115,8 +115,8 @@ export const HOUSE_PUZZLE: Puzzle = {
   colClues: [[3], [4], [3, 1], [4], [3]]
 };
 
-export const STAR_PUZZLE: Puzzle = {
-  id: 6,
+export const STAR: Puzzle = {
+  id: '7c3d',
   name: 'Star',
   width: 5,
   height: 5,
@@ -138,8 +138,8 @@ export const STAR_PUZZLE: Puzzle = {
   colClues: [[1, 2], [3], [3], [3], [1, 2]]
 };
 
-export const DIAMOND_PUZZLE: Puzzle = {
-  id: 7,
+export const DIAMOND: Puzzle = {
+  id: 'e6a1',
   name: 'Diamond',
   width: 5,
   height: 5,
@@ -161,8 +161,8 @@ export const DIAMOND_PUZZLE: Puzzle = {
   colClues: [[1], [3], [5], [3], [1]]
 };
 
-export const SHIELD_PUZZLE: Puzzle = {
-  id: 8,
+export const SHIELD: Puzzle = {
+  id: '1f9b',
   name: 'Shield',
   width: 5,
   height: 5,
@@ -184,8 +184,8 @@ export const SHIELD_PUZZLE: Puzzle = {
   colClues: [[3], [4], [1, 3], [4], [3]]
 };
 
-export const BOAT_PUZZLE: Puzzle = {
-  id: 9,
+export const BOAT: Puzzle = {
+  id: 'd4c2',
   name: 'Boat',
   width: 5,
   height: 5,
@@ -207,8 +207,8 @@ export const BOAT_PUZZLE: Puzzle = {
   colClues: [[1, 1], [4], [5], [3], [1, 1]]
 };
 
-export const DUCK_PUZZLE: Puzzle = {
-  id: 10,
+export const DUCK: Puzzle = {
+  id: '8a5f',
   name: 'Duck',
   width: 5,
   height: 5,
@@ -230,8 +230,8 @@ export const DUCK_PUZZLE: Puzzle = {
   colClues: [[1, 1], [5], [5], [3], [1, 1]]
 };
 
-export const MUSHROOM_PUZZLE: Puzzle = {
-  id: 11,
+export const MUSHROOM: Puzzle = {
+  id: '4e7d',
   name: 'Mushroom',
   width: 5,
   height: 5,
@@ -253,8 +253,8 @@ export const MUSHROOM_PUZZLE: Puzzle = {
   colClues: [[2], [4], [5], [4], [2]]
 };
 
-export const COFFEE_MUG_PUZZLE: Puzzle = {
-  id: 12,
+export const COFFEE_MUG: Puzzle = {
+  id: 'c91b',
   name: 'Coffee Mug',
   width: 5,
   height: 5,
@@ -276,8 +276,8 @@ export const COFFEE_MUG_PUZZLE: Puzzle = {
   colClues: [[4], [2, 2], [5], [5], [2]]
 };
 
-export const ROCKET_PUZZLE: Puzzle = {
-  id: 13,
+export const ROCKET: Puzzle = {
+  id: '6f3e',
   name: 'Rocket',
   width: 10,
   height: 10,
@@ -419,8 +419,8 @@ export const ROCKET_PUZZLE: Puzzle = {
   colClues: [[1], [1], [4, 1], [8], [10], [10], [8], [4, 1], [1], [1]]
 };
 
-export const GHOST_PUZZLE: Puzzle = {
-  id: 14,
+export const GHOST: Puzzle = {
+  id: 'a2d8',
   name: 'Ghost',
   width: 10,
   height: 10,
@@ -562,8 +562,8 @@ export const GHOST_PUZZLE: Puzzle = {
   colClues: [[8], [7], [8], [3, 5], [8], [8], [3, 5], [8], [7], [8]]
 };
 
-export const CACTUS_PUZZLE: Puzzle = {
-  id: 15,
+export const CACTUS: Puzzle = {
+  id: '5b4c',
   name: 'Cactus',
   width: 10,
   height: 10,
@@ -705,8 +705,8 @@ export const CACTUS_PUZZLE: Puzzle = {
   colClues: [[4], [4], [2, 1], [2, 4], [10], [10], [5, 4], [5, 1], [5], [4]]
 };
 
-export const CROWN_PUZZLE: Puzzle = {
-  id: 16,
+export const CROWN: Puzzle = {
+  id: 'e8a3',
   name: 'Crown',
   width: 10,
   height: 10,
@@ -848,8 +848,8 @@ export const CROWN_PUZZLE: Puzzle = {
   colClues: [[7], [8], [7], [10], [7], [7], [10], [7], [8], [7]]
 };
 
-export const PIZZA_SLICE_PUZZLE: Puzzle = {
-  id: 17,
+export const PIZZA_SLICE: Puzzle = {
+  id: '3d7f',
   name: 'Pizza Slice',
   width: 10,
   height: 10,
@@ -991,8 +991,8 @@ export const PIZZA_SLICE_PUZZLE: Puzzle = {
   colClues: [[1], [3], [2, 2], [4, 2], [6, 3], [6, 3], [4, 2], [2, 2], [3], [1]]
 };
 
-export const PENGUIN_PUZZLE: Puzzle = {
-  id: 18,
+export const PENGUIN: Puzzle = {
+  id: '9c2b',
   name: 'Penguin',
   width: 10,
   height: 10,
@@ -1134,8 +1134,8 @@ export const PENGUIN_PUZZLE: Puzzle = {
   colClues: [[2], [2], [7, 1], [10], [9], [9], [10], [7, 1], [2], [2]]
 };
 
-export const BUTTERFLY_PUZZLE: Puzzle = {
-  id: 19,
+export const BUTTERFLY: Puzzle = {
+  id: 'f1e6',
   name: 'Butterfly',
   width: 10,
   height: 10,
@@ -1288,8 +1288,8 @@ export const BUTTERFLY_PUZZLE: Puzzle = {
   colClues: [[8], [3, 2, 3], [4, 4], [10], [6], [6], [10], [4, 4], [3, 2, 3], [8]]
 };
 
-export const TROPHY_PUZZLE: Puzzle = {
-  id: 20,
+export const TROPHY: Puzzle = {
+  id: '7a4d',
   name: 'Trophy',
   width: 10,
   height: 10,
@@ -1451,8 +1451,8 @@ export const TROPHY_PUZZLE: Puzzle = {
   ]
 };
 
-export const CAMPFIRE_PUZZLE: Puzzle = {
-  id: 21,
+export const CAMPFIRE: Puzzle = {
+  id: '2c9e',
   name: 'Campfire',
   width: 10,
   height: 10,
@@ -1594,8 +1594,8 @@ export const CAMPFIRE_PUZZLE: Puzzle = {
   colClues: [[2], [1, 4], [8], [9], [10], [10], [9], [7], [4], [2]]
 };
 
-export const WHALE_PUZZLE: Puzzle = {
-  id: 22,
+export const WHALE: Puzzle = {
+  id: 'b5f3',
   name: 'Whale',
   width: 10,
   height: 10,
@@ -1737,8 +1737,8 @@ export const WHALE_PUZZLE: Puzzle = {
   colClues: [[1, 1], [3, 2], [8], [7], [8], [7], [6], [5], [4], [2]]
 };
 
-export const ALIEN_PUZZLE: Puzzle = {
-  id: 23,
+export const ALIEN: Puzzle = {
+  id: '4d8a',
   name: 'Alien',
   width: 10,
   height: 10,
@@ -1881,27 +1881,27 @@ export const ALIEN_PUZZLE: Puzzle = {
 };
 
 export const ALL_PUZZLES: Puzzle[] = [
-  CAT_PUZZLE,
-  HEART_PUZZLE,
-  APPLE_PUZZLE,
-  TREE_PUZZLE,
-  HOUSE_PUZZLE,
-  STAR_PUZZLE,
-  DIAMOND_PUZZLE,
-  SHIELD_PUZZLE,
-  BOAT_PUZZLE,
-  DUCK_PUZZLE,
-  MUSHROOM_PUZZLE,
-  COFFEE_MUG_PUZZLE,
-  ROCKET_PUZZLE,
-  GHOST_PUZZLE,
-  CACTUS_PUZZLE,
-  CROWN_PUZZLE,
-  PIZZA_SLICE_PUZZLE,
-  PENGUIN_PUZZLE,
-  BUTTERFLY_PUZZLE,
-  TROPHY_PUZZLE,
-  CAMPFIRE_PUZZLE,
-  WHALE_PUZZLE,
-  ALIEN_PUZZLE
+  CAT,
+  HEART,
+  APPLE,
+  TREE,
+  HOUSE,
+  STAR,
+  DIAMOND,
+  SHIELD,
+  BOAT,
+  DUCK,
+  MUSHROOM,
+  COFFEE_MUG,
+  ROCKET,
+  GHOST,
+  CACTUS,
+  CROWN,
+  PIZZA_SLICE,
+  PENGUIN,
+  BUTTERFLY,
+  TROPHY,
+  CAMPFIRE,
+  WHALE,
+  ALIEN
 ];
