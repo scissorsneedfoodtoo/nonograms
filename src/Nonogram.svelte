@@ -22,10 +22,11 @@
 
   interface Props {
     puzzle: Puzzle;
+    order: number;
     onBack: () => void;
   }
 
-  let { puzzle, onBack }: Props = $props();
+  let { puzzle, order, onBack }: Props = $props();
 
   const PENALTY_SECONDS = 15;
 
@@ -38,7 +39,7 @@
   // Timer and Penalties
   let seconds = $state(0);
   let penalties = $state(0);
-  let timerInterval: number | undefined;
+  let timerInterval: ReturnType<typeof setInterval> | undefined;
 
   // Derived state for completed rows/cols
   // Use getters to ensure reactivity is tracked correctly
@@ -56,9 +57,31 @@
   let totalPenaltyTime = $derived(penalties * PENALTY_SECONDS);
   let totalTime = $derived(seconds + totalPenaltyTime);
 
+  function devCompleteGame() {
+    if (!import.meta.env.DEV) return;
+    stopTimer();
+    isWon = true;
+    saveBestTime(puzzle.id, totalTime);
+    clearPuzzleProgress(puzzle.id);
+  }
+
   onMount(() => {
     resetGame();
+
+    function handleDevShortcut(e: KeyboardEvent) {
+      if (e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey && e.key === 'F') {
+        devCompleteGame();
+      }
+    }
+
+    if (import.meta.env.DEV) {
+      document.addEventListener('keydown', handleDevShortcut);
+    }
+
     return () => {
+      if (import.meta.env.DEV) {
+        document.removeEventListener('keydown', handleDevShortcut);
+      }
       if (isPuzzleInProgress(grid) && !isWon) {
         saveProgress();
       }
@@ -217,7 +240,7 @@
   <div class="game-container">
     <div class="header-nav">
       <button class="back-btn" onclick={handleExit}>&larr; Exit to Menu</button>
-      <h1>#{puzzle.id}</h1>
+      <h1>#{order} — {isWon ? puzzle.name : '???'}</h1>
     </div>
 
     <div class="stats-bar">
@@ -312,18 +335,14 @@
         Note: Incorrect moves are auto-corrected and add <strong>{PENALTY_SECONDS}s</strong> to your total
         time.
       </p>
+      {#if import.meta.env.DEV}
+        <p class="dev-hint"><strong>Dev:</strong> <kbd>Shift+F</kbd> to auto-complete puzzle</p>
+      {/if}
     </div>
   </div>
 
   {#if isWon}
-    <WinModal
-      {puzzle}
-      {seconds}
-      {penalties}
-      {totalPenaltyTime}
-      {totalTime}
-      onClose={handleExit}
-    />
+    <WinModal {puzzle} {seconds} {penalties} {totalPenaltyTime} {totalTime} onClose={handleExit} />
   {/if}
 {/if}
 
@@ -582,5 +601,23 @@
     font-size: 0.9rem;
     margin-top: 10px;
     color: var(--gray-45);
+  }
+
+  .dev-hint {
+    font-size: 0.85rem;
+    margin-top: 12px;
+    color: var(--gray-45);
+    border-top: 1px dashed var(--gray-75);
+    padding-top: 10px;
+  }
+
+  .dev-hint kbd {
+    display: inline-block;
+    padding: 1px 6px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    background-color: var(--gray-85);
+    border: 1px solid var(--gray-45);
+    border-radius: 3px;
   }
 </style>

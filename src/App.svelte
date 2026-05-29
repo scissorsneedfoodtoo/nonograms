@@ -6,13 +6,23 @@
   import type { Puzzle } from './lib/types';
   import { getProgress, clearAllProgress } from './lib/storage';
 
+  const PUZZLES_PER_PAGE = 12;
+
   let view = $state<'level-select' | 'game'>('level-select');
   let selectedPuzzle = $state<Puzzle | null>(null);
+  let selectedPuzzleOrder = $state(0);
   let userProgress = $state(getProgress());
   let showResetConfirm = $state(false);
+  let currentPage = $state(0);
 
-  function selectPuzzle(puzzle: Puzzle) {
+  const totalPages = $derived(Math.ceil(ALL_PUZZLES.length / PUZZLES_PER_PAGE));
+  const visiblePuzzles = $derived(
+    ALL_PUZZLES.slice(currentPage * PUZZLES_PER_PAGE, (currentPage + 1) * PUZZLES_PER_PAGE)
+  );
+
+  function selectPuzzle(puzzle: Puzzle, order: number) {
     selectedPuzzle = puzzle;
+    selectedPuzzleOrder = order;
     view = 'game';
   }
 
@@ -34,21 +44,57 @@
     <div class="level-select-container">
       <header class="fcc-header">
         <h1>Nonogram Puzzles</h1>
-        <p>Challenge yourself with these logic puzzles. Accurate moves earn you the fastest times!</p>
+        <p>
+          Challenge yourself with these logic puzzles. Accurate moves earn you the fastest times!
+        </p>
       </header>
 
       <div class="puzzle-grid">
-        {#each ALL_PUZZLES as puzzle (puzzle.id)}
+        {#each visiblePuzzles as puzzle, i (puzzle.id)}
           {@const stats = userProgress.stats[puzzle.id]}
           {@const inProgress = userProgress.inProgress[puzzle.id]}
           {@const completed = !!stats?.completed}
+          {@const order = currentPage * PUZZLES_PER_PAGE + i + 1}
 
-          <PuzzleCard {puzzle} {stats} inProgress={!!inProgress} {completed} onclick={() => selectPuzzle(puzzle)} />
+          <PuzzleCard
+            {puzzle}
+            {order}
+            {stats}
+            inProgress={!!inProgress}
+            {completed}
+            onclick={() => selectPuzzle(puzzle, order)}
+          />
         {/each}
       </div>
 
+      {#if totalPages > 1}
+        <div class="pagination">
+          <button
+            class="page-btn"
+            onclick={() => (currentPage -= 1)}
+            disabled={currentPage === 0}
+            aria-label="Previous page"
+          >
+            &lsaquo; Prev
+          </button>
+          <span class="page-indicator">Page {currentPage + 1} / {totalPages}</span>
+          <button
+            class="page-btn"
+            onclick={() => (currentPage += 1)}
+            disabled={currentPage === totalPages - 1}
+            aria-label="Next page"
+          >
+            Next &rsaquo;
+          </button>
+        </div>
+      {/if}
+
       <footer class="fcc-footer">
-        <p>Built with Svelte & freeCodeCamp Design System</p>
+        <span>
+          Made by <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer"
+            >freeCodeCamp</a
+          >
+        </span>
         <button class="reset-all-btn" onclick={() => (showResetConfirm = true)}>
           Reset All Progress
         </button>
@@ -65,7 +111,7 @@
       />
     {/if}
   {:else if view === 'game' && selectedPuzzle}
-    <Nonogram puzzle={selectedPuzzle} onBack={goBack} />
+    <Nonogram puzzle={selectedPuzzle} order={selectedPuzzleOrder} onBack={goBack} />
   {/if}
 </main>
 
@@ -110,10 +156,50 @@
 
   .puzzle-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 200px));
+    justify-content: center;
     gap: 1.5rem;
     width: 100%;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .page-btn {
+    background: transparent;
+    border: 3px solid var(--gray-45);
+    color: var(--gray-15);
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition:
+      border-color 0.1s,
+      color 0.1s;
+  }
+
+  .page-btn:hover:not(:disabled) {
+    border-color: var(--yellow-gold);
+    color: var(--yellow-gold);
+  }
+
+  .page-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .page-indicator {
+    font-family: var(--font-mono);
+    color: var(--gray-45);
+    font-size: 0.9rem;
+    font-weight: 700;
+    min-width: 110px;
+    text-align: center;
   }
 
   .fcc-footer {
@@ -143,5 +229,4 @@
     background: var(--error-red);
     color: var(--gray-00);
   }
-
 </style>

@@ -31,10 +31,7 @@ export default defineConfig(
       // Note: you must disable the base rule as it can report incorrect errors
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': 'error'
-    },
-    extends: [
-      'prettier' // Disable ESLint rules that might conflict with Prettier
-    ]
+    }
   },
   {
     ignores: ['build/', '.svelte-kit/', 'dist/']

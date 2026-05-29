@@ -5,18 +5,19 @@
 
   interface Props {
     puzzle: Puzzle;
+    order: number;
     stats: PuzzleStats | undefined;
     inProgress: boolean;
     completed: boolean;
     onclick: () => void;
   }
 
-  let { puzzle, stats, inProgress, completed, onclick }: Props = $props();
+  let { puzzle, order, stats, inProgress, completed, onclick }: Props = $props();
 </script>
 
 <button class="puzzle-square" {onclick}>
   <div class="square-header">
-    <span class="puzzle-id">#{puzzle.id}</span>
+    <span class="puzzle-id">#{order}</span>
     <span class="puzzle-size">{puzzle.width}x{puzzle.height}</span>
   </div>
 
@@ -54,6 +55,7 @@
     color: var(--gray-00);
     position: relative;
     aspect-ratio: 1 / 1.3;
+    will-change: transform;
   }
 
   .puzzle-square:hover {

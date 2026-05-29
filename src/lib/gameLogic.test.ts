@@ -47,7 +47,7 @@ describe('gameLogic', () => {
         ['filled', 'empty'],
         ['empty', 'filled']
       ];
-      // @ts-ignore
+      // @ts-expect-error intentionally passing untyped test data
       expect(checkWin(grid, solution)).toBe(true);
     });
 
@@ -56,7 +56,7 @@ describe('gameLogic', () => {
         ['filled', 'empty'],
         ['empty', 'empty']
       ];
-      // @ts-ignore
+      // @ts-expect-error intentionally passing untyped test data
       expect(checkWin(grid, solution)).toBe(false);
     });
 
@@ -65,7 +65,7 @@ describe('gameLogic', () => {
         ['filled', 'filled'],
         ['empty', 'filled']
       ];
-      // @ts-ignore
+      // @ts-expect-error intentionally passing untyped test data
       expect(checkWin(grid, solution)).toBe(false);
     });
 
@@ -74,7 +74,7 @@ describe('gameLogic', () => {
         ['filled', 'marked'],
         ['empty', 'filled']
       ];
-      // @ts-ignore
+      // @ts-expect-error intentionally passing untyped test data
       expect(checkWin(grid, solution)).toBe(true);
     });
   });
@@ -85,7 +85,7 @@ describe('gameLogic', () => {
         ['empty', 'empty'],
         ['empty', 'empty']
       ];
-      // @ts-ignore
+      // @ts-expect-error intentionally passing untyped test data
       expect(isPuzzleInProgress(grid)).toBe(false);
     });
 
@@ -94,7 +94,7 @@ describe('gameLogic', () => {
         ['empty', 'filled'],
         ['empty', 'empty']
       ];
-      // @ts-ignore
+      // @ts-expect-error intentionally passing untyped test data
       expect(isPuzzleInProgress(grid)).toBe(true);
     });
 
@@ -103,7 +103,7 @@ describe('gameLogic', () => {
         ['empty', 'empty'],
         ['marked', 'empty']
       ];
-      // @ts-ignore
+      // @ts-expect-error intentionally passing untyped test data
       expect(isPuzzleInProgress(grid)).toBe(true);
     });
   });
@@ -138,22 +138,18 @@ describe('gameLogic', () => {
     const solutionLine = [1, 0, 1];
 
     it('returns true if filled cells match', () => {
-      // @ts-ignore
       expect(isLineCorrect(['filled', 'empty', 'filled'], solutionLine)).toBe(true);
     });
 
     it('returns true if marked cells are in empty spots', () => {
-      // @ts-ignore
       expect(isLineCorrect(['filled', 'marked', 'filled'], solutionLine)).toBe(true);
     });
 
     it('returns false if a fill is missing', () => {
-      // @ts-ignore
       expect(isLineCorrect(['filled', 'empty', 'empty'], solutionLine)).toBe(false);
     });
 
     it('returns false if an empty spot is filled', () => {
-      // @ts-ignore
       expect(isLineCorrect(['filled', 'filled', 'filled'], solutionLine)).toBe(false);
     });
   });
@@ -164,7 +160,7 @@ describe('gameLogic', () => {
         [1, 2, 3],
         [4, 5, 6]
       ];
-      // @ts-ignore
+      // @ts-expect-error intentionally passing untyped test data
       expect(getColumn(grid, 1)).toEqual([2, 5]);
     });
   });
