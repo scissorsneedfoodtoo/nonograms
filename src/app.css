@@ -54,6 +54,15 @@ body {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  /* Keep padding inside the viewport so narrow screens don't scroll horizontally. */
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  #app {
+    /* <main> already supplies the page padding on small screens. */
+    padding: 0;
+  }
 }
 
 h1, h2, h3 {
