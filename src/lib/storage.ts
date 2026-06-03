@@ -2,21 +2,25 @@ import type { UserProgress, PuzzleProgress, CellState } from './types';
 
 const STORAGE_KEY = 'fcc-nonograms-progress-v2';
 
-const DEFAULT_PROGRESS: UserProgress = {
-  stats: {},
-  inProgress: {}
-};
+// Return a fresh object every call. Callers (e.g. savePuzzleProgress) mutate the
+// result, so a shared default would get polluted across calls.
+function emptyProgress(): UserProgress {
+  return {
+    stats: {},
+    inProgress: {}
+  };
+}
 
 export function getProgress(): UserProgress {
-  if (typeof window === 'undefined') return DEFAULT_PROGRESS;
+  if (typeof window === 'undefined') return emptyProgress();
   const stored = localStorage.getItem(STORAGE_KEY);
-  if (!stored) return DEFAULT_PROGRESS;
+  if (!stored) return emptyProgress();
 
   try {
     return JSON.parse(stored);
   } catch (err) {
     console.error('Failed to parse progress from localStorage:', err);
-    return DEFAULT_PROGRESS;
+    return emptyProgress();
   }
 }
 
