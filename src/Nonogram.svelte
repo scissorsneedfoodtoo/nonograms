@@ -541,7 +541,9 @@
   .grid {
     grid-area: grid;
     display: grid;
-    background-color: var(--gray-00);
+    /* Dark like the separators (cells fully tile over this). Keeps any
+       sub-pixel seam at the sticky-gutter edge from flashing white on scroll. */
+    background-color: var(--gray-90);
     gap: 0;
   }
 
@@ -788,24 +790,27 @@
       -webkit-overflow-scrolling: touch;
     }
 
+    /* Gutters must sit above every cell z-index. Cells reach z-index 2 at the
+       thick every-5 gridline intersections (and 10 on keyboard focus), so the
+       frozen clues use higher values to avoid the grid bleeding past them. */
     .corner {
       position: sticky;
       top: 0;
       left: 0;
-      z-index: 3;
+      z-index: 21;
       background-color: var(--gray-85);
     }
 
     .col-clues {
       position: sticky;
       top: 0;
-      z-index: 2;
+      z-index: 20;
     }
 
     .row-clues {
       position: sticky;
       left: 0;
-      z-index: 2;
+      z-index: 20;
     }
 
     .clue-group {
