@@ -34,13 +34,13 @@ pnpm test:e2e     # end-to-end tests only
 pnpm test:e2e:ui  # end-to-end tests in Playwright's UI mode
 ```
 
-The e2e suite drives a real browser, so install it once after cloning:
+The e2e suite runs against real browsers — Chromium, Firefox, and WebKit (Safari) on desktop, plus mobile Chromium and WebKit viewports — so install them once after cloning:
 
 ```bash
-pnpm exec playwright install chromium
+pnpm exec playwright install chromium firefox webkit
 ```
 
-Without it, `pnpm test` (and `pnpm test:e2e`) will fail at the browser-launch step. The e2e config builds the app and serves it with `vite preview` automatically, so you don't need a dev server running.
+Without them, `pnpm test` (and `pnpm test:e2e`) will fail at the browser-launch step. The e2e config builds the app and serves it with `vite preview` automatically, so you don't need a dev server running.
 
 ## License
 
