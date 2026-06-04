@@ -15,10 +15,14 @@
     "check": "svelte-check --tsconfig ./tsconfig.json && tsc",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "vitest run"
+    "test": "pnpm test:unit && pnpm test:e2e",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@playwright/test": "1.60.0",
     "@sveltejs/vite-plugin-svelte": "7.0.0",
     "@tsconfig/svelte": "5.0.8",
     "@types/node": "24.12.2",

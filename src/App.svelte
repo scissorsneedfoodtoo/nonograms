@@ -229,4 +229,32 @@
     background: var(--error-red);
     color: var(--gray-00);
   }
+
+  @media (max-width: 600px) {
+    main {
+      padding: 1rem;
+    }
+
+    .fcc-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+    }
+
+    .fcc-header h1 {
+      font-size: 1.85rem;
+    }
+
+    .fcc-header p {
+      font-size: 1rem;
+    }
+
+    .puzzle-grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+
+    .pagination {
+      margin-bottom: 2rem;
+    }
+  }
 </style>

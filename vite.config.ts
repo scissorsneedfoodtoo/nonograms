@@ -1,4 +1,5 @@
-import { defineConfig, loadEnv } from 'vite';
+import { loadEnv } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 
 // https://vite.dev/config/
@@ -13,6 +14,11 @@ export default defineConfig(({ mode }) => {
     plugins: [svelte()],
     server: {
       port: parseInt(env.PORT || '8080')
+    },
+    test: {
+      // Unit tests only. The Playwright e2e suite (tests/e2e/*.spec.ts) runs
+      // under its own runner — keep Vitest from trying to execute it.
+      include: ['src/**/*.test.ts']
     }
   };
 });

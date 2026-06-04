@@ -29,7 +29,7 @@
     <div class="puzzle-name">
       {completed ? puzzle.name : '???'}
     </div>
-    {#if completed && stats?.bestTime}
+    {#if completed && stats}
       <div class="best-time">Best: {formatTime(stats.bestTime)}</div>
     {:else if inProgress}
       <div class="status-hint">In Progress</div>

@@ -36,6 +36,10 @@
   let errorState = $state<boolean[][]>([]);
   let isWon = $state(false);
 
+  // Tap mode for touch devices: a plain click/tap fills or marks based on this.
+  // Desktop users can still right-click / shift-click to mark regardless of mode.
+  let mode = $state<'fill' | 'mark'>('fill');
+
   // Timer and Penalties
   let seconds = $state(0);
   let penalties = $state(0);
@@ -167,7 +171,8 @@
   }
 
   function handleCellClick(r: number, c: number, event: MouseEvent) {
-    const action = event.shiftKey || event.button === 2 ? 'mark' : 'fill';
+    // Shift-click always marks (desktop power users); otherwise follow the active tap mode.
+    const action = event.shiftKey || event.button === 2 ? 'mark' : mode;
     handleMove(r, c, action);
   }
 
@@ -253,11 +258,37 @@
       </div>
     </div>
 
-    <div class="nonogram-board" oncontextmenu={handleContextMenu} role="presentation">
+    <div class="mode-toggle" role="group" aria-label="Tap mode">
+      <button
+        class="mode-btn"
+        class:active={mode === 'fill'}
+        onclick={() => (mode = 'fill')}
+        aria-pressed={mode === 'fill'}
+        disabled={isWon}
+      >
+        <span class="mode-swatch fill" aria-hidden="true"></span> Fill
+      </button>
+      <button
+        class="mode-btn"
+        class:active={mode === 'mark'}
+        onclick={() => (mode = 'mark')}
+        aria-pressed={mode === 'mark'}
+        disabled={isWon}
+      >
+        <span class="mode-swatch mark" aria-hidden="true">&times;</span> Mark
+      </button>
+    </div>
+
+    <div
+      class="nonogram-board"
+      style="--cols: {puzzle.width}; --rows: {puzzle.height};"
+      oncontextmenu={handleContextMenu}
+      role="presentation"
+    >
       <div class="corner"></div>
 
       <!-- Column Clues -->
-      <div class="col-clues" style="grid-template-columns: repeat({puzzle.width}, 45px);">
+      <div class="col-clues" style="grid-template-columns: repeat({puzzle.width}, var(--cell-size));">
         {#each puzzle.colClues as col, i (i)}
           <div
             class="clue-group col"
@@ -274,7 +305,7 @@
       </div>
 
       <!-- Row Clues -->
-      <div class="row-clues" style="grid-template-rows: repeat({puzzle.height}, 45px);">
+      <div class="row-clues" style="grid-template-rows: repeat({puzzle.height}, var(--cell-size));">
         {#each puzzle.rowClues as row, i (i)}
           <div
             class="clue-group row"
@@ -293,7 +324,7 @@
         class="grid"
         role="grid"
         aria-label="Nonogram grid"
-        style="grid-template-columns: repeat({puzzle.width}, 45px); grid-template-rows: repeat({puzzle.height}, 45px);"
+        style="grid-template-columns: repeat({puzzle.width}, var(--cell-size)); grid-template-rows: repeat({puzzle.height}, var(--cell-size));"
       >
         {#each grid as row, r (r)}
           {#each row as cell, c (c)}
@@ -327,10 +358,15 @@
     </div>
 
     <div class="instructions">
-      <p>
-        <strong>Controls:</strong> Left Click / Space / Enter to Fill | Right Click / X to Mark (X)
+      <p class="touch-controls">
+        <strong>Touch:</strong> Pick <strong>Fill</strong> or <strong>Mark</strong> above, then tap
+        cells. Drag to scroll larger puzzles — the clues stay pinned.
       </p>
-      <p>Use Arrow Keys to navigate the grid</p>
+      <p class="desktop-controls">
+        <strong>Desktop:</strong> Left Click / Space / Enter to Fill | Right Click / Shift+Click / X to
+        Mark
+      </p>
+      <p class="desktop-controls">Use Arrow Keys to navigate the grid</p>
       <p class="penalty-notice">
         Note: Incorrect moves are auto-corrected and add <strong>{PENALTY_SECONDS}s</strong> to your total
         time.
@@ -404,7 +440,71 @@
     margin-left: 5px;
   }
 
+  .mode-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .mode-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-width: 3px;
+    border-color: var(--gray-45);
+    background: var(--gray-85);
+    color: var(--gray-15);
+  }
+
+  .mode-btn:first-child {
+    border-right-width: 0;
+  }
+
+  .mode-btn.active {
+    background: var(--yellow-gold);
+    border-color: var(--yellow-gold);
+    color: var(--gray-90);
+  }
+
+  .mode-btn.active:hover,
+  .mode-btn.active:focus-visible {
+    background: var(--yellow-hover);
+    border-color: var(--yellow-hover);
+    color: var(--gray-90);
+  }
+
+  .mode-swatch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .mode-swatch.fill {
+    background: currentColor;
+    border: 2px solid currentColor;
+  }
+
+  .mode-swatch.mark {
+    font-size: 1.3rem;
+  }
+
+  .touch-controls {
+    display: none;
+  }
+
   .nonogram-board {
+    /* Cell and clue-gutter sizing. Overridden responsively below; --cols/--rows
+       are injected inline per-puzzle so the board can scale to fit the viewport. */
+    --cell-size: 45px;
+    --clue-size: 100px;
+    --clue-font: 1.25rem;
     display: grid;
     grid-template-areas:
       'corner col-clues'
@@ -413,6 +513,7 @@
     border: 4px solid var(--gray-90);
     padding: 20px;
     background-color: var(--gray-85);
+    max-width: 100%;
   }
 
   .corner {
@@ -440,14 +541,16 @@
   .grid {
     grid-area: grid;
     display: grid;
-    background-color: var(--gray-00);
+    /* Dark like the separators (cells fully tile over this). Keeps any
+       sub-pixel seam at the sticky-gutter edge from flashing white on scroll. */
+    background-color: var(--gray-90);
     gap: 0;
   }
 
   .clue-group {
     display: flex;
     font-family: var(--font-mono);
-    font-size: 1.25rem;
+    font-size: var(--clue-font);
     font-weight: 700;
     color: var(--gray-00);
     padding: 8px;
@@ -465,7 +568,7 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    min-height: 100px;
+    min-height: var(--clue-size);
     box-shadow: inset -1px 0 0 var(--gray-75);
   }
 
@@ -473,21 +576,21 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    min-width: 100px;
+    min-width: var(--clue-size);
     gap: 6px;
     box-shadow: inset 0 -1px 0 var(--gray-75);
   }
 
   .cell {
-    width: 45px;
-    height: 45px;
+    width: var(--cell-size);
+    height: var(--cell-size);
     background-color: var(--gray-00);
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-mono);
-    font-size: 1.75rem;
+    font-size: calc(var(--cell-size) * 0.6);
     font-weight: 900;
     cursor: pointer;
     padding: 0;
@@ -496,6 +599,10 @@
     box-sizing: border-box;
     position: relative;
     z-index: 0;
+    /* Prevent the browser from hijacking taps with double-tap-zoom / text selection */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
   }
 
   /* Default thin shadows */
@@ -619,5 +726,119 @@
     background-color: var(--gray-85);
     border: 1px solid var(--gray-45);
     border-radius: 3px;
+  }
+
+  /* Touch devices: surface the tap-mode hint, hide keyboard/mouse instructions. */
+  @media (hover: none) and (pointer: coarse) {
+    .touch-controls {
+      display: block;
+    }
+    .desktop-controls {
+      display: none;
+    }
+  }
+
+  /* Phones / narrow viewports: scale the board to fit and tighten chrome. */
+  @media (max-width: 600px) {
+    .game-container {
+      padding: 12px;
+      /* Allow children to shrink below their content width so the board can
+         be capped to the viewport and scroll internally. */
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .header-nav {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+    }
+
+    .header-nav h1 {
+      font-size: 1.3rem;
+    }
+
+    .back-btn {
+      font-size: 0.9rem;
+      padding: 6px 12px;
+    }
+
+    .stats-bar {
+      gap: 1rem;
+      padding: 8px 12px;
+      margin-bottom: 1.25rem;
+    }
+
+    .stat-item {
+      font-size: 1rem;
+    }
+
+    /* Keep cells finger-sized and let the board scroll instead of shrinking.
+       The board becomes its own scroll viewport; the clue gutters are frozen
+       via position: sticky so they stay aligned while the grid scrolls. */
+    .nonogram-board {
+      --clue-size: 48px;
+      --clue-font: 0.8rem;
+      --cell-size: 44px;
+      padding: 0;
+      max-width: 100%;
+      min-width: 0;
+      max-height: 72vh;
+      overflow: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Gutters must sit above every cell z-index. Cells reach z-index 2 at the
+       thick every-5 gridline intersections (and 10 on keyboard focus), so the
+       frozen clues use higher values to avoid the grid bleeding past them. */
+    .corner {
+      position: sticky;
+      top: 0;
+      left: 0;
+      z-index: 21;
+      background-color: var(--gray-85);
+    }
+
+    .col-clues {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .row-clues {
+      position: sticky;
+      left: 0;
+      z-index: 20;
+    }
+
+    .clue-group {
+      padding: 4px;
+    }
+
+    .clue-group.row {
+      gap: 3px;
+    }
+
+    .mode-btn {
+      flex: 1;
+      padding: 12px 16px;
+    }
+
+    .mode-toggle {
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .controls {
+      margin-top: 2rem;
+    }
+
+    .instructions {
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
   }
 </style>
