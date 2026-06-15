@@ -561,7 +561,6 @@
   .clue-group.completed {
     color: var(--gray-45);
     text-decoration: line-through;
-    opacity: 0.6;
   }
 
   .clue-group.col {
