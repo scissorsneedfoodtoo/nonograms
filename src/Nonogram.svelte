@@ -674,9 +674,13 @@
     background-color: var(--gray-85);
   }
 
+  /* Dual-color focus ring so it stays visible on both empty (white) and filled
+     (navy) cells: gold inset ring contrasts on navy, dark outline contrasts on
+     white. At least one ring always clears 3:1 against the cell. */
   .cell:focus-visible {
-    outline: 4px solid var(--yellow-gold);
-    outline-offset: -4px;
+    outline: 3px solid var(--gray-90);
+    outline-offset: -3px;
+    box-shadow: inset 0 0 0 6px var(--yellow-gold);
     z-index: 10;
   }
 
