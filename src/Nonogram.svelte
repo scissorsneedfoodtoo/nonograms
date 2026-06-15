@@ -40,6 +40,9 @@
   // Desktop users can still right-click / shift-click to mark regardless of mode.
   let mode = $state<'fill' | 'mark'>('fill');
 
+  // Screen-reader announcement for incorrect moves / penalties (visually hidden).
+  let liveMessage = $state('');
+
   // Timer and Penalties
   let seconds = $state(0);
   let penalties = $state(0);
@@ -136,6 +139,9 @@
     if (isMistake) {
       errorState[r][c] = true;
       penalties++;
+
+      // Include the running count so identical repeat mistakes still re-announce.
+      liveMessage = `Incorrect move. ${PENALTY_SECONDS} second penalty added. ${penalties} mistake${penalties === 1 ? '' : 's'} so far.`;
 
       setTimeout(() => {
         if (errorState[r]) {
@@ -243,6 +249,8 @@
 
 {#if grid.length > 0}
   <div class="game-container">
+    <div class="sr-only" role="status" aria-live="assertive" aria-atomic="true">{liveMessage}</div>
+
     <div class="header-nav">
       <button class="back-btn" onclick={handleExit}>&larr; Exit to Menu</button>
       <h1>#{order} — {isWon ? puzzle.name : '???'}</h1>
@@ -389,6 +397,19 @@
     align-items: center;
     padding: 20px;
     background-color: var(--gray-90);
+  }
+
+  /* Visually hidden but available to screen readers. */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .header-nav {

@@ -1,6 +1,7 @@
 <script lang="ts">
   import PuzzlePreview from './PuzzlePreview.svelte';
   import { formatTime } from '../gameLogic';
+  import { focusTrap } from '../actions/focusTrap';
   import type { Puzzle } from '../types';
 
   interface Props {
@@ -16,7 +17,14 @@
 </script>
 
 <div class="modal-backdrop" aria-live="polite">
-  <div class="win-message" role="dialog" aria-modal="true" aria-labelledby="win-title">
+  <div
+    class="win-message"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="win-title"
+    tabindex="-1"
+    use:focusTrap={{ onEscape: onClose }}
+  >
     <h2 id="win-title">Puzzle Completed! 🎉</h2>
     <h3>{puzzle.name}</h3>
     <div class="win-preview">

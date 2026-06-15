@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { focusTrap } from '../actions/focusTrap';
+
   interface Props {
     title: string;
     message: string;
@@ -11,8 +13,15 @@
 </script>
 
 <div class="modal-backdrop">
-  <div class="modal-content" role="dialog" aria-modal="true">
-    <h2>{title}</h2>
+  <div
+    class="modal-content"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="confirm-title"
+    tabindex="-1"
+    use:focusTrap={{ onEscape: onCancel }}
+  >
+    <h2 id="confirm-title">{title}</h2>
     <p>{message}</p>
     <div class="modal-actions">
       <button class="primary danger" onclick={onConfirm}>
