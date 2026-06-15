@@ -98,7 +98,9 @@
           >
             &lsaquo; Prev
           </button>
-          <span class="page-indicator">Page {currentPage + 1} / {totalPages}</span>
+          <span class="page-indicator" aria-live="polite" aria-atomic="true">
+            Page {currentPage + 1} / {totalPages}
+          </span>
           <button
             class="page-btn"
             onclick={() => (currentPage += 1)}

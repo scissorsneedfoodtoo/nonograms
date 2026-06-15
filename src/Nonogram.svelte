@@ -557,8 +557,8 @@
 
   .corner {
     grid-area: corner;
-    border-right: 1px solid var(--gray-75);
-    border-bottom: 1px solid var(--gray-75);
+    border-right: 1px solid var(--clue-divider);
+    border-bottom: 1px solid var(--clue-divider);
   }
 
   .col-clues {
@@ -614,7 +614,7 @@
     justify-content: flex-end;
     align-items: center;
     min-height: var(--clue-size);
-    box-shadow: inset -1px 0 0 var(--gray-75);
+    box-shadow: inset -1px 0 0 var(--clue-divider);
   }
 
   .clue-group.row {
@@ -623,7 +623,7 @@
     align-items: center;
     min-width: var(--clue-size);
     gap: 6px;
-    box-shadow: inset 0 -1px 0 var(--gray-75);
+    box-shadow: inset 0 -1px 0 var(--clue-divider);
   }
 
   .cell {

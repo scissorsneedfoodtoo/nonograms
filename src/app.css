@@ -13,6 +13,8 @@
      sit on: a darker gray on empty (white) cells, a lighter gray on filled (navy). */
   --cell-divider: #8e8e8e;
   --cell-divider-filled: #646478;
+  /* Separator lines between clue groups / the corner, on the gray-85 gutter (3:1). */
+  --clue-divider: #6b6b80;
   
   --yellow-gold: #fecc4c;
   --yellow-hover: #f1be32;
