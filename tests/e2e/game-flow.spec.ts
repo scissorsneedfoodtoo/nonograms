@@ -36,9 +36,10 @@ test('a wrong move adds a penalty and locks the cell', async ({ page }) => {
 
   await expect(page.locator('.error-text')).toHaveText('1');
   await expect(page.locator('.penalty-hint')).toContainText('0:15');
-  // After the auto-correction it becomes a locked, disabled mark.
+  // After the auto-correction it becomes a locked mark. It stays focusable
+  // (aria-disabled, not disabled) so keyboard grid navigation can move past it.
   await expect(cell).toHaveClass(/locked/);
-  await expect(cell).toBeDisabled();
+  await expect(cell).toHaveAttribute('aria-disabled', 'true');
 });
 
 test('progress is saved on exit and restored on return', async ({ page }) => {
