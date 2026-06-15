@@ -217,8 +217,8 @@
 
   .reset-all-btn {
     background: transparent;
-    border-color: var(--error-red);
-    color: var(--error-red);
+    border-color: var(--error-red-text);
+    color: var(--error-red-text);
     font-size: 0.9rem;
     padding: 8px 16px;
     font-weight: 700;

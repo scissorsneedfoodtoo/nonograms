@@ -12,6 +12,9 @@
   --yellow-gold: #fecc4c;
   --yellow-hover: #f1be32;
   --error-red: #850000;
+  /* Lighter red for use as text/border on dark backgrounds (--error-red fails
+     AA contrast there). Passes AA on gray-90 and gray-85. */
+  --error-red-text: #ff5b5b;
   --success-green: #006400;
   --warning-orange: #ffad33;
 
