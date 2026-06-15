@@ -3,6 +3,12 @@ import type { Action } from 'svelte/action';
 interface FocusTrapParams {
   /** Called when Escape is pressed inside the trapped element. */
   onEscape?: () => void;
+  /**
+   * Element to restore focus to on close. Pass this explicitly when the trigger
+   * is made `inert` while the dialog is open — by then it has already lost
+   * focus, so capturing `document.activeElement` here would be too late.
+   */
+  returnFocus?: HTMLElement | null;
 }
 
 const FOCUSABLE =
@@ -63,7 +69,8 @@ export const focusTrap: Action<HTMLElement, FocusTrapParams | undefined> = (node
     },
     destroy() {
       node.removeEventListener('keydown', handleKeydown);
-      previouslyFocused?.focus?.();
+      const target = params?.returnFocus ?? previouslyFocused;
+      target?.focus?.();
     }
   };
 };

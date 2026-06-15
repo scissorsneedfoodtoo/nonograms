@@ -73,6 +73,14 @@
     z-index: 10;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .puzzle-square,
+    .puzzle-square:hover,
+    .puzzle-square:active {
+      transform: none;
+    }
+  }
+
   .square-header {
     display: flex;
     justify-content: space-between;

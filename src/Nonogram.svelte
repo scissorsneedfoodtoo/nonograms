@@ -254,7 +254,9 @@
 </script>
 
 {#if grid.length > 0}
-  <div class="game-container">
+  <!-- Behind the win dialog the board is made inert (non-focusable + hidden from
+       assistive tech); the dialog manages its own focus. -->
+  <div class="game-container" inert={isWon}>
     <div class="sr-only" role="status" aria-live="assertive" aria-atomic="true">{liveMessage}</div>
 
     <div class="header-nav">

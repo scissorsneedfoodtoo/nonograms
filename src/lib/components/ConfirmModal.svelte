@@ -7,9 +7,11 @@
     confirmLabel: string;
     onConfirm: () => void;
     onCancel: () => void;
+    /** Control to restore focus to when the dialog closes (made inert while open). */
+    returnFocus?: HTMLElement | null;
   }
 
-  let { title, message, confirmLabel, onConfirm, onCancel }: Props = $props();
+  let { title, message, confirmLabel, onConfirm, onCancel, returnFocus = null }: Props = $props();
 </script>
 
 <div class="modal-backdrop">
@@ -19,7 +21,7 @@
     aria-modal="true"
     aria-labelledby="confirm-title"
     tabindex="-1"
-    use:focusTrap={{ onEscape: onCancel }}
+    use:focusTrap={{ onEscape: onCancel, returnFocus }}
   >
     <h2 id="confirm-title">{title}</h2>
     <p>{message}</p>

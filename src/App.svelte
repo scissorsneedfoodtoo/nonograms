@@ -13,6 +13,7 @@
   let selectedPuzzleOrder = $state(0);
   let userProgress = $state(getProgress());
   let showResetConfirm = $state(false);
+  let resetTrigger = $state<HTMLElement | null>(null);
   let currentPage = $state(0);
 
   const totalPages = $derived(Math.ceil(ALL_PUZZLES.length / PUZZLES_PER_PAGE));
@@ -41,7 +42,9 @@
 
 <main>
   {#if view === 'level-select'}
-    <div class="level-select-container">
+    <!-- Make the page behind the confirm dialog inert (non-focusable + hidden
+         from assistive tech) while it's open. -->
+    <div class="level-select-container" inert={showResetConfirm}>
       <header class="fcc-header">
         <h1>Nonogram Puzzles</h1>
         <p>
@@ -95,7 +98,13 @@
             >freeCodeCamp</a
           >
         </span>
-        <button class="reset-all-btn" onclick={() => (showResetConfirm = true)}>
+        <button
+          class="reset-all-btn"
+          onclick={(e) => {
+            resetTrigger = e.currentTarget;
+            showResetConfirm = true;
+          }}
+        >
           Reset All Progress
         </button>
       </footer>
@@ -106,6 +115,7 @@
         title="Reset All Progress?"
         message="This will permanently delete all your best times and puzzle progress. This action cannot be undone."
         confirmLabel="Yes, Reset Everything"
+        returnFocus={resetTrigger}
         onConfirm={handleResetAll}
         onCancel={() => (showResetConfirm = false)}
       />
