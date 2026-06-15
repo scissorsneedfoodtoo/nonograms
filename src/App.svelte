@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { tick } from 'svelte';
   import Nonogram from './Nonogram.svelte';
   import PuzzleCard from './lib/components/PuzzleCard.svelte';
   import ConfirmModal from './lib/components/ConfirmModal.svelte';
@@ -15,22 +16,39 @@
   let showResetConfirm = $state(false);
   let resetTrigger = $state<HTMLElement | null>(null);
   let currentPage = $state(0);
+  let menuHeading = $state<HTMLElement | null>(null);
 
   const totalPages = $derived(Math.ceil(ALL_PUZZLES.length / PUZZLES_PER_PAGE));
   const visiblePuzzles = $derived(
     ALL_PUZZLES.slice(currentPage * PUZZLES_PER_PAGE, (currentPage + 1) * PUZZLES_PER_PAGE)
   );
 
+  // Keep the document title in sync with the current view so screen-reader and
+  // tab-switching users get orientation. The puzzle name stays hidden until won,
+  // so the in-game title only references its number.
+  $effect(() => {
+    document.title =
+      view === 'game' ? `Puzzle #${selectedPuzzleOrder} — Nonograms` : 'Nonograms';
+  });
+
   function selectPuzzle(puzzle: Puzzle, order: number) {
     selectedPuzzle = puzzle;
     selectedPuzzleOrder = order;
     view = 'game';
+    // Nonogram moves focus to its heading on mount.
   }
 
-  function goBack() {
+  async function goBack() {
+    const returnTo = selectedPuzzleOrder;
     userProgress = getProgress();
     view = 'level-select';
     selectedPuzzle = null;
+
+    // Return focus to the card that was open (or the menu heading as a fallback)
+    // so keyboard/SR users land back where they were rather than at <body>.
+    await tick();
+    const card = document.querySelector<HTMLElement>(`.puzzle-square[data-order="${returnTo}"]`);
+    (card ?? menuHeading)?.focus();
   }
 
   function handleResetAll() {
@@ -46,7 +64,7 @@
          from assistive tech) while it's open. -->
     <div class="level-select-container" inert={showResetConfirm}>
       <header class="fcc-header">
-        <h1>Nonogram Puzzles</h1>
+        <h1 bind:this={menuHeading} tabindex="-1" class="focus-target">Nonogram Puzzles</h1>
         <p>
           Challenge yourself with these logic puzzles. Accurate moves earn you the fastest times!
         </p>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
   import {
     createEmptyGrid,
     createEmptyLockedGrid,
@@ -47,6 +47,10 @@
   // keys move it. Keeps the grid to a single tab stop instead of one per cell.
   let focusedCell = $state({ r: 0, c: 0 });
 
+  // Heading focus target so entering the game moves focus here (it's rendered
+  // once the grid is populated), giving keyboard/SR users a clear landing point.
+  let headingEl = $state<HTMLElement | null>(null);
+
   // Timer and Penalties
   let seconds = $state(0);
   let penalties = $state(0);
@@ -78,6 +82,8 @@
 
   onMount(() => {
     resetGame();
+    // The heading renders once resetGame populates the grid, so focus it next tick.
+    tick().then(() => headingEl?.focus());
 
     function handleDevShortcut(e: KeyboardEvent) {
       if (e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey && e.key === 'F') {
@@ -261,7 +267,9 @@
 
     <div class="header-nav">
       <button class="back-btn" onclick={handleExit}>&larr; Exit to Menu</button>
-      <h1>#{order} — {isWon ? puzzle.name : '???'}</h1>
+      <h1 bind:this={headingEl} tabindex="-1" class="focus-target">
+        #{order} — {isWon ? puzzle.name : '???'}
+      </h1>
     </div>
 
     <div class="stats-bar">

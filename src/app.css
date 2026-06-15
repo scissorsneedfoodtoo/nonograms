@@ -73,6 +73,12 @@ body {
   }
 }
 
+/* Headings used purely as programmatic focus targets on view transitions
+   shouldn't render a focus ring — they aren't interactive controls. */
+.focus-target:focus {
+  outline: none;
+}
+
 h1, h2, h3 {
   color: var(--heading-color);
   margin-top: 0;

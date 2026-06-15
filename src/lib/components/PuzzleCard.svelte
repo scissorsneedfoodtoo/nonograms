@@ -15,7 +15,7 @@
   let { puzzle, order, stats, inProgress, completed, onclick }: Props = $props();
 </script>
 
-<button class="puzzle-square" {onclick}>
+<button class="puzzle-square" data-order={order} {onclick}>
   <div class="square-header">
     <span class="puzzle-id">#{order}</span>
     <span class="puzzle-size">{puzzle.width}x{puzzle.height}</span>
