@@ -8,6 +8,11 @@
   --gray-10: #dfdfe2;
   --gray-05: #eeeef0;
   --gray-00: #ffffff;
+
+  /* Thin grid dividers, tuned to clear 3:1 (WCAG 1.4.11) against the cell they
+     sit on: a darker gray on empty (white) cells, a lighter gray on filled (navy). */
+  --cell-divider: #8e8e8e;
+  --cell-divider-filled: #646478;
   
   --yellow-gold: #fecc4c;
   --yellow-hover: #f1be32;

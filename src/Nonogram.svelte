@@ -43,6 +43,10 @@
   // Screen-reader announcement for incorrect moves / penalties (visually hidden).
   let liveMessage = $state('');
 
+  // Roving tabindex: only the cell at this position is in the tab order; arrow
+  // keys move it. Keeps the grid to a single tab stop instead of one per cell.
+  let focusedCell = $state({ r: 0, c: 0 });
+
   // Timer and Penalties
   let seconds = $state(0);
   let penalties = $state(0);
@@ -216,6 +220,7 @@
 
     if (nextR !== r || nextC !== c) {
       event.preventDefault();
+      focusedCell = { r: nextR, c: nextC };
       const nextBtn = document.querySelector(`.cell-${nextR}-${nextC}`) as HTMLButtonElement;
       nextBtn?.focus();
     }
@@ -243,6 +248,7 @@
     }
     errorState = createEmptyLockedGrid(puzzle.width, puzzle.height);
     isWon = false;
+    focusedCell = { r: 0, c: 0 };
     startTimer();
   }
 </script>
@@ -299,6 +305,7 @@
       <div class="col-clues" style="grid-template-columns: repeat({puzzle.width}, var(--cell-size));">
         {#each puzzle.colClues as col, i (i)}
           <div
+            id="col-clue-{i}"
             class="clue-group col"
             class:completed={completedCols[i]}
             aria-label="Column {i + 1} clues: {col.join(', ')}{completedCols[i]
@@ -316,6 +323,7 @@
       <div class="row-clues" style="grid-template-rows: repeat({puzzle.height}, var(--cell-size));">
         {#each puzzle.rowClues as row, i (i)}
           <div
+            id="row-clue-{i}"
             class="clue-group row"
             class:completed={completedRows[i]}
             aria-label="Row {i + 1} clues: {row.join(', ')}{completedRows[i] ? ' - completed' : ''}"
@@ -328,35 +336,35 @@
       </div>
 
       <!-- The Grid -->
-      <div
-        class="grid"
-        role="grid"
-        aria-label="Nonogram grid"
-        style="grid-template-columns: repeat({puzzle.width}, var(--cell-size)); grid-template-rows: repeat({puzzle.height}, var(--cell-size));"
-      >
+      <div class="grid" role="grid" aria-label="Nonogram grid">
         {#each grid as row, r (r)}
-          {#each row as cell, c (c)}
-            <button
-              class="cell {cell} cell-{r}-{c}"
-              class:error={errorState[r] && errorState[r][c]}
-              class:locked={locked[r] && locked[r][c]}
-              class:thick-border-right={(c + 1) % 5 === 0 && c + 1 !== puzzle.width}
-              class:thick-border-bottom={(r + 1) % 5 === 0 && r + 1 !== puzzle.height}
-              onclick={(e) => handleCellClick(r, c, e)}
-              onkeydown={(e) => handleKeyDown(e, r, c)}
-              oncontextmenu={(e) => {
-                e.preventDefault();
-                handleMove(r, c, 'mark');
-              }}
-              aria-label="Row {r + 1}, Column {c + 1}: {cell}"
-              aria-pressed={cell === 'filled'}
-              disabled={isWon || (locked[r] && locked[r][c] && !isWon)}
-            >
-              {#if cell === 'marked'}
-                <span aria-hidden="true">&times;</span>
-              {/if}
-            </button>
-          {/each}
+          <div class="grid-row" role="row">
+            {#each row as cell, c (c)}
+              <button
+                class="cell {cell} cell-{r}-{c}"
+                role="gridcell"
+                class:error={errorState[r] && errorState[r][c]}
+                class:locked={locked[r] && locked[r][c]}
+                class:thick-border-right={(c + 1) % 5 === 0 && c + 1 !== puzzle.width}
+                class:thick-border-bottom={(r + 1) % 5 === 0 && r + 1 !== puzzle.height}
+                onclick={(e) => handleCellClick(r, c, e)}
+                onkeydown={(e) => handleKeyDown(e, r, c)}
+                onfocus={() => (focusedCell = { r, c })}
+                oncontextmenu={(e) => {
+                  e.preventDefault();
+                  handleMove(r, c, 'mark');
+                }}
+                aria-label="Row {r + 1}, Column {c + 1}: {cell}"
+                aria-describedby="row-clue-{r} col-clue-{c}"
+                aria-disabled={isWon || (locked[r] && locked[r][c])}
+                tabindex={focusedCell.r === r && focusedCell.c === c ? 0 : -1}
+              >
+                {#if cell === 'marked'}
+                  <span aria-hidden="true">&times;</span>
+                {/if}
+              </button>
+            {/each}
+          </div>
         {/each}
       </div>
     </div>
@@ -561,11 +569,18 @@
 
   .grid {
     grid-area: grid;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     /* Dark like the separators (cells fully tile over this). Keeps any
        sub-pixel seam at the sticky-gutter edge from flashing white on scroll. */
     background-color: var(--gray-90);
     gap: 0;
+  }
+
+  /* role="row" wrappers for the ARIA grid; cells keep their fixed size so the
+     visual layout is identical to the former CSS grid. */
+  .grid-row {
+    display: flex;
   }
 
   .clue-group {
@@ -627,8 +642,8 @@
 
   /* Default thin shadows */
   .cell {
-    --r-shadow: inset -1px 0 0 var(--gray-15);
-    --b-shadow: inset 0 -1px 0 var(--gray-15);
+    --r-shadow: inset -1px 0 0 var(--cell-divider);
+    --b-shadow: inset 0 -1px 0 var(--cell-divider);
     box-shadow: var(--r-shadow), var(--b-shadow);
   }
 
@@ -656,23 +671,25 @@
   /* Handle filled state colors - keep dividers visible */
   .cell.filled {
     background-color: var(--gray-90);
-    --r-shadow: inset -1px 0 0 var(--gray-75);
-    --b-shadow: inset 0 -1px 0 var(--gray-75);
+    --r-shadow: inset -1px 0 0 var(--cell-divider-filled);
+    --b-shadow: inset 0 -1px 0 var(--cell-divider-filled);
   }
 
   .cell.filled.thick-border-right {
-    --r-shadow: inset -4px 0 0 var(--gray-75);
+    --r-shadow: inset -4px 0 0 var(--cell-divider-filled);
   }
 
   .cell.filled.thick-border-bottom {
-    --b-shadow: inset 0 -4px 0 var(--gray-75);
+    --b-shadow: inset 0 -4px 0 var(--cell-divider-filled);
   }
 
   .cell.marked {
     color: var(--gray-90);
   }
-  .cell.locked {
+  .cell[aria-disabled='true'] {
     cursor: not-allowed;
+  }
+  .cell.locked {
     background-color: var(--gray-05);
   }
 
@@ -687,11 +704,11 @@
     box-shadow: none;
   }
 
-  .cell:not(:disabled):hover {
+  .cell:not([aria-disabled='true']):hover {
     background-color: var(--gray-10);
   }
 
-  .cell.filled:not(:disabled):hover {
+  .cell.filled:not([aria-disabled='true']):hover {
     background-color: var(--gray-85);
   }
 
