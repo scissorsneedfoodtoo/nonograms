@@ -36,6 +36,7 @@
   style="width: {size}px; height: {size}px;"
   class:completed
   class:in-progress={inProgress && !completed}
+  aria-hidden="true"
 >
   {#if completed}
     <canvas bind:this={canvas} width={puzzle.width} height={puzzle.height} class="mini-canvas">
