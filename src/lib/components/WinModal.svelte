@@ -25,7 +25,7 @@
     tabindex="-1"
     use:focusTrap={{ onEscape: onClose }}
   >
-    <h2 id="win-title">Puzzle Completed! 🎉</h2>
+    <h2 id="win-title">Puzzle Completed! <span aria-hidden="true">🎉</span></h2>
     <h3>{puzzle.name}</h3>
     <div class="win-preview">
       <PuzzlePreview {puzzle} completed={true} inProgress={false} size={150} />

@@ -266,7 +266,9 @@
     <div class="sr-only" role="status" aria-live="assertive" aria-atomic="true">{liveMessage}</div>
 
     <div class="header-nav">
-      <button class="back-btn" onclick={handleExit}>&larr; Exit to Menu</button>
+      <button class="back-btn" onclick={handleExit}>
+        <span aria-hidden="true">&larr;</span> Exit to Menu
+      </button>
       <h1 bind:this={headingEl} tabindex="-1" class="focus-target">
         #{order} — {isWon ? puzzle.name : '???'}
       </h1>
