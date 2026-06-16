@@ -70,7 +70,10 @@ export const focusTrap: Action<HTMLElement, FocusTrapParams | undefined> = (node
     destroy() {
       node.removeEventListener('keydown', handleKeydown);
       const target = params?.returnFocus ?? previouslyFocused;
-      target?.focus?.();
+      // Defer until after the current DOM flush: closing the dialog also removes
+      // `inert` from the restore target's container in the same update, and
+      // focus() is a no-op on a still-inert element.
+      requestAnimationFrame(() => target?.focus?.());
     }
   };
 };
