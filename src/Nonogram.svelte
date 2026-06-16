@@ -866,6 +866,14 @@
       z-index: 20;
     }
 
+    /* When a cell is focused via the keyboard, scrollIntoView ignores the
+       sticky clue gutters. Reserve their size so a focused cell at the scroll
+       edge isn't tucked beneath them. */
+    .cell {
+      scroll-margin-top: var(--clue-size);
+      scroll-margin-left: var(--clue-size);
+    }
+
     .clue-group {
       padding: 4px;
     }
