@@ -8,10 +8,20 @@
   --gray-10: #dfdfe2;
   --gray-05: #eeeef0;
   --gray-00: #ffffff;
+
+  /* Thin grid dividers, tuned to clear 3:1 (WCAG 1.4.11) against the cell they
+     sit on: a darker gray on empty (white) cells, a lighter gray on filled (navy). */
+  --cell-divider: #8e8e8e;
+  --cell-divider-filled: #646478;
+  /* Separator lines between clue groups / the corner, on the gray-85 gutter (3:1). */
+  --clue-divider: #6b6b80;
   
   --yellow-gold: #fecc4c;
   --yellow-hover: #f1be32;
   --error-red: #850000;
+  /* Lighter red for use as text/border on dark backgrounds (--error-red fails
+     AA contrast there). Passes AA on gray-90 and gray-85. */
+  --error-red-text: #ff5b5b;
   --success-green: #006400;
   --warning-orange: #ffad33;
 
@@ -65,6 +75,12 @@ body {
   }
 }
 
+/* Headings used purely as programmatic focus targets on view transitions
+   shouldn't render a focus ring — they aren't interactive controls. */
+.focus-target:focus {
+  outline: none;
+}
+
 h1, h2, h3 {
   color: var(--heading-color);
   margin-top: 0;
@@ -111,4 +127,17 @@ button.primary:hover, button.primary:focus-visible {
   background: var(--yellow-hover);
   border-color: var(--yellow-hover);
   color: var(--gray-90);
+}
+
+/* Respect users who ask for reduced motion: neutralize animations/transitions
+   so nothing moves or animates (focus outlines etc. still appear instantly). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

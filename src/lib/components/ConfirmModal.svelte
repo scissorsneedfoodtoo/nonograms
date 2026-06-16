@@ -1,18 +1,29 @@
 <script lang="ts">
+  import { focusTrap } from '../actions/focusTrap';
+
   interface Props {
     title: string;
     message: string;
     confirmLabel: string;
     onConfirm: () => void;
     onCancel: () => void;
+    /** Control to restore focus to when the dialog closes (made inert while open). */
+    returnFocus?: HTMLElement | null;
   }
 
-  let { title, message, confirmLabel, onConfirm, onCancel }: Props = $props();
+  let { title, message, confirmLabel, onConfirm, onCancel, returnFocus = null }: Props = $props();
 </script>
 
 <div class="modal-backdrop">
-  <div class="modal-content" role="dialog" aria-modal="true">
-    <h2>{title}</h2>
+  <div
+    class="modal-content"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="confirm-title"
+    tabindex="-1"
+    use:focusTrap={{ onEscape: onCancel, returnFocus }}
+  >
+    <h2 id="confirm-title">{title}</h2>
     <p>{message}</p>
     <div class="modal-actions">
       <button class="primary danger" onclick={onConfirm}>

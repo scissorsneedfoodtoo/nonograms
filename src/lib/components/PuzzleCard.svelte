@@ -15,7 +15,7 @@
   let { puzzle, order, stats, inProgress, completed, onclick }: Props = $props();
 </script>
 
-<button class="puzzle-square" {onclick}>
+<button class="puzzle-square" data-order={order} {onclick}>
   <div class="square-header">
     <span class="puzzle-id">#{order}</span>
     <span class="puzzle-size">{puzzle.width}x{puzzle.height}</span>
@@ -71,6 +71,14 @@
     outline: 5px solid var(--yellow-gold);
     outline-offset: 5px;
     z-index: 10;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .puzzle-square,
+    .puzzle-square:hover,
+    .puzzle-square:active {
+      transform: none;
+    }
   }
 
   .square-header {

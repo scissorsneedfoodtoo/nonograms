@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
   import {
     createEmptyGrid,
     createEmptyLockedGrid,
@@ -40,6 +40,17 @@
   // Desktop users can still right-click / shift-click to mark regardless of mode.
   let mode = $state<'fill' | 'mark'>('fill');
 
+  // Screen-reader announcement for incorrect moves / penalties (visually hidden).
+  let liveMessage = $state('');
+
+  // Roving tabindex: only the cell at this position is in the tab order; arrow
+  // keys move it. Keeps the grid to a single tab stop instead of one per cell.
+  let focusedCell = $state({ r: 0, c: 0 });
+
+  // Heading focus target so entering the game moves focus here (it's rendered
+  // once the grid is populated), giving keyboard/SR users a clear landing point.
+  let headingEl = $state<HTMLElement | null>(null);
+
   // Timer and Penalties
   let seconds = $state(0);
   let penalties = $state(0);
@@ -71,6 +82,8 @@
 
   onMount(() => {
     resetGame();
+    // The heading renders once resetGame populates the grid, so focus it next tick.
+    tick().then(() => headingEl?.focus());
 
     function handleDevShortcut(e: KeyboardEvent) {
       if (e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey && e.key === 'F') {
@@ -136,6 +149,9 @@
     if (isMistake) {
       errorState[r][c] = true;
       penalties++;
+
+      // Include the running count so identical repeat mistakes still re-announce.
+      liveMessage = `Incorrect move. ${PENALTY_SECONDS} second penalty added. ${penalties} mistake${penalties === 1 ? '' : 's'} so far.`;
 
       setTimeout(() => {
         if (errorState[r]) {
@@ -210,6 +226,7 @@
 
     if (nextR !== r || nextC !== c) {
       event.preventDefault();
+      focusedCell = { r: nextR, c: nextC };
       const nextBtn = document.querySelector(`.cell-${nextR}-${nextC}`) as HTMLButtonElement;
       nextBtn?.focus();
     }
@@ -237,15 +254,24 @@
     }
     errorState = createEmptyLockedGrid(puzzle.width, puzzle.height);
     isWon = false;
+    focusedCell = { r: 0, c: 0 };
     startTimer();
   }
 </script>
 
 {#if grid.length > 0}
-  <div class="game-container">
+  <!-- Behind the win dialog the board is made inert (non-focusable + hidden from
+       assistive tech); the dialog manages its own focus. -->
+  <div class="game-container" inert={isWon}>
+    <div class="sr-only" role="status" aria-live="assertive" aria-atomic="true">{liveMessage}</div>
+
     <div class="header-nav">
-      <button class="back-btn" onclick={handleExit}>&larr; Exit to Menu</button>
-      <h1>#{order} — {isWon ? puzzle.name : '???'}</h1>
+      <button class="back-btn" onclick={handleExit}>
+        <span aria-hidden="true">&larr;</span> Exit to Menu
+      </button>
+      <h1 bind:this={headingEl} tabindex="-1" class="focus-target">
+        #{order} — {isWon ? puzzle.name : '???'}
+      </h1>
     </div>
 
     <div class="stats-bar">
@@ -291,6 +317,7 @@
       <div class="col-clues" style="grid-template-columns: repeat({puzzle.width}, var(--cell-size));">
         {#each puzzle.colClues as col, i (i)}
           <div
+            id="col-clue-{i}"
             class="clue-group col"
             class:completed={completedCols[i]}
             aria-label="Column {i + 1} clues: {col.join(', ')}{completedCols[i]
@@ -308,6 +335,7 @@
       <div class="row-clues" style="grid-template-rows: repeat({puzzle.height}, var(--cell-size));">
         {#each puzzle.rowClues as row, i (i)}
           <div
+            id="row-clue-{i}"
             class="clue-group row"
             class:completed={completedRows[i]}
             aria-label="Row {i + 1} clues: {row.join(', ')}{completedRows[i] ? ' - completed' : ''}"
@@ -320,35 +348,35 @@
       </div>
 
       <!-- The Grid -->
-      <div
-        class="grid"
-        role="grid"
-        aria-label="Nonogram grid"
-        style="grid-template-columns: repeat({puzzle.width}, var(--cell-size)); grid-template-rows: repeat({puzzle.height}, var(--cell-size));"
-      >
+      <div class="grid" role="grid" aria-label="Nonogram grid">
         {#each grid as row, r (r)}
-          {#each row as cell, c (c)}
-            <button
-              class="cell {cell} cell-{r}-{c}"
-              class:error={errorState[r] && errorState[r][c]}
-              class:locked={locked[r] && locked[r][c]}
-              class:thick-border-right={(c + 1) % 5 === 0 && c + 1 !== puzzle.width}
-              class:thick-border-bottom={(r + 1) % 5 === 0 && r + 1 !== puzzle.height}
-              onclick={(e) => handleCellClick(r, c, e)}
-              onkeydown={(e) => handleKeyDown(e, r, c)}
-              oncontextmenu={(e) => {
-                e.preventDefault();
-                handleMove(r, c, 'mark');
-              }}
-              aria-label="Row {r + 1}, Column {c + 1}: {cell}"
-              aria-pressed={cell === 'filled'}
-              disabled={isWon || (locked[r] && locked[r][c] && !isWon)}
-            >
-              {#if cell === 'marked'}
-                <span aria-hidden="true">&times;</span>
-              {/if}
-            </button>
-          {/each}
+          <div class="grid-row" role="row">
+            {#each row as cell, c (c)}
+              <button
+                class="cell {cell} cell-{r}-{c}"
+                role="gridcell"
+                class:error={errorState[r] && errorState[r][c]}
+                class:locked={locked[r] && locked[r][c]}
+                class:thick-border-right={(c + 1) % 5 === 0 && c + 1 !== puzzle.width}
+                class:thick-border-bottom={(r + 1) % 5 === 0 && r + 1 !== puzzle.height}
+                onclick={(e) => handleCellClick(r, c, e)}
+                onkeydown={(e) => handleKeyDown(e, r, c)}
+                onfocus={() => (focusedCell = { r, c })}
+                oncontextmenu={(e) => {
+                  e.preventDefault();
+                  handleMove(r, c, 'mark');
+                }}
+                aria-label="Row {r + 1}, Column {c + 1}: {cell}"
+                aria-describedby="row-clue-{r} col-clue-{c}"
+                aria-disabled={isWon || (locked[r] && locked[r][c])}
+                tabindex={focusedCell.r === r && focusedCell.c === c ? 0 : -1}
+              >
+                {#if cell === 'marked'}
+                  <span aria-hidden="true">&times;</span>
+                {/if}
+              </button>
+            {/each}
+          </div>
         {/each}
       </div>
     </div>
@@ -389,6 +417,19 @@
     align-items: center;
     padding: 20px;
     background-color: var(--gray-90);
+  }
+
+  /* Visually hidden but available to screen readers. */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .header-nav {
@@ -518,8 +559,8 @@
 
   .corner {
     grid-area: corner;
-    border-right: 1px solid var(--gray-75);
-    border-bottom: 1px solid var(--gray-75);
+    border-right: 1px solid var(--clue-divider);
+    border-bottom: 1px solid var(--clue-divider);
   }
 
   .col-clues {
@@ -540,11 +581,18 @@
 
   .grid {
     grid-area: grid;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     /* Dark like the separators (cells fully tile over this). Keeps any
        sub-pixel seam at the sticky-gutter edge from flashing white on scroll. */
     background-color: var(--gray-90);
     gap: 0;
+  }
+
+  /* role="row" wrappers for the ARIA grid; cells keep their fixed size so the
+     visual layout is identical to the former CSS grid. */
+  .grid-row {
+    display: flex;
   }
 
   .clue-group {
@@ -561,7 +609,6 @@
   .clue-group.completed {
     color: var(--gray-45);
     text-decoration: line-through;
-    opacity: 0.6;
   }
 
   .clue-group.col {
@@ -569,7 +616,7 @@
     justify-content: flex-end;
     align-items: center;
     min-height: var(--clue-size);
-    box-shadow: inset -1px 0 0 var(--gray-75);
+    box-shadow: inset -1px 0 0 var(--clue-divider);
   }
 
   .clue-group.row {
@@ -578,7 +625,7 @@
     align-items: center;
     min-width: var(--clue-size);
     gap: 6px;
-    box-shadow: inset 0 -1px 0 var(--gray-75);
+    box-shadow: inset 0 -1px 0 var(--clue-divider);
   }
 
   .cell {
@@ -607,8 +654,8 @@
 
   /* Default thin shadows */
   .cell {
-    --r-shadow: inset -1px 0 0 var(--gray-15);
-    --b-shadow: inset 0 -1px 0 var(--gray-15);
+    --r-shadow: inset -1px 0 0 var(--cell-divider);
+    --b-shadow: inset 0 -1px 0 var(--cell-divider);
     box-shadow: var(--r-shadow), var(--b-shadow);
   }
 
@@ -636,23 +683,25 @@
   /* Handle filled state colors - keep dividers visible */
   .cell.filled {
     background-color: var(--gray-90);
-    --r-shadow: inset -1px 0 0 var(--gray-75);
-    --b-shadow: inset 0 -1px 0 var(--gray-75);
+    --r-shadow: inset -1px 0 0 var(--cell-divider-filled);
+    --b-shadow: inset 0 -1px 0 var(--cell-divider-filled);
   }
 
   .cell.filled.thick-border-right {
-    --r-shadow: inset -4px 0 0 var(--gray-75);
+    --r-shadow: inset -4px 0 0 var(--cell-divider-filled);
   }
 
   .cell.filled.thick-border-bottom {
-    --b-shadow: inset 0 -4px 0 var(--gray-75);
+    --b-shadow: inset 0 -4px 0 var(--cell-divider-filled);
   }
 
   .cell.marked {
     color: var(--gray-90);
   }
-  .cell.locked {
+  .cell[aria-disabled='true'] {
     cursor: not-allowed;
+  }
+  .cell.locked {
     background-color: var(--gray-05);
   }
 
@@ -667,17 +716,21 @@
     box-shadow: none;
   }
 
-  .cell:not(:disabled):hover {
+  .cell:not([aria-disabled='true']):hover {
     background-color: var(--gray-10);
   }
 
-  .cell.filled:not(:disabled):hover {
+  .cell.filled:not([aria-disabled='true']):hover {
     background-color: var(--gray-85);
   }
 
+  /* Dual-color focus ring so it stays visible on both empty (white) and filled
+     (navy) cells: gold inset ring contrasts on navy, dark outline contrasts on
+     white. At least one ring always clears 3:1 against the cell. */
   .cell:focus-visible {
-    outline: 4px solid var(--yellow-gold);
-    outline-offset: -4px;
+    outline: 3px solid var(--gray-90);
+    outline-offset: -3px;
+    box-shadow: inset 0 0 0 6px var(--yellow-gold);
     z-index: 10;
   }
 
@@ -811,6 +864,14 @@
       position: sticky;
       left: 0;
       z-index: 20;
+    }
+
+    /* When a cell is focused via the keyboard, scrollIntoView ignores the
+       sticky clue gutters. Reserve their size so a focused cell at the scroll
+       edge isn't tucked beneath them. */
+    .cell {
+      scroll-margin-top: var(--clue-size);
+      scroll-margin-left: var(--clue-size);
     }
 
     .clue-group {

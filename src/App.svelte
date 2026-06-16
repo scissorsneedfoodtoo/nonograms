@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { tick } from 'svelte';
   import Nonogram from './Nonogram.svelte';
   import PuzzleCard from './lib/components/PuzzleCard.svelte';
   import ConfirmModal from './lib/components/ConfirmModal.svelte';
@@ -13,23 +14,41 @@
   let selectedPuzzleOrder = $state(0);
   let userProgress = $state(getProgress());
   let showResetConfirm = $state(false);
+  let resetTrigger = $state<HTMLElement | null>(null);
   let currentPage = $state(0);
+  let menuHeading = $state<HTMLElement | null>(null);
 
   const totalPages = $derived(Math.ceil(ALL_PUZZLES.length / PUZZLES_PER_PAGE));
   const visiblePuzzles = $derived(
     ALL_PUZZLES.slice(currentPage * PUZZLES_PER_PAGE, (currentPage + 1) * PUZZLES_PER_PAGE)
   );
 
+  // Keep the document title in sync with the current view so screen-reader and
+  // tab-switching users get orientation. The puzzle name stays hidden until won,
+  // so the in-game title only references its number.
+  $effect(() => {
+    document.title =
+      view === 'game' ? `Puzzle #${selectedPuzzleOrder} — Nonograms` : 'Nonograms';
+  });
+
   function selectPuzzle(puzzle: Puzzle, order: number) {
     selectedPuzzle = puzzle;
     selectedPuzzleOrder = order;
     view = 'game';
+    // Nonogram moves focus to its heading on mount.
   }
 
-  function goBack() {
+  async function goBack() {
+    const returnTo = selectedPuzzleOrder;
     userProgress = getProgress();
     view = 'level-select';
     selectedPuzzle = null;
+
+    // Return focus to the card that was open (or the menu heading as a fallback)
+    // so keyboard/SR users land back where they were rather than at <body>.
+    await tick();
+    const card = document.querySelector<HTMLElement>(`.puzzle-square[data-order="${returnTo}"]`);
+    (card ?? menuHeading)?.focus();
   }
 
   function handleResetAll() {
@@ -41,9 +60,11 @@
 
 <main>
   {#if view === 'level-select'}
-    <div class="level-select-container">
+    <!-- Make the page behind the confirm dialog inert (non-focusable + hidden
+         from assistive tech) while it's open. -->
+    <div class="level-select-container" inert={showResetConfirm}>
       <header class="fcc-header">
-        <h1>Nonogram Puzzles</h1>
+        <h1 bind:this={menuHeading} tabindex="-1" class="focus-target">Nonogram Puzzles</h1>
         <p>
           Challenge yourself with these logic puzzles. Accurate moves earn you the fastest times!
         </p>
@@ -77,7 +98,9 @@
           >
             &lsaquo; Prev
           </button>
-          <span class="page-indicator">Page {currentPage + 1} / {totalPages}</span>
+          <span class="page-indicator" aria-live="polite" aria-atomic="true">
+            Page {currentPage + 1} / {totalPages}
+          </span>
           <button
             class="page-btn"
             onclick={() => (currentPage += 1)}
@@ -95,7 +118,13 @@
             >freeCodeCamp</a
           >
         </span>
-        <button class="reset-all-btn" onclick={() => (showResetConfirm = true)}>
+        <button
+          class="reset-all-btn"
+          onclick={(e) => {
+            resetTrigger = e.currentTarget;
+            showResetConfirm = true;
+          }}
+        >
           Reset All Progress
         </button>
       </footer>
@@ -106,6 +135,7 @@
         title="Reset All Progress?"
         message="This will permanently delete all your best times and puzzle progress. This action cannot be undone."
         confirmLabel="Yes, Reset Everything"
+        returnFocus={resetTrigger}
         onConfirm={handleResetAll}
         onCancel={() => (showResetConfirm = false)}
       />
@@ -217,8 +247,8 @@
 
   .reset-all-btn {
     background: transparent;
-    border-color: var(--error-red);
-    color: var(--error-red);
+    border-color: var(--error-red-text);
+    color: var(--error-red-text);
     font-size: 0.9rem;
     padding: 8px 16px;
     font-weight: 700;
