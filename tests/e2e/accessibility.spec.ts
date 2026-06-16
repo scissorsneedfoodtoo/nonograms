@@ -102,6 +102,26 @@ test.describe('confirm dialog', () => {
   });
 });
 
+test.describe('win dialog', () => {
+  test('makes the board inert, focuses the dialog, and returns focus on close', async ({
+    page
+  }) => {
+    await openPuzzle(page, CAT_INDEX);
+    await solvePuzzle(page, CAT_INDEX);
+
+    const back = page.getByRole('button', { name: 'Back to Levels' });
+
+    // Initial focus lands inside the dialog; the board behind it is inert.
+    await expect(back).toBeFocused();
+    await expect(page.locator('.game-container')).toHaveJSProperty('inert', true);
+
+    // Escape closes it, returns to the menu, and focuses the originating card.
+    await page.keyboard.press('Escape');
+    await expect(page.locator('.puzzle-square[data-order="1"]')).toBeFocused();
+    await expect(page).toHaveTitle('Nonograms');
+  });
+});
+
 test.describe('announcements and decorative content', () => {
   test('announces incorrect moves in an assertive live region', async ({ page }) => {
     await openPuzzle(page, CAT_INDEX);
