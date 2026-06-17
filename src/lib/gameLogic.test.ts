@@ -11,7 +11,9 @@ import {
   isLineCorrect,
   getColumn,
   getSolutionColumn,
-  formatTime
+  formatTime,
+  totalPenaltySeconds,
+  penaltyForMistake
 } from './gameLogic';
 
 describe('gameLogic', () => {
@@ -220,6 +222,37 @@ describe('gameLogic', () => {
       expect(formatTime(5)).toBe('0:05');
       expect(formatTime(65)).toBe('1:05');
       expect(formatTime(600)).toBe('10:00');
+    });
+  });
+
+  describe('penaltyForMistake', () => {
+    it('charges step * mistake number, escalating linearly', () => {
+      expect(penaltyForMistake(1, 30)).toBe(30);
+      expect(penaltyForMistake(2, 30)).toBe(60);
+      expect(penaltyForMistake(3, 30)).toBe(90);
+    });
+  });
+
+  describe('totalPenaltySeconds', () => {
+    it('is zero with no mistakes', () => {
+      expect(totalPenaltySeconds(0, 30)).toBe(0);
+    });
+
+    it('accumulates the escalating per-mistake penalties', () => {
+      // 30, 30+60, 30+60+90, 30+60+90+120
+      expect(totalPenaltySeconds(1, 30)).toBe(30);
+      expect(totalPenaltySeconds(2, 30)).toBe(90);
+      expect(totalPenaltySeconds(3, 30)).toBe(180);
+      expect(totalPenaltySeconds(4, 30)).toBe(300);
+    });
+
+    it('equals the running sum of penaltyForMistake', () => {
+      const step = 30;
+      let running = 0;
+      for (let n = 1; n <= 6; n++) {
+        running += penaltyForMistake(n, step);
+        expect(totalPenaltySeconds(n, step)).toBe(running);
+      }
     });
   });
 });

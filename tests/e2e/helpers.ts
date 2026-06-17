@@ -47,6 +47,21 @@ export function firstEmptyCell(index: number): [number, number] {
   throw new Error('puzzle has no empty cell');
 }
 
+/** First `count` cells that are empty in the solution (each a mistake in Fill mode). */
+export function firstEmptyCells(index: number, count: number): [number, number][] {
+  const puzzle = puzzleAt(index);
+  const cells: [number, number][] = [];
+  for (let r = 0; r < puzzle.height; r++) {
+    for (let c = 0; c < puzzle.width; c++) {
+      if (puzzle.solution[r][c] === 0) {
+        cells.push([r, c]);
+        if (cells.length === count) return cells;
+      }
+    }
+  }
+  throw new Error(`puzzle has fewer than ${count} empty cells`);
+}
+
 /** First cell that is filled in the solution. */
 export function firstFilledCell(index: number): [number, number] {
   const puzzle = puzzleAt(index);

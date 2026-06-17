@@ -9,7 +9,9 @@
     getColumn,
     getSolutionColumn,
     formatTime,
-    isPuzzleInProgress
+    isPuzzleInProgress,
+    totalPenaltySeconds,
+    penaltyForMistake
   } from './lib/gameLogic';
   import type { CellState, Puzzle } from './lib/types';
   import {
@@ -28,7 +30,9 @@
 
   let { puzzle, order, onBack }: Props = $props();
 
-  const PENALTY_SECONDS = 15;
+  // Penalties escalate linearly: the 1st mistake costs PENALTY_STEP_SECONDS,
+  // the 2nd costs twice that, the 3rd three times, and so on.
+  const PENALTY_STEP_SECONDS = 30;
 
   // Initialize with empty arrays to satisfy types, real initialization happens in resetGame
   let grid = $state<CellState[][]>([]);
@@ -69,7 +73,7 @@
       : []
   );
 
-  let totalPenaltyTime = $derived(penalties * PENALTY_SECONDS);
+  let totalPenaltyTime = $derived(totalPenaltySeconds(penalties, PENALTY_STEP_SECONDS));
   let totalTime = $derived(seconds + totalPenaltyTime);
 
   function devCompleteGame() {
@@ -143,19 +147,23 @@
     if (isWon || locked[r][c] || errorState[r][c]) return;
 
     const solutionValue = puzzle.solution[r][c];
-    const isMistake =
-      (action === 'fill' && solutionValue === 0) || (action === 'mark' && solutionValue === 1);
+    // Only filling a cell that should be empty is a mistake. X marks are just
+    // the player's own notes, so placing one on a filled cell is never penalized.
+    const isMistake = action === 'fill' && solutionValue === 0;
 
     if (isMistake) {
       errorState[r][c] = true;
       penalties++;
 
+      // Each successive mistake costs more, so announce this mistake's own penalty.
+      const penaltyAdded = penaltyForMistake(penalties, PENALTY_STEP_SECONDS);
       // Include the running count so identical repeat mistakes still re-announce.
-      liveMessage = `Incorrect move. ${PENALTY_SECONDS} second penalty added. ${penalties} mistake${penalties === 1 ? '' : 's'} so far.`;
+      liveMessage = `Incorrect move. ${penaltyAdded} second penalty added. ${penalties} mistake${penalties === 1 ? '' : 's'} so far.`;
 
       setTimeout(() => {
         if (errorState[r]) {
-          grid[r][c] = solutionValue === 1 ? 'filled' : 'marked';
+          // A mistake is always a wrongly-filled empty cell, so auto-correct to a mark.
+          grid[r][c] = 'marked';
           locked[r][c] = true;
           errorState[r][c] = false;
 
@@ -396,8 +404,11 @@
       </p>
       <p class="desktop-controls">Use Arrow Keys to navigate the grid</p>
       <p class="penalty-notice">
-        Note: Incorrect moves are auto-corrected and add <strong>{PENALTY_SECONDS}s</strong> to your total
-        time.
+        Note: Incorrect moves are auto-corrected and add an escalating time penalty — <strong
+          >{PENALTY_STEP_SECONDS}s</strong
+        >
+        for the first mistake, {PENALTY_STEP_SECONDS * 2}s for the second, {PENALTY_STEP_SECONDS * 3}s
+        for the third, and so on.
       </p>
       {#if import.meta.env.DEV}
         <p class="dev-hint"><strong>Dev:</strong> <kbd>Shift+F</kbd> to auto-complete puzzle</p>

@@ -90,6 +90,20 @@ export function generateColClues(solution: number[][]): number[][] {
   return colClues;
 }
 
+/**
+ * Total penalty time for a number of mistakes, escalating linearly: the nth
+ * mistake adds `stepSeconds * n`, so the running total is the triangular sum
+ * `stepSeconds * n(n+1)/2` (e.g. with a 30s step: 0:30, 1:30, 3:00, 5:00...).
+ */
+export function totalPenaltySeconds(mistakes: number, stepSeconds: number): number {
+  return (stepSeconds * mistakes * (mistakes + 1)) / 2;
+}
+
+/** Penalty added by the nth mistake alone (1-indexed): `stepSeconds * n`. */
+export function penaltyForMistake(mistakeNumber: number, stepSeconds: number): number {
+  return stepSeconds * mistakeNumber;
+}
+
 export function formatTime(seconds: number): string {
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;

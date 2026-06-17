@@ -1,6 +1,6 @@
 import type { UserProgress, PuzzleProgress, CellState } from './types';
 
-const STORAGE_KEY = 'fcc-nonograms-progress-v2';
+const STORAGE_KEY = 'fcc-nonograms-progress-v1';
 
 // Return a fresh object every call. Callers (e.g. savePuzzleProgress) mutate the
 // result, so a shared default would get polluted across calls.
