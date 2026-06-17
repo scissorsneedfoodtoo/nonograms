@@ -42,6 +42,40 @@ test('a wrong move adds a penalty and locks the cell', async ({ page }) => {
   await expect(cell).toHaveAttribute('aria-disabled', 'true');
 });
 
+test('marking a cell that should be filled is not a mistake', async ({ page }) => {
+  await openPuzzle(page, CAT_INDEX);
+  const [fr, fc] = firstFilledCell(CAT_INDEX);
+  const cell = page.locator(`.cell-${fr}-${fc}`);
+
+  // X marks are just the player's own notes, so placing one on a filled-solution
+  // cell must not add a penalty or lock the cell.
+  await cell.click({ button: 'right' });
+
+  await expect(cell).toHaveClass(/marked/);
+  await expect(cell).not.toHaveClass(/locked/);
+  await expect(page.locator('.error-text')).toHaveText('0');
+  await expect(page.locator('.penalty-hint')).toContainText('0:00');
+
+  // And the mark stays a free, reversible note — toggling it back off is allowed.
+  await cell.click({ button: 'right' });
+  await expect(cell).not.toHaveClass(/marked/);
+  await expect(page.locator('.error-text')).toHaveText('0');
+});
+
+test('the mistake counter only reacts to wrong fills, not X marks', async ({ page }) => {
+  await openPuzzle(page, CAT_INDEX);
+  const [fr, fc] = firstFilledCell(CAT_INDEX);
+  const [er, ec] = firstEmptyCell(CAT_INDEX);
+
+  // Marking a filled-solution cell: no penalty.
+  await page.locator(`.cell-${fr}-${fc}`).click({ button: 'right' });
+  await expect(page.locator('.error-text')).toHaveText('0');
+
+  // Filling an empty-solution cell: a penalty.
+  await page.locator(`.cell-${er}-${ec}`).click();
+  await expect(page.locator('.error-text')).toHaveText('1');
+});
+
 test('progress is saved on exit and restored on return', async ({ page }) => {
   await openPuzzle(page, CAT_INDEX);
   const [fr, fc] = firstFilledCell(CAT_INDEX);

@@ -143,8 +143,9 @@
     if (isWon || locked[r][c] || errorState[r][c]) return;
 
     const solutionValue = puzzle.solution[r][c];
-    const isMistake =
-      (action === 'fill' && solutionValue === 0) || (action === 'mark' && solutionValue === 1);
+    // Only filling a cell that should be empty is a mistake. X marks are just
+    // the player's own notes, so placing one on a filled cell is never penalized.
+    const isMistake = action === 'fill' && solutionValue === 0;
 
     if (isMistake) {
       errorState[r][c] = true;
@@ -155,7 +156,8 @@
 
       setTimeout(() => {
         if (errorState[r]) {
-          grid[r][c] = solutionValue === 1 ? 'filled' : 'marked';
+          // A mistake is always a wrongly-filled empty cell, so auto-correct to a mark.
+          grid[r][c] = 'marked';
           locked[r][c] = true;
           errorState[r][c] = false;
 
