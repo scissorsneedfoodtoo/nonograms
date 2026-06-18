@@ -56,7 +56,7 @@ export interface TutorialStep {
   technique: string;
   title: string;
   /** Explanation shown in the step panel. Stylized text. */
-  body: string | string[];
+  body: string[];
   /** Cells the player fills in this step (become 'filled'). */
   fills: Cell[];
   /** Cells the player marks with an X in this step (become 'marked'). */

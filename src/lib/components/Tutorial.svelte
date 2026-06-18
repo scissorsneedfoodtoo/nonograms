@@ -64,10 +64,7 @@
   const liveMessage = $derived.by(() => {
     if (isDone) return `Puzzle solved. It's a ${puzzle.name}. Well done!`;
     if (!step) return '';
-    const body = (Array.isArray(step.body) ? step.body.join(' ') : step.body).replace(
-      /<[^>]+>/g,
-      ''
-    );
+    const body = step.body.join(' ').replace(/<[^>]+>/g, '');
     return `Step ${stepIndex + 1} of ${steps.length}. ${step.technique}: ${step.title}. ${body}`;
   });
 
@@ -216,11 +213,11 @@
       {:else if step}
         <p class="badge">{step.technique}</p>
         <h2>{step.title}</h2>
-        {#each Array.isArray(step.body) ? step.body : [step.body] as str, i (i)}
+        {#each step.body as paragraph, i (i)}
           <!-- Body text is static, trusted content from tutorial.ts (only <pre> clue
                chips), never user input, so {@html} is safe here. -->
           <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-          <p class="body">{@html str}</p>
+          <p class="body">{@html paragraph}</p>
         {/each}
 
         {#if activeCount > 0 && !stepComplete}
