@@ -15,7 +15,7 @@
   --cell-divider-filled: #646478;
   /* Separator lines between clue groups / the corner, on the gray-85 gutter (3:1). */
   --clue-divider: #6b6b80;
-  
+
   --yellow-gold: #fecc4c;
   --yellow-hover: #f1be32;
   --error-red: #850000;
@@ -34,8 +34,8 @@
   --secondary-bg: var(--gray-85);
   --text-color: var(--gray-15);
   --heading-color: var(--gray-00);
-  --border-color: var(--gray-00); /* FCC uses high-contrast white borders */
-  
+  --border-color: var(--gray-00); /* fCC uses high-contrast white borders */
+
   font-family: var(--font-family);
   line-height: 1.6;
   font-weight: 400;
@@ -81,14 +81,15 @@ body {
   outline: none;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: var(--heading-color);
   margin-top: 0;
   font-weight: 900;
-  text-transform: capitalize;
 }
 
-/* FCC Button Styles */
+/* fCC Button Styles */
 button {
   font-family: var(--font-family);
   border: 3px solid var(--gray-00);
@@ -96,7 +97,7 @@ button {
   color: var(--gray-00);
   padding: 10px 30px;
   font-size: 1.125rem;
-  font-weight: 400; /* FCC often uses regular weight for secondary */
+  font-weight: 400; /* fCC often uses regular weight for secondary */
   cursor: pointer;
   transition: background-color 0.2s;
   border-radius: 0;
@@ -105,7 +106,8 @@ button {
   justify-content: center;
 }
 
-button:hover, button:focus-visible {
+button:hover,
+button:focus-visible {
   background: var(--gray-00);
   color: var(--gray-90);
   outline: none;
@@ -123,7 +125,8 @@ button.primary {
   font-weight: 900;
 }
 
-button.primary:hover, button.primary:focus-visible {
+button.primary:hover,
+button.primary:focus-visible {
   background: var(--yellow-hover);
   border-color: var(--yellow-hover);
   color: var(--gray-90);

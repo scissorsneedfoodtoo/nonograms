@@ -115,7 +115,10 @@
     <div class="board" style="--cols: {puzzle.width}; --rows: {puzzle.height};">
       <div class="corner"></div>
 
-      <div class="col-clues" style="grid-template-columns: repeat({puzzle.width}, var(--cell-size));">
+      <div
+        class="col-clues"
+        style="grid-template-columns: repeat({puzzle.width}, var(--cell-size));"
+      >
         {#each puzzle.colClues as col, i (i)}
           <div class="clue-group col" class:highlight={step?.highlightCols?.includes(i)}>
             {#each col as num, j (j)}
@@ -190,7 +193,9 @@
       {:else if step}
         <p class="badge">{step.technique}</p>
         <h2>{step.title}</h2>
-        <p class="body">{step.body}</p>
+        {#each Array.isArray(step.body) ? step.body : [step.body] as str, i (i)}
+          <p class="body">{@html str}</p>
+        {/each}
 
         {#if activeCount > 0 && !stepComplete}
           <p class="hint">Click the highlighted cells, or use “Show me”.</p>
@@ -498,6 +503,7 @@
 
   .actions {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 0.75rem;
     margin-bottom: 1rem;

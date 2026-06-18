@@ -55,8 +55,8 @@ export interface TutorialStep {
   /** Short badge shown above the step, e.g. the technique name. */
   technique: string;
   title: string;
-  /** Explanation shown in the step panel. Plain text. */
-  body: string;
+  /** Explanation shown in the step panel. Stylized text. */
+  body: string | string[];
   /** Cells the player fills in this step (become 'filled'). */
   fills: Cell[];
   /** Cells the player marks with an X in this step (become 'marked'). */
@@ -74,15 +74,22 @@ export interface TutorialStep {
 export const TUTORIAL_STEPS: TutorialStep[] = [
   {
     technique: 'The basics',
-    title: 'How to read the clues',
-    body: 'Each number is the length of a run of filled cells, in order from left-to-right (rows) or top-to-bottom (columns). Runs in the same line always have at least one empty cell between them. Mark cells you know are empty with an X so they are easy to skip. Click Next to start solving.',
+    title: 'How To Read the Clues',
+    body: [
+      'Each number represents the length of a run of filled cells, in order from left to right (rows) or top to bottom (columns).',
+      'Runs in the same row or column are always separated by at least one empty cell. For example, a clue of <pre>[3 2]</pre> means three filled cells, then at least one empty cell, then two filled cells.',
+      'Mark cells you know are empty with an X so they\'re easier to identify. Click "Next" to start solving.'
+    ],
     fills: [],
     crosses: []
   },
   {
     technique: 'Full lines',
-    title: 'Fill a line that is completely full',
-    body: 'When a clue equals the line length, every cell in that line is filled. Row 3 reads [5] in a width of 5 — fill it all the way across.',
+    title: 'Fill a Line When the Clue Matches Its Length',
+    body: [
+      'If a clue equals the length of its row or column, every cell in that line must be filled. Row 3 has a clue of <pre>[5]</pre> and is 5 cells wide, so every cell in that row should be filled.',
+      'Fill in every cell in row 3.'
+    ],
     fills: [
       [2, 0],
       [2, 1],
@@ -95,8 +102,11 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   },
   {
     technique: 'Overlapping',
-    title: 'Overlap finds guaranteed cells',
-    body: 'Columns 2, 3 and 4 each read [4] in a height of 5. Slide each block as far up as it goes, then as far down: the cells covered both ways are always filled. That fills the middle of rows 2 and 4.',
+    title: 'Overlap Reveals Guaranteed Cells',
+    body: [
+      'Columns 2, 3, and 4 each have a clue of <pre>[4]</pre> in a column that is 5 cells tall. Imagine sliding the block as far up as it can go, then as far down as it can go. Any cells covered in both positions must be filled. This means the middle cells in rows 2, 3, and 4 are guaranteed to be filled.',
+      'Fill in those cells now.'
+    ],
     fills: [
       [1, 1],
       [1, 2],
@@ -110,8 +120,12 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   },
   {
     technique: 'Crosses',
-    title: 'A satisfied line is empty elsewhere',
-    body: 'Columns 1 and 5 each read [1], and the wings row already provides that single cell in each. So the rest of those two columns must be empty — mark the X’s down both sides.',
+    title: 'Satisfied Clues Reveal Empty Cells',
+    body: [
+      'Columns 1 and 5 each have a clue of <pre>[1]</pre>, and the wings row already contains that single filled cell in each column. Since the clue is satisfied, every other cell in those columns must be empty.',
+      "Mark the remaining cells with X's down both sides."
+    ],
+
     fills: [],
     crosses: [
       [0, 0],
@@ -127,8 +141,12 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   },
   {
     technique: 'Splitting',
-    title: 'A gap splits a line into separate runs',
-    body: 'The bottom row reads [1,1] — two single cells with a gap between them. With the sides crossed off, the only way to fit two separated cells is under columns 2 and 4, so fill the two feet and mark the gap.',
+    title: 'A Gap Splits a Line Into Separate Runs',
+    body: [
+      'The bottom row reads <pre>[1, 1]</pre>, meaning two single filled cells separated by at least one empty cell.',
+      'Since the side cells are already known to be empty, the only valid positions for the two filled cells are under columns 2 and 4.',
+      'Fill those two cells, and mark the gap in between as empty.'
+    ],
     fills: [
       [4, 1],
       [4, 3]
@@ -138,8 +156,12 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   },
   {
     technique: 'Joining',
-    title: 'Reach up to the crest',
-    body: "Column 3 reads [4]. It has three filled cells and the bottom is now blocked, so the run can only grow upward — into the crest. Fill the top of column 3, then mark the rest of the crest row. Your Cardinal is complete!",
+    title: 'When One End Is Blocked, the Run Extends the Other Way',
+    body: [
+      'Column 3 has a clue of <pre>[4]</pre>. Three cells in this column are already filled, and the bottom is now blocked, so the remaining cell must extend upward.',
+      "Fill the top cell of column 3. You can optionally mark the remaining empty cells in that column with X's but it's not necessary since there's only one remaining cell to fill in.",
+      'Once you fill in the final cell, the puzzle is complete!'
+    ],
     fills: [[0, 2]],
     crosses: [
       [0, 1],
