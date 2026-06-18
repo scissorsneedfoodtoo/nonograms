@@ -33,6 +33,12 @@ test('game board has no automatically detectable a11y violations', async ({ page
   await scan(page);
 });
 
+test('tutorial has no automatically detectable a11y violations', async ({ page }) => {
+  await page.getByRole('button', { name: 'How to Play' }).click();
+  await expect(page.getByRole('heading', { name: 'How to Play' })).toBeVisible();
+  await scan(page);
+});
+
 test('confirm dialog has no automatically detectable a11y violations', async ({ page }) => {
   await page.getByRole('button', { name: 'Reset All Progress' }).click();
   await expect(page.getByRole('button', { name: 'Yes, Reset Everything' })).toBeFocused();
