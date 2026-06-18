@@ -30,23 +30,46 @@
 
   const activeCount = $derived(Object.keys(activeCells).length);
 
-  // The step is complete once every cell it asks for matches its expected state.
-  // Steps with no cells (the intro) are complete immediately.
+  // Cells that MUST be set to finish the step. Normally every active cell, but on
+  // a completeOnFill step the crosses are optional, so only the fills are required.
+  const requiredCells = $derived.by(() => {
+    const map: Record<string, CellState> = {};
+    if (step) {
+      for (const [r, c] of step.fills) map[`${r}-${c}`] = 'filled';
+      if (!step.completeOnFill) for (const [r, c] of step.crosses) map[`${r}-${c}`] = 'marked';
+    }
+    return map;
+  });
+
+  // The step is complete once every required cell matches its expected state.
+  // Steps with no required cells (the intro) are complete immediately.
   const stepComplete = $derived(
-    Object.entries(activeCells).every(([key, expected]) => {
+    Object.entries(requiredCells).every(([key, expected]) => {
       const [r, c] = key.split('-').map(Number);
       return grid[r][c] === expected;
     })
   );
 
-  // Announced to screen readers whenever the step changes.
-  const liveMessage = $derived(
-    isDone
-      ? 'Practice puzzle solved. Well done!'
-      : step
-        ? `Step ${stepIndex + 1} of ${steps.length}. ${step.technique}: ${step.title}. ${step.body}`
-        : ''
-  );
+  // On the final step, filling the last image cell ends the tutorial right away —
+  // like winning the real game, where the optional X marks never gate the win.
+  $effect(() => {
+    if (!isDone && step?.completeOnFill && stepComplete) {
+      stepIndex = steps.length;
+    }
+  });
+
+  // Announced to screen readers whenever the step changes. The body may be split
+  // into paragraphs and contain markup (e.g. <pre> clue chips), so flatten it to
+  // a single plain-text string before announcing.
+  const liveMessage = $derived.by(() => {
+    if (isDone) return `Puzzle solved. It's a ${puzzle.name}. Well done!`;
+    if (!step) return '';
+    const body = (Array.isArray(step.body) ? step.body.join(' ') : step.body).replace(
+      /<[^>]+>/g,
+      ''
+    );
+    return `Step ${stepIndex + 1} of ${steps.length}. ${step.technique}: ${step.title}. ${body}`;
+  });
 
   function setCells(cells: [number, number][], value: CellState) {
     for (const [r, c] of cells) grid[r][c] = value;
@@ -194,6 +217,9 @@
         <p class="badge">{step.technique}</p>
         <h2>{step.title}</h2>
         {#each Array.isArray(step.body) ? step.body : [step.body] as str, i (i)}
+          <!-- Body text is static, trusted content from tutorial.ts (only <pre> clue
+               chips), never user input, so {@html} is safe here. -->
+          <!-- eslint-disable-next-line svelte/no-at-html-tags -->
           <p class="body">{@html str}</p>
         {/each}
 
@@ -488,6 +514,21 @@
     line-height: 1.7;
     color: var(--gray-05);
     margin: 0 0 1rem;
+  }
+
+  /* Clue chips written as <pre> inside body text (injected via {@html}, so they
+     need :global). Styled like freeCodeCamp inline code: a dark rounded chip that
+     stays inline within the sentence instead of breaking onto its own line. */
+  .body :global(pre) {
+    display: inline;
+    margin: 0;
+    padding: 1px 4px;
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+    white-space: nowrap;
+    color: var(--gray-10);
+    background: #2a2a40;
+    border: 1px solid var(--gray-45);
   }
 
   .hint {

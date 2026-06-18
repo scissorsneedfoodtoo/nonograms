@@ -61,6 +61,13 @@ export interface TutorialStep {
   fills: Cell[];
   /** Cells the player marks with an X in this step (become 'marked'). */
   crosses: Cell[];
+  /**
+   * When true, the step is complete as soon as its `fills` are placed; the
+   * `crosses` become optional X marks (the player may add them but doesn't have
+   * to). Used for the final step so it ends like the real game — the puzzle is
+   * won the moment the last image cell is filled.
+   */
+  completeOnFill?: boolean;
   /** Row/column clue indices to emphasize while this step is active. */
   highlightRows?: number[];
   highlightCols?: number[];
@@ -104,8 +111,9 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     technique: 'Overlapping',
     title: 'Overlap Reveals Guaranteed Cells',
     body: [
-      'Columns 2, 3, and 4 each have a clue of <pre>[4]</pre> in a column that is 5 cells tall. Imagine sliding the block as far up as it can go, then as far down as it can go. Any cells covered in both positions must be filled. This means the middle cells in rows 2, 3, and 4 are guaranteed to be filled.',
-      'Fill in those cells now.'
+      'Columns 2, 3, and 4 each have a clue of <pre>[4]</pre> in a column that is 5 cells tall.',
+      'Imagine sliding a 4x1 cell block as far up as it can go, then as far down as it can go in each column. Any cells covered in both positions must be filled.',
+      'This means the middle cells in rows 2, 3, and 4 are guaranteed to be filled. Fill in those cells now.'
     ],
     fills: [
       [1, 1],
@@ -122,7 +130,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
     technique: 'Crosses',
     title: 'Satisfied Clues Reveal Empty Cells',
     body: [
-      'Columns 1 and 5 each have a clue of <pre>[1]</pre>, and the wings row already contains that single filled cell in each column. Since the clue is satisfied, every other cell in those columns must be empty.',
+      "Columns 1 and 5 each have a clue of <pre>[1]</pre>, and there's already a filled cell in each column. Since the clue is satisfied, every other cell in those columns must be empty.",
       "Mark the remaining cells with X's down both sides."
     ],
 
@@ -167,6 +175,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
       [0, 1],
       [0, 3]
     ],
+    completeOnFill: true,
     highlightRows: [0],
     highlightCols: [2]
   }

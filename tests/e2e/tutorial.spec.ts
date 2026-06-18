@@ -1,9 +1,21 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import { TUTORIAL_STEPS } from '../../src/lib/tutorial';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
 });
+
+// Walk the whole tutorial using "Show me" + advance. The final step finishes the
+// moment its fill lands (the X's are optional), so there may be no button to
+// click on that step — guard both clicks rather than assuming they exist.
+async function walkWithShowMe(page: Page) {
+  for (let i = 0; i < TUTORIAL_STEPS.length; i++) {
+    const showMe = page.getByRole('button', { name: 'Show me' });
+    if (await showMe.isVisible()) await showMe.click();
+    const advance = page.getByRole('button', { name: /Next|Finish/ });
+    if (await advance.isVisible()) await advance.click();
+  }
+}
 
 test('How to Play opens the tutorial and Exit returns to the menu', async ({ page }) => {
   await page.getByRole('button', { name: 'How to Play' }).click();
@@ -48,13 +60,9 @@ test('Back clears the current step so it can be redone', async ({ page }) => {
 
 test('finishing reveals the colored picture', async ({ page }) => {
   await page.getByRole('button', { name: 'How to Play' }).click();
-  for (let i = 0; i < TUTORIAL_STEPS.length; i++) {
-    const showMe = page.getByRole('button', { name: 'Show me' });
-    if (await showMe.isVisible()) await showMe.click();
-    await page.getByRole('button', { name: /Next|Finish/ }).click();
-  }
+  await walkWithShowMe(page);
 
-  await expect(page.getByText(/It's a Cardinal/)).toBeVisible();
+  await expect(page.locator('.reveal-name')).toContainText('Cardinal');
   // The beak is painted with its colorSolution color (#f39c12)...
   await expect(page.locator('[data-cell="2-2"]')).toHaveCSS('background-color', 'rgb(243, 156, 18)');
   // ...and the X marks are hidden in favor of the picture.
@@ -63,15 +71,7 @@ test('finishing reveals the colored picture', async ({ page }) => {
 
 test('stepping through with “Show me” solves the puzzle', async ({ page }) => {
   await page.getByRole('button', { name: 'How to Play' }).click();
-
-  // Walk every step: use "Show me" where the step has cells, then advance.
-  for (let i = 0; i < TUTORIAL_STEPS.length; i++) {
-    const showMe = page.getByRole('button', { name: 'Show me' });
-    if (await showMe.isVisible()) {
-      await showMe.click();
-    }
-    await page.getByRole('button', { name: /Next|Finish/ }).click();
-  }
+  await walkWithShowMe(page);
 
   await expect(page.getByRole('heading', { name: /You solved it/ })).toBeVisible();
 
@@ -80,4 +80,30 @@ test('stepping through with “Show me” solves the puzzle', async ({ page }) =
 
   await page.getByRole('button', { name: 'Back to puzzles' }).click();
   await expect(page.locator('.puzzle-grid')).toBeVisible();
+});
+
+test('filling the last cell ends the tutorial — the X marks are optional', async ({ page }) => {
+  await page.getByRole('button', { name: 'How to Play' }).click();
+  await page.getByRole('button', { name: /Next/ }).click(); // intro -> step 1
+
+  // Show me + Next through every step except the last.
+  for (let i = 1; i < TUTORIAL_STEPS.length - 1; i++) {
+    await page.getByRole('button', { name: 'Show me' }).click();
+    await page.getByRole('button', { name: /Next/ }).click();
+  }
+  await expect(page.locator('.progress')).toContainText(`Step ${TUTORIAL_STEPS.length} of`);
+
+  const last = TUTORIAL_STEPS[TUTORIAL_STEPS.length - 1];
+  const [fr, fc] = last.fills[0];
+  const [cr, cc] = last.crosses[0];
+
+  // Both the final fill and the optional X cells are highlighted (the X cells
+  // keep their blue 'target-cross' ring), so the player can mark them if they like.
+  await expect(page.locator(`[data-cell="${fr}-${fc}"]`)).toHaveClass(/pending/);
+  await expect(page.locator(`[data-cell="${cr}-${cc}"]`)).toHaveClass(/pending/);
+  await expect(page.locator(`[data-cell="${cr}-${cc}"]`)).toHaveClass(/target-cross/);
+
+  // But the X marks are optional: filling the one cell ends the tutorial.
+  await page.locator(`[data-cell="${fr}-${fc}"]`).click();
+  await expect(page.locator('.reveal-name')).toContainText('Cardinal');
 });
