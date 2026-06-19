@@ -68,6 +68,8 @@ export interface TutorialStep {
    * won the moment the last image cell is filled.
    */
   completeOnFill?: boolean;
+  /** An illustrative diagram to render alongside the body text, if any. */
+  diagram?: 'overlap';
   /** Row/column clue indices to emphasize while this step is active. */
   highlightRows?: number[];
   highlightCols?: number[];
@@ -124,6 +126,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
       [3, 3]
     ],
     crosses: [],
+    diagram: 'overlap',
     highlightCols: [1, 2, 3]
   },
   {

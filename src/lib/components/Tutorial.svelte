@@ -17,6 +17,15 @@
   const isDone = $derived(stepIndex >= steps.length);
   const step = $derived(isDone ? null : steps[stepIndex]);
 
+  // Cell patterns for the 'overlap' diagram: a [4] block in a column of 5, shown
+  // slid all the way up, slid all the way down, and the cells covered in both
+  // (always filled). Mirrors the overlapping step's reasoning.
+  const overlapColumns = [
+    { label: 'Slid up', tone: 'up', cells: [true, true, true, true, false] },
+    { label: 'Slid down', tone: 'down', cells: [false, true, true, true, true] },
+    { label: 'Always filled', tone: 'both', cells: [false, true, true, true, false] }
+  ];
+
   // "r-c" -> expected state for the cells the current step asks the player to act
   // on. Fills become 'filled', crosses become 'marked'.
   const activeCells = $derived.by(() => {
@@ -131,6 +140,67 @@
   </div>
 
   <div class="layout">
+    <!-- Step panel (placed before the board so reading order matches the visual
+         order: panel-left on desktop, panel-on-top when stacked on narrow screens). -->
+    <div class="panel">
+      {#if isDone}
+        <p class="badge">Done</p>
+        <h2>You solved it! 🎉</h2>
+        <p class="reveal-name">It's a {puzzle.name}! 🐦</p>
+        <p class="body">
+          That is every core technique: full lines, overlapping, crosses, and joining and splitting.
+          Real puzzles hide a picture like this one — you are ready to play.
+        </p>
+        <div class="actions">
+          <button class="btn primary" onclick={onBack}>Back to puzzles</button>
+          <button class="btn" onclick={restart}>Replay tutorial</button>
+        </div>
+      {:else if step}
+        <p class="badge">{step.technique}</p>
+        <h2>{step.title}</h2>
+        {#each step.body as paragraph, i (i)}
+          <!-- A diagram, if any, sits just before the final (actionable) paragraph. -->
+          {#if step.diagram === 'overlap' && i === step.body.length - 1}
+            <!-- Illustrative only; the body paragraphs describe it for screen readers. -->
+            <div class="overlap-diagram" aria-hidden="true">
+              {#each overlapColumns as col (col.label)}
+                <div class="od-col">
+                  <div class="od-cells">
+                    {#each col.cells as on, r (r)}
+                      <span class="od-cell {on ? col.tone : ''}"></span>
+                    {/each}
+                  </div>
+                  <span class="od-label">{col.label}</span>
+                </div>
+              {/each}
+            </div>
+          {/if}
+          <!-- Body text is static, trusted content from tutorial.ts (only <pre> clue
+               chips), never user input, so {@html} is safe here. -->
+          <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+          <p class="body">{@html paragraph}</p>
+        {/each}
+
+        {#if activeCount > 0 && !stepComplete}
+          <p class="hint">Click the highlighted cells, or use “Show me”.</p>
+        {:else if activeCount > 0 && stepComplete}
+          <p class="hint done">Nice — that is the move. Click Next.</p>
+        {/if}
+
+        <div class="actions">
+          <button class="btn" onclick={back} disabled={stepIndex === 0}>&lsaquo; Back</button>
+          {#if activeCount > 0}
+            <button class="btn" onclick={showMe} disabled={stepComplete}>Show me</button>
+          {/if}
+          <button class="btn primary" onclick={next} disabled={!stepComplete}>
+            {stepIndex === steps.length - 1 ? 'Finish' : 'Next'} &rsaquo;
+          </button>
+        </div>
+
+        <p class="progress" aria-hidden="true">Step {stepIndex + 1} of {steps.length}</p>
+      {/if}
+    </div>
+
     <!-- Board -->
     <div class="board" style="--cols: {puzzle.width}; --rows: {puzzle.height};">
       <div class="corner"></div>
@@ -194,50 +264,6 @@
           </div>
         {/each}
       </div>
-    </div>
-
-    <!-- Step panel -->
-    <div class="panel">
-      {#if isDone}
-        <p class="badge">Done</p>
-        <h2>You solved it! 🎉</h2>
-        <p class="reveal-name">It's a {puzzle.name}! 🐦</p>
-        <p class="body">
-          That is every core technique: full lines, overlapping, crosses, and joining and splitting.
-          Real puzzles hide a picture like this one — you are ready to play.
-        </p>
-        <div class="actions">
-          <button class="btn primary" onclick={onBack}>Back to puzzles</button>
-          <button class="btn" onclick={restart}>Replay tutorial</button>
-        </div>
-      {:else if step}
-        <p class="badge">{step.technique}</p>
-        <h2>{step.title}</h2>
-        {#each step.body as paragraph, i (i)}
-          <!-- Body text is static, trusted content from tutorial.ts (only <pre> clue
-               chips), never user input, so {@html} is safe here. -->
-          <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-          <p class="body">{@html paragraph}</p>
-        {/each}
-
-        {#if activeCount > 0 && !stepComplete}
-          <p class="hint">Click the highlighted cells, or use “Show me”.</p>
-        {:else if activeCount > 0 && stepComplete}
-          <p class="hint done">Nice — that is the move. Click Next.</p>
-        {/if}
-
-        <div class="actions">
-          <button class="btn" onclick={back} disabled={stepIndex === 0}>&lsaquo; Back</button>
-          {#if activeCount > 0}
-            <button class="btn" onclick={showMe} disabled={stepComplete}>Show me</button>
-          {/if}
-          <button class="btn primary" onclick={next} disabled={!stepComplete}>
-            {stepIndex === steps.length - 1 ? 'Finish' : 'Next'} &rsaquo;
-          </button>
-        </div>
-
-        <p class="progress" aria-hidden="true">Step {stepIndex + 1} of {steps.length}</p>
-      {/if}
     </div>
   </div>
 </div>
@@ -526,6 +552,63 @@
     color: var(--gray-10);
     background: #2a2a40;
     border: 1px solid var(--gray-45);
+  }
+
+  /* Overlap technique illustration: a [4] block slid up (blue), slid down (pink),
+     and the cells covered both ways (purple = always filled). Each column takes
+     an equal share of the width so the three strips are evenly spaced. */
+  .overlap-diagram {
+    display: flex;
+    /* Equal-width columns keep the strips evenly spaced; the capped, centered
+       width keeps the three grouped together rather than spread across the panel. */
+    max-width: 260px;
+    margin: 0 auto 1.25rem;
+  }
+
+  .od-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .od-cells {
+    width: max-content;
+    /* Dark, board-matching frame so the light cells stand out on the panel. */
+    border: 2px solid var(--gray-90);
+  }
+
+  .od-cell {
+    display: block;
+    width: 22px;
+    height: 22px;
+    background: var(--gray-00); /* empty cells read white, like the real board */
+    border-bottom: 1px solid var(--gray-90);
+  }
+
+  .od-cell:last-child {
+    border-bottom: none;
+  }
+
+  /* freeCodeCamp style-guide palette. */
+  .od-cell.up {
+    background: var(--fcc-blue);
+  }
+
+  .od-cell.down {
+    /* A light pink that, blended 50/50 with --fcc-blue, lands on --fcc-purple —
+       so the overlap reads as "blue + pink = purple". */
+    background: #ffa7ff;
+  }
+
+  .od-cell.both {
+    background: var(--fcc-purple);
+  }
+
+  .od-label {
+    font-size: 0.8rem;
+    color: var(--gray-15);
   }
 
   .hint {

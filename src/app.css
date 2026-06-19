@@ -9,6 +9,16 @@
   --gray-05: #eeeef0;
   --gray-00: #ffffff;
 
+  /* freeCodeCamp style-guide accent palette (primary + secondary/dark pairs). */
+  --fcc-purple: #dbb8ff;
+  --fcc-yellow: #f1be32;
+  --fcc-blue: #99c9ff;
+  --fcc-light-green: #acd157;
+  --fcc-dark-purple: #5a01a7;
+  --fcc-dark-yellow: #4d3800;
+  --fcc-dark-blue: #002ead;
+  --fcc-dark-green: #00471b;
+
   /* Thin grid dividers, tuned to clear 3:1 (WCAG 1.4.11) against the cell they
      sit on: a darker gray on empty (white) cells, a lighter gray on filled (navy). */
   --cell-divider: #8e8e8e;
@@ -17,7 +27,6 @@
   --clue-divider: #6b6b80;
 
   --yellow-gold: #fecc4c;
-  --yellow-hover: #f1be32;
   --error-red: #850000;
   /* Lighter red for use as text/border on dark backgrounds (--error-red fails
      AA contrast there). Passes AA on gray-90 and gray-85. */
@@ -127,8 +136,8 @@ button.primary {
 
 button.primary:hover,
 button.primary:focus-visible {
-  background: var(--yellow-hover);
-  border-color: var(--yellow-hover);
+  background: var(--fcc-yellow);
+  border-color: var(--fcc-yellow);
   color: var(--gray-90);
 }
 

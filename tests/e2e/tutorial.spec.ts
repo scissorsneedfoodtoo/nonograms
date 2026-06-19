@@ -43,6 +43,20 @@ test('clicking a highlighted cell performs the step', async ({ page }) => {
   await expect(next).toBeEnabled();
 });
 
+test('the overlapping step shows the overlap diagram', async ({ page }) => {
+  await page.getByRole('button', { name: 'How to Play' }).click();
+  await page.getByRole('button', { name: /Next/ }).click(); // intro -> full lines
+
+  // The diagram is specific to the overlapping step, not shown on others.
+  await expect(page.locator('.overlap-diagram')).toHaveCount(0);
+
+  await page.getByRole('button', { name: 'Show me' }).click();
+  await page.getByRole('button', { name: /Next/ }).click(); // -> overlapping
+
+  await expect(page.locator('.overlap-diagram')).toBeVisible();
+  await expect(page.locator('.overlap-diagram .od-col')).toHaveCount(3);
+});
+
 test('Back clears the current step so it can be redone', async ({ page }) => {
   await page.getByRole('button', { name: 'How to Play' }).click();
 
