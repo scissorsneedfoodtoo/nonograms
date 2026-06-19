@@ -146,7 +146,7 @@
       {#if isDone}
         <p class="badge">Done</p>
         <h2>You solved it! 🎉</h2>
-        <p class="reveal-name">It's a {puzzle.name}! 🐦</p>
+        <p class="reveal-name">It's a {puzzle.name}!</p>
         <p class="body">
           That is every core technique: full lines, overlapping, crosses, and joining and splitting.
           Real puzzles hide a picture like this one — you are ready to play.
