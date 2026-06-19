@@ -83,7 +83,7 @@ export interface TutorialStep {
 export const TUTORIAL_STEPS: TutorialStep[] = [
   {
     technique: 'The basics',
-    title: 'How To Read the Clues',
+    title: 'How to Read the Clues',
     body: [
       'Each number represents the length of a run of filled cells, in order from left to right (rows) or top to bottom (columns).',
       'Runs in the same row or column are always separated by at least one empty cell. For example, a clue of <pre>[3 2]</pre> means three filled cells, then at least one empty cell, then two filled cells.',
@@ -94,7 +94,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   },
   {
     technique: 'Full lines',
-    title: 'Fill a Line When the Clue Matches Its Length',
+    title: 'A Full-Length Clue Fills the Line',
     body: [
       'If a clue equals the length of its row or column, every cell in that line must be filled. Row 3 has a clue of <pre>[5]</pre> and is 5 cells wide, so all five of its cells must be filled.',
       'Fill in every cell in row 3.'
@@ -167,7 +167,7 @@ export const TUTORIAL_STEPS: TutorialStep[] = [
   },
   {
     technique: 'Joining',
-    title: 'When One End Is Blocked, the Run Extends the Other Way',
+    title: 'A Blocked End Pushes the Run the Other Way',
     body: [
       'Column 3 has a clue of <pre>[4]</pre>. Three of its cells are already filled and the bottom cell is now blocked, so the last filled cell has to be at the top.',
       "Fill the top cell of column 3 — the crest. You can optionally mark the two empty cells beside it with an X, but it's not required.",
