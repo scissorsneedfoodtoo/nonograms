@@ -1,6 +1,7 @@
 <script lang="ts">
   import { tick } from 'svelte';
   import Nonogram from './Nonogram.svelte';
+  import Tutorial from './lib/components/Tutorial.svelte';
   import PuzzleCard from './lib/components/PuzzleCard.svelte';
   import ConfirmModal from './lib/components/ConfirmModal.svelte';
   import { ALL_PUZZLES } from './lib/puzzles';
@@ -9,7 +10,7 @@
 
   const PUZZLES_PER_PAGE = 12;
 
-  let view = $state<'level-select' | 'game'>('level-select');
+  let view = $state<'level-select' | 'game' | 'tutorial'>('level-select');
   let selectedPuzzle = $state<Puzzle | null>(null);
   let selectedPuzzleOrder = $state(0);
   let userProgress = $state(getProgress());
@@ -28,7 +29,11 @@
   // so the in-game title only references its number.
   $effect(() => {
     document.title =
-      view === 'game' ? `Puzzle #${selectedPuzzleOrder} — Nonograms` : 'Nonograms';
+      view === 'game'
+        ? `Puzzle #${selectedPuzzleOrder} — Nonograms`
+        : view === 'tutorial'
+          ? 'How to Play — Nonograms'
+          : 'Nonograms';
   });
 
   function selectPuzzle(puzzle: Puzzle, order: number) {
@@ -36,6 +41,19 @@
     selectedPuzzleOrder = order;
     view = 'game';
     // Nonogram moves focus to its heading on mount.
+  }
+
+  function openTutorial() {
+    view = 'tutorial';
+    // Tutorial moves focus to its heading on mount.
+  }
+
+  async function exitTutorial() {
+    view = 'level-select';
+    // Land focus back on the button that opened the tutorial, falling back to
+    // the menu heading, so keyboard/SR users don't get dumped at <body>.
+    await tick();
+    (document.querySelector<HTMLElement>('.how-to-play-btn') ?? menuHeading)?.focus();
   }
 
   async function goBack() {
@@ -68,6 +86,7 @@
         <p>
           Challenge yourself with these logic puzzles. Accurate moves earn you the fastest times!
         </p>
+        <button class="how-to-play-btn" onclick={openTutorial}>How to Play</button>
       </header>
 
       <div class="puzzle-grid">
@@ -142,6 +161,8 @@
     {/if}
   {:else if view === 'game' && selectedPuzzle}
     <Nonogram puzzle={selectedPuzzle} order={selectedPuzzleOrder} onBack={goBack} />
+  {:else if view === 'tutorial'}
+    <Tutorial onBack={exitTutorial} />
   {/if}
 </main>
 
@@ -182,6 +203,25 @@
   .fcc-header p {
     font-size: 1.25rem;
     color: var(--gray-15);
+  }
+
+  .how-to-play-btn {
+    margin-top: 1.5rem;
+    background: transparent;
+    border: 3px solid var(--yellow-gold);
+    color: var(--yellow-gold);
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition:
+      background-color 0.1s,
+      color 0.1s;
+  }
+
+  .how-to-play-btn:hover {
+    background: var(--yellow-gold);
+    color: var(--gray-90);
   }
 
   .puzzle-grid {
