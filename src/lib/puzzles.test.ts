@@ -23,13 +23,23 @@ describe('puzzles validation', () => {
         });
       });
 
-      it('has no empty rows or columns', () => {
-        puzzle.rowClues.forEach((clues, index) => {
-          expect(clues, `Row ${index} in puzzle "${puzzle.name}" is empty`).not.toEqual([0]);
-        });
-        puzzle.colClues.forEach((clues, index) => {
-          expect(clues, `Column ${index} in puzzle "${puzzle.name}" is empty`).not.toEqual([0]);
-        });
+      // Empty rows/columns are allowed: some designs read better with a margin
+      // (e.g. the Pizza Slice no longer stretches into a thin tail). They must
+      // still be intentional, so the design has to occupy most of the grid —
+      // fewer than half the rows and columns may be empty. This scales with the
+      // puzzle size, so larger puzzles can afford more empty lines.
+      it('keeps any empty rows or columns limited and intentional', () => {
+        const emptyRows = puzzle.rowClues.filter((clues) => clues.length === 1 && clues[0] === 0).length;
+        const emptyCols = puzzle.colClues.filter((clues) => clues.length === 1 && clues[0] === 0).length;
+
+        expect(
+          emptyRows,
+          `Puzzle "${puzzle.name}" has too many empty rows (${emptyRows} of ${puzzle.height})`
+        ).toBeLessThan(puzzle.height / 2);
+        expect(
+          emptyCols,
+          `Puzzle "${puzzle.name}" has too many empty columns (${emptyCols} of ${puzzle.width})`
+        ).toBeLessThan(puzzle.width / 2);
       });
 
       it('has a unique solution', () => {
