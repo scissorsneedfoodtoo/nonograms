@@ -1,0 +1,12 @@
+# Lockfiles — never reformat
+pnpm-lock.yaml
+
+# Build output / deps
+dist
+build
+node_modules
+
+# Test artifacts
+coverage
+playwright-report
+test-results
