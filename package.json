@@ -15,6 +15,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json && tsc",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
