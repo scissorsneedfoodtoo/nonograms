@@ -76,7 +76,7 @@ export function firstFilledCell(index: number): [number, number] {
 /** Horizontal overflow of the whole document (0 means no page-level scroll). */
 export async function pageOverflow(page: Page): Promise<number> {
   return page.evaluate(
-    () => document.documentElement.scrollWidth - document.documentElement.clientWidth
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
   );
 }
 

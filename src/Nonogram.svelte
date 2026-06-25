@@ -11,14 +11,14 @@
     formatTime,
     isPuzzleInProgress,
     totalPenaltySeconds,
-    penaltyForMistake
+    penaltyForMistake,
   } from './lib/gameLogic';
   import type { CellState, Puzzle } from './lib/types';
   import {
     saveBestTime,
     savePuzzleProgress,
     getPuzzleProgress,
-    clearPuzzleProgress
+    clearPuzzleProgress,
   } from './lib/storage';
   import WinModal from './lib/components/WinModal.svelte';
 
@@ -63,14 +63,14 @@
   // Derived state for completed rows/cols
   // Use getters to ensure reactivity is tracked correctly
   let completedRows = $derived(
-    grid.length > 0 ? grid.map((row, i) => isLineCorrect(row, puzzle.solution[i])) : []
+    grid.length > 0 ? grid.map((row, i) => isLineCorrect(row, puzzle.solution[i])) : [],
   );
   let completedCols = $derived(
     grid.length > 0
       ? Array.from({ length: puzzle.width }, (_, i) =>
-          isLineCorrect(getColumn(grid, i), getSolutionColumn(puzzle.solution, i))
+          isLineCorrect(getColumn(grid, i), getSolutionColumn(puzzle.solution, i)),
         )
-      : []
+      : [],
   );
 
   let totalPenaltyTime = $derived(totalPenaltySeconds(penalties, PENALTY_STEP_SECONDS));
@@ -322,7 +322,10 @@
       <div class="corner"></div>
 
       <!-- Column Clues -->
-      <div class="col-clues" style="grid-template-columns: repeat({puzzle.width}, var(--cell-size));">
+      <div
+        class="col-clues"
+        style="grid-template-columns: repeat({puzzle.width}, var(--cell-size));"
+      >
         {#each puzzle.colClues as col, i (i)}
           <div
             id="col-clue-{i}"
@@ -395,8 +398,8 @@
 
     <div class="instructions">
       <p class="touch-controls">
-        <strong>Touch:</strong> Pick <strong>Fill</strong> or <strong>Mark</strong> above, then tap
-        cells. Drag to scroll larger puzzles — the clues stay pinned.
+        <strong>Touch:</strong> Pick <strong>Fill</strong> or <strong>Mark</strong> above, then tap cells.
+        Drag to scroll larger puzzles — the clues stay pinned.
       </p>
       <p class="desktop-controls">
         <strong>Desktop:</strong> Left Click / Space / Enter to Fill | Right Click / Shift+Click / X to
@@ -407,8 +410,8 @@
         Note: Incorrect moves are auto-corrected and add an escalating time penalty — <strong
           >{PENALTY_STEP_SECONDS}s</strong
         >
-        for the first mistake, {PENALTY_STEP_SECONDS * 2}s for the second, {PENALTY_STEP_SECONDS * 3}s
-        for the third, and so on.
+        for the first mistake, {PENALTY_STEP_SECONDS * 2}s for the second, {PENALTY_STEP_SECONDS *
+          3}s for the third, and so on.
       </p>
       {#if import.meta.env.DEV}
         <p class="dev-hint"><strong>Dev:</strong> <kbd>Shift+F</kbd> to auto-complete puzzle</p>

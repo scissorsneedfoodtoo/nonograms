@@ -10,17 +10,17 @@ export const CAT: Puzzle = {
     [1, 1, 1, 1, 1],
     [1, 0, 1, 0, 1],
     [1, 1, 1, 1, 1],
-    [0, 1, 1, 1, 0]
+    [0, 1, 1, 1, 0],
   ],
   colorSolution: [
     ['#4a4a4a', '#aed9e0', '#aed9e0', '#aed9e0', '#4a4a4a'],
     ['#6e6e6e', '#6e6e6e', '#6e6e6e', '#6e6e6e', '#6e6e6e'],
     ['#6e6e6e', '#2ecc71', '#6e6e6e', '#2ecc71', '#6e6e6e'],
     ['#6e6e6e', '#6e6e6e', '#ff9ff3', '#6e6e6e', '#6e6e6e'],
-    ['#aed9e0', '#4a4a4a', '#4a4a4a', '#4a4a4a', '#aed9e0']
+    ['#aed9e0', '#4a4a4a', '#4a4a4a', '#4a4a4a', '#aed9e0'],
   ],
   rowClues: [[1, 1], [5], [1, 1, 1], [5], [3]],
-  colClues: [[4], [1, 2], [4], [1, 2], [4]]
+  colClues: [[4], [1, 2], [4], [1, 2], [4]],
 };
 
 export const HEART: Puzzle = {
@@ -33,17 +33,17 @@ export const HEART: Puzzle = {
     [1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1],
     [0, 1, 1, 1, 0],
-    [0, 0, 1, 0, 0]
+    [0, 0, 1, 0, 0],
   ],
   colorSolution: [
     ['#ffcccc', '#ff4757', '#ffcccc', '#ff4757', '#ffcccc'],
     ['#ff4757', '#ff6b81', '#ff6b81', '#ff6b81', '#ff4757'],
     ['#ff4757', '#ff6b81', '#ff6b81', '#ff6b81', '#ff4757'],
     ['#ffcccc', '#ff4757', '#ff6b81', '#ff4757', '#ffcccc'],
-    ['#ffcccc', '#ffcccc', '#ff4757', '#ffcccc', '#ffcccc']
+    ['#ffcccc', '#ffcccc', '#ff4757', '#ffcccc', '#ffcccc'],
   ],
   rowClues: [[1, 1], [5], [5], [3], [1]],
-  colClues: [[2], [4], [4], [4], [2]]
+  colClues: [[2], [4], [4], [4], [2]],
 };
 
 export const APPLE: Puzzle = {
@@ -56,17 +56,17 @@ export const APPLE: Puzzle = {
     [0, 1, 1, 1, 0],
     [1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1],
-    [0, 1, 1, 1, 0]
+    [0, 1, 1, 1, 0],
   ],
   colorSolution: [
     ['#f1f2f6', '#f1f2f6', '#2ecc71', '#f1f2f6', '#f1f2f6'],
     ['#f1f2f6', '#ff4757', '#ff4757', '#ff4757', '#f1f2f6'],
     ['#ff4757', '#ff6b81', '#ff6b81', '#ff6b81', '#ff4757'],
     ['#ff4757', '#ff6b81', '#ff6b81', '#ff6b81', '#ff4757'],
-    ['#f1f2f6', '#ff4757', '#ff4757', '#ff4757', '#f1f2f6']
+    ['#f1f2f6', '#ff4757', '#ff4757', '#ff4757', '#f1f2f6'],
   ],
   rowClues: [[1], [3], [5], [5], [3]],
-  colClues: [[2], [4], [5], [4], [2]]
+  colClues: [[2], [4], [5], [4], [2]],
 };
 
 export const TREE: Puzzle = {
@@ -79,17 +79,17 @@ export const TREE: Puzzle = {
     [0, 1, 1, 1, 0],
     [1, 1, 1, 1, 1],
     [0, 0, 1, 0, 0],
-    [0, 0, 1, 0, 0]
+    [0, 0, 1, 0, 0],
   ],
   colorSolution: [
     ['#eccc68', '#eccc68', '#2ed573', '#eccc68', '#eccc68'],
     ['#eccc68', '#2ed573', '#2ed573', '#2ed573', '#eccc68'],
     ['#2ed573', '#7bed9f', '#7bed9f', '#7bed9f', '#2ed573'],
     ['#eccc68', '#eccc68', '#a4b0be', '#eccc68', '#eccc68'],
-    ['#eccc68', '#eccc68', '#a4b0be', '#eccc68', '#eccc68']
+    ['#eccc68', '#eccc68', '#a4b0be', '#eccc68', '#eccc68'],
   ],
   rowClues: [[1], [3], [5], [1], [1]],
-  colClues: [[1], [2], [5], [2], [1]]
+  colClues: [[1], [2], [5], [2], [1]],
 };
 
 export const HOUSE: Puzzle = {
@@ -102,17 +102,17 @@ export const HOUSE: Puzzle = {
     [0, 1, 1, 1, 0],
     [1, 1, 1, 1, 1],
     [1, 1, 0, 1, 1],
-    [1, 1, 1, 1, 1]
+    [1, 1, 1, 1, 1],
   ],
   colorSolution: [
     ['#f1f2f6', '#f1f2f6', '#ff4757', '#f1f2f6', '#f1f2f6'],
     ['#f1f2f6', '#ff4757', '#ff4757', '#ff4757', '#f1f2f6'],
     ['#ff4757', '#ff4757', '#ff4757', '#ff4757', '#ff4757'],
     ['#535c68', '#535c68', '#f1f2f6', '#535c68', '#535c68'],
-    ['#535c68', '#535c68', '#535c68', '#535c68', '#535c68']
+    ['#535c68', '#535c68', '#535c68', '#535c68', '#535c68'],
   ],
   rowClues: [[1], [3], [5], [2, 2], [5]],
-  colClues: [[3], [4], [3, 1], [4], [3]]
+  colClues: [[3], [4], [3, 1], [4], [3]],
 };
 
 export const STAR: Puzzle = {
@@ -125,17 +125,17 @@ export const STAR: Puzzle = {
     [1, 1, 1, 1, 1],
     [0, 1, 1, 1, 0],
     [1, 1, 0, 1, 1],
-    [1, 0, 0, 0, 1]
+    [1, 0, 0, 0, 1],
   ],
   colorSolution: [
     ['#2f3542', '#2f3542', '#eccc68', '#2f3542', '#2f3542'],
     ['#eccc68', '#eccc68', '#eccc68', '#eccc68', '#eccc68'],
     ['#2f3542', '#eccc68', '#eccc68', '#eccc68', '#2f3542'],
     ['#eccc68', '#eccc68', '#2f3542', '#eccc68', '#eccc68'],
-    ['#eccc68', '#2f3542', '#2f3542', '#2f3542', '#eccc68']
+    ['#eccc68', '#2f3542', '#2f3542', '#2f3542', '#eccc68'],
   ],
   rowClues: [[1], [5], [3], [2, 2], [1, 1]],
-  colClues: [[1, 2], [3], [3], [3], [1, 2]]
+  colClues: [[1, 2], [3], [3], [3], [1, 2]],
 };
 
 export const DIAMOND: Puzzle = {
@@ -148,17 +148,17 @@ export const DIAMOND: Puzzle = {
     [0, 1, 1, 1, 0],
     [1, 1, 1, 1, 1],
     [0, 1, 1, 1, 0],
-    [0, 0, 1, 0, 0]
+    [0, 0, 1, 0, 0],
   ],
   colorSolution: [
     ['#f1f2f6', '#f1f2f6', '#70a1ff', '#f1f2f6', '#f1f2f6'],
     ['#f1f2f6', '#70a1ff', '#1e90ff', '#70a1ff', '#f1f2f6'],
     ['#70a1ff', '#1e90ff', '#3742fa', '#1e90ff', '#70a1ff'],
     ['#f1f2f6', '#70a1ff', '#1e90ff', '#70a1ff', '#f1f2f6'],
-    ['#f1f2f6', '#f1f2f6', '#70a1ff', '#f1f2f6', '#f1f2f6']
+    ['#f1f2f6', '#f1f2f6', '#70a1ff', '#f1f2f6', '#f1f2f6'],
   ],
   rowClues: [[1], [3], [5], [3], [1]],
-  colClues: [[1], [3], [5], [3], [1]]
+  colClues: [[1], [3], [5], [3], [1]],
 };
 
 export const SHIELD: Puzzle = {
@@ -171,17 +171,17 @@ export const SHIELD: Puzzle = {
     [1, 1, 0, 1, 1],
     [1, 1, 1, 1, 1],
     [0, 1, 1, 1, 0],
-    [0, 0, 1, 0, 0]
+    [0, 0, 1, 0, 0],
   ],
   colorSolution: [
     ['#535c68', '#535c68', '#535c68', '#535c68', '#535c68'],
     ['#535c68', '#70a1ff', '#70a1ff', '#70a1ff', '#535c68'],
     ['#535c68', '#535c68', '#70a1ff', '#535c68', '#535c68'],
     ['#f1f2f6', '#535c68', '#535c68', '#535c68', '#f1f2f6'],
-    ['#f1f2f6', '#f1f2f6', '#535c68', '#f1f2f6', '#f1f2f6']
+    ['#f1f2f6', '#f1f2f6', '#535c68', '#f1f2f6', '#f1f2f6'],
   ],
   rowClues: [[5], [2, 2], [5], [3], [1]],
-  colClues: [[3], [4], [1, 3], [4], [3]]
+  colClues: [[3], [4], [1, 3], [4], [3]],
 };
 
 export const BOAT: Puzzle = {
@@ -194,17 +194,17 @@ export const BOAT: Puzzle = {
     [0, 1, 1, 0, 0],
     [1, 1, 1, 1, 1],
     [0, 1, 1, 1, 0],
-    [1, 1, 1, 1, 1]
+    [1, 1, 1, 1, 1],
   ],
   colorSolution: [
     ['#aed9e0', '#aed9e0', '#ffffff', '#aed9e0', '#aed9e0'],
     ['#aed9e0', '#ffffff', '#ffffff', '#aed9e0', '#aed9e0'],
     ['#ff4757', '#ff4757', '#ff4757', '#ff4757', '#ff4757'],
     ['#aed9e0', '#ff4757', '#ff4757', '#ff4757', '#aed9e0'],
-    ['#3742fa', '#3742fa', '#3742fa', '#3742fa', '#3742fa']
+    ['#3742fa', '#3742fa', '#3742fa', '#3742fa', '#3742fa'],
   ],
   rowClues: [[1], [2], [5], [3], [5]],
-  colClues: [[1, 1], [4], [5], [3], [1, 1]]
+  colClues: [[1, 1], [4], [5], [3], [1, 1]],
 };
 
 export const DUCK: Puzzle = {
@@ -217,17 +217,17 @@ export const DUCK: Puzzle = {
     [1, 1, 1, 0, 0],
     [0, 1, 1, 1, 1],
     [0, 1, 1, 1, 0],
-    [1, 1, 1, 1, 1]
+    [1, 1, 1, 1, 1],
   ],
   colorSolution: [
     ['#f1f2f6', '#eccc68', '#eccc68', '#f1f2f6', '#f1f2f6'],
     ['#eccc68', '#eccc68', '#eccc68', '#f1f2f6', '#f1f2f6'],
     ['#f1f2f6', '#eccc68', '#eccc68', '#eccc68', '#eccc68'],
     ['#f1f2f6', '#eccc68', '#eccc68', '#eccc68', '#f1f2f6'],
-    ['#70a1ff', '#70a1ff', '#70a1ff', '#70a1ff', '#70a1ff']
+    ['#70a1ff', '#70a1ff', '#70a1ff', '#70a1ff', '#70a1ff'],
   ],
   rowClues: [[2], [3], [4], [3], [5]],
-  colClues: [[1, 1], [5], [5], [3], [1, 1]]
+  colClues: [[1, 1], [5], [5], [3], [1, 1]],
 };
 
 export const MUSHROOM: Puzzle = {
@@ -240,17 +240,17 @@ export const MUSHROOM: Puzzle = {
     [1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1],
     [0, 1, 1, 1, 0],
-    [0, 0, 1, 0, 0]
+    [0, 0, 1, 0, 0],
   ],
   colorSolution: [
     ['#2870c0', '#ff4757', '#ff4757', '#ff4757', '#2870c0'],
     ['#ff4757', '#ffffff', '#ff4757', '#ffffff', '#ff4757'],
     ['#ff4757', '#ff4757', '#ff4757', '#ff4757', '#ff4757'],
     ['#2870c0', '#ffffff', '#ffffff', '#ffffff', '#2870c0'],
-    ['#2870c0', '#2870c0', '#ffffff', '#2870c0', '#2870c0']
+    ['#2870c0', '#2870c0', '#ffffff', '#2870c0', '#2870c0'],
   ],
   rowClues: [[3], [5], [5], [3], [1]],
-  colClues: [[2], [4], [5], [4], [2]]
+  colClues: [[2], [4], [5], [4], [2]],
 };
 
 export const COFFEE_MUG: Puzzle = {
@@ -263,17 +263,17 @@ export const COFFEE_MUG: Puzzle = {
     [1, 1, 1, 1, 1],
     [1, 0, 1, 1, 1],
     [1, 1, 1, 1, 0],
-    [0, 1, 1, 1, 0]
+    [0, 1, 1, 1, 0],
   ],
   colorSolution: [
     ['#8b5e3c', '#8b5e3c', '#8b5e3c', '#8b5e3c', '#ffffff'],
     ['#8b5e3c', '#8b5e3c', '#8b5e3c', '#8b5e3c', '#8b5e3c'],
     ['#8b5e3c', '#c49a6c', '#8b5e3c', '#8b5e3c', '#8b5e3c'],
     ['#8b5e3c', '#8b5e3c', '#8b5e3c', '#8b5e3c', '#ffffff'],
-    ['#ffffff', '#c49a6c', '#c49a6c', '#c49a6c', '#ffffff']
+    ['#ffffff', '#c49a6c', '#c49a6c', '#c49a6c', '#ffffff'],
   ],
   rowClues: [[4], [5], [1, 3], [4], [3]],
-  colClues: [[4], [2, 2], [5], [5], [2]]
+  colClues: [[4], [2, 2], [5], [5], [2]],
 };
 
 export const ROCKET: Puzzle = {
@@ -291,7 +291,7 @@ export const ROCKET: Puzzle = {
     [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-    [0, 0, 1, 0, 1, 1, 0, 1, 0, 0]
+    [0, 0, 1, 0, 1, 1, 0, 1, 0, 0],
   ],
   colorSolution: [
     [
@@ -304,7 +304,7 @@ export const ROCKET: Puzzle = {
       '#0c2461',
       '#0c2461',
       '#0c2461',
-      '#0c2461'
+      '#0c2461',
     ],
     [
       '#0c2461',
@@ -316,7 +316,7 @@ export const ROCKET: Puzzle = {
       '#dcdde1',
       '#0c2461',
       '#0c2461',
-      '#0c2461'
+      '#0c2461',
     ],
     [
       '#0c2461',
@@ -328,7 +328,7 @@ export const ROCKET: Puzzle = {
       '#dcdde1',
       '#0c2461',
       '#0c2461',
-      '#0c2461'
+      '#0c2461',
     ],
     [
       '#0c2461',
@@ -340,7 +340,7 @@ export const ROCKET: Puzzle = {
       '#dcdde1',
       '#0c2461',
       '#0c2461',
-      '#0c2461'
+      '#0c2461',
     ],
     [
       '#0c2461',
@@ -352,7 +352,7 @@ export const ROCKET: Puzzle = {
       '#dcdde1',
       '#dcdde1',
       '#0c2461',
-      '#0c2461'
+      '#0c2461',
     ],
     [
       '#0c2461',
@@ -364,7 +364,7 @@ export const ROCKET: Puzzle = {
       '#dcdde1',
       '#dcdde1',
       '#0c2461',
-      '#0c2461'
+      '#0c2461',
     ],
     [
       '#0c2461',
@@ -376,7 +376,7 @@ export const ROCKET: Puzzle = {
       '#dcdde1',
       '#dcdde1',
       '#0c2461',
-      '#0c2461'
+      '#0c2461',
     ],
     [
       '#0c2461',
@@ -388,7 +388,7 @@ export const ROCKET: Puzzle = {
       '#dcdde1',
       '#7f8c8d',
       '#7f8c8d',
-      '#0c2461'
+      '#0c2461',
     ],
     [
       '#0c2461',
@@ -400,7 +400,7 @@ export const ROCKET: Puzzle = {
       '#7f8c8d',
       '#0c2461',
       '#0c2461',
-      '#0c2461'
+      '#0c2461',
     ],
     [
       '#0c2461',
@@ -412,11 +412,11 @@ export const ROCKET: Puzzle = {
       '#0c2461',
       '#e67e22',
       '#0c2461',
-      '#0c2461'
-    ]
+      '#0c2461',
+    ],
   ],
   rowClues: [[2], [4], [4], [4], [6], [6], [6], [8], [4], [1, 2, 1]],
-  colClues: [[0], [1], [4, 1], [8], [10], [10], [8], [4, 1], [1], [0]]
+  colClues: [[0], [1], [4, 1], [8], [10], [10], [8], [4, 1], [1], [0]],
 };
 
 export const GHOST: Puzzle = {
@@ -434,7 +434,7 @@ export const GHOST: Puzzle = {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
-    [1, 0, 0, 1, 0, 0, 1, 0, 0, 1]
+    [1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
   ],
   colorSolution: [
     [
@@ -447,7 +447,7 @@ export const GHOST: Puzzle = {
       '#f5f6fa',
       '#f5f6fa',
       '#1e272e',
-      '#1e272e'
+      '#1e272e',
     ],
     [
       '#1e272e',
@@ -459,7 +459,7 @@ export const GHOST: Puzzle = {
       '#f5f6fa',
       '#f5f6fa',
       '#f5f6fa',
-      '#1e272e'
+      '#1e272e',
     ],
     [
       '#f5f6fa',
@@ -471,7 +471,7 @@ export const GHOST: Puzzle = {
       '#f5f6fa',
       '#f5f6fa',
       '#f5f6fa',
-      '#f5f6fa'
+      '#f5f6fa',
     ],
     [
       '#f5f6fa',
@@ -483,7 +483,7 @@ export const GHOST: Puzzle = {
       '#1e272e',
       '#f5f6fa',
       '#f5f6fa',
-      '#f5f6fa'
+      '#f5f6fa',
     ],
     [
       '#f5f6fa',
@@ -495,7 +495,7 @@ export const GHOST: Puzzle = {
       '#1e272e',
       '#f5f6fa',
       '#f5f6fa',
-      '#f5f6fa'
+      '#f5f6fa',
     ],
     [
       '#f5f6fa',
@@ -507,7 +507,7 @@ export const GHOST: Puzzle = {
       '#f5f6fa',
       '#f5f6fa',
       '#f5f6fa',
-      '#f5f6fa'
+      '#f5f6fa',
     ],
     [
       '#f5f6fa',
@@ -519,7 +519,7 @@ export const GHOST: Puzzle = {
       '#f5f6fa',
       '#f5f6fa',
       '#f5f6fa',
-      '#f5f6fa'
+      '#f5f6fa',
     ],
     [
       '#f5f6fa',
@@ -531,7 +531,7 @@ export const GHOST: Puzzle = {
       '#f5f6fa',
       '#f5f6fa',
       '#f5f6fa',
-      '#f5f6fa'
+      '#f5f6fa',
     ],
     [
       '#f5f6fa',
@@ -543,7 +543,7 @@ export const GHOST: Puzzle = {
       '#f5f6fa',
       '#1e272e',
       '#1e272e',
-      '#f5f6fa'
+      '#f5f6fa',
     ],
     [
       '#f5f6fa',
@@ -555,11 +555,11 @@ export const GHOST: Puzzle = {
       '#f5f6fa',
       '#1e272e',
       '#1e272e',
-      '#f5f6fa'
-    ]
+      '#f5f6fa',
+    ],
   ],
   rowClues: [[6], [8], [10], [3, 2, 3], [3, 2, 3], [10], [10], [10], [1, 1, 1, 1], [1, 1, 1, 1]],
-  colClues: [[8], [7], [8], [3, 5], [8], [8], [3, 5], [8], [7], [8]]
+  colClues: [[8], [7], [8], [3, 5], [8], [8], [3, 5], [8], [7], [8]],
 };
 
 export const CACTUS: Puzzle = {
@@ -577,7 +577,7 @@ export const CACTUS: Puzzle = {
     [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0]
+    [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
   ],
   colorSolution: [
     [
@@ -590,7 +590,7 @@ export const CACTUS: Puzzle = {
       '#87ceeb',
       '#87ceeb',
       '#87ceeb',
-      '#87ceeb'
+      '#87ceeb',
     ],
     [
       '#87ceeb',
@@ -602,7 +602,7 @@ export const CACTUS: Puzzle = {
       '#87ceeb',
       '#87ceeb',
       '#87ceeb',
-      '#87ceeb'
+      '#87ceeb',
     ],
     [
       '#87ceeb',
@@ -614,7 +614,7 @@ export const CACTUS: Puzzle = {
       '#87ceeb',
       '#2d6a4f',
       '#2d6a4f',
-      '#87ceeb'
+      '#87ceeb',
     ],
     [
       '#87ceeb',
@@ -626,7 +626,7 @@ export const CACTUS: Puzzle = {
       '#87ceeb',
       '#2d6a4f',
       '#2d6a4f',
-      '#87ceeb'
+      '#87ceeb',
     ],
     [
       '#87ceeb',
@@ -638,7 +638,7 @@ export const CACTUS: Puzzle = {
       '#2d6a4f',
       '#2d6a4f',
       '#2d6a4f',
-      '#87ceeb'
+      '#87ceeb',
     ],
     [
       '#87ceeb',
@@ -650,7 +650,7 @@ export const CACTUS: Puzzle = {
       '#87ceeb',
       '#87ceeb',
       '#87ceeb',
-      '#87ceeb'
+      '#87ceeb',
     ],
     [
       '#87ceeb',
@@ -662,7 +662,7 @@ export const CACTUS: Puzzle = {
       '#8b5e3c',
       '#8b5e3c',
       '#87ceeb',
-      '#87ceeb'
+      '#87ceeb',
     ],
     [
       '#87ceeb',
@@ -674,7 +674,7 @@ export const CACTUS: Puzzle = {
       '#c1440e',
       '#87ceeb',
       '#87ceeb',
-      '#87ceeb'
+      '#87ceeb',
     ],
     [
       '#87ceeb',
@@ -686,7 +686,7 @@ export const CACTUS: Puzzle = {
       '#c1440e',
       '#87ceeb',
       '#87ceeb',
-      '#87ceeb'
+      '#87ceeb',
     ],
     [
       '#87ceeb',
@@ -698,11 +698,11 @@ export const CACTUS: Puzzle = {
       '#c1440e',
       '#87ceeb',
       '#87ceeb',
-      '#87ceeb'
-    ]
+      '#87ceeb',
+    ],
   ],
   rowClues: [[2], [2, 2], [2, 2, 2], [5, 2], [5], [2], [6], [4], [4], [4]],
-  colClues: [[0], [3], [3, 1], [1, 4], [10], [10], [1, 4], [3, 1], [3], [0]]
+  colClues: [[0], [3], [3, 1], [1, 4], [10], [10], [1, 4], [3, 1], [3], [0]],
 };
 
 export const CROWN: Puzzle = {
@@ -720,7 +720,7 @@ export const CROWN: Puzzle = {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [0, 0, 1, 1, 1, 1, 1, 1, 0, 0]
+    [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
   ],
   colorSolution: [
     [
@@ -733,7 +733,7 @@ export const CROWN: Puzzle = {
       '#FFD700',
       '#1a1a2e',
       '#1a1a2e',
-      '#FFD700'
+      '#FFD700',
     ],
     [
       '#FFD700',
@@ -745,7 +745,7 @@ export const CROWN: Puzzle = {
       '#FFD700',
       '#1a1a2e',
       '#FFD700',
-      '#FFD700'
+      '#FFD700',
     ],
     [
       '#FFD700',
@@ -757,7 +757,7 @@ export const CROWN: Puzzle = {
       '#FFD700',
       '#1a1a2e',
       '#FFD700',
-      '#FFD700'
+      '#FFD700',
     ],
     [
       '#FFD700',
@@ -769,7 +769,7 @@ export const CROWN: Puzzle = {
       '#FFD700',
       '#FFD700',
       '#FFD700',
-      '#FFD700'
+      '#FFD700',
     ],
     [
       '#FFD700',
@@ -781,7 +781,7 @@ export const CROWN: Puzzle = {
       '#FFD700',
       '#FFD700',
       '#c0392b',
-      '#FFD700'
+      '#FFD700',
     ],
     [
       '#FFD700',
@@ -793,7 +793,7 @@ export const CROWN: Puzzle = {
       '#FFD700',
       '#FFD700',
       '#FFD700',
-      '#FFD700'
+      '#FFD700',
     ],
     [
       '#FFD700',
@@ -805,7 +805,7 @@ export const CROWN: Puzzle = {
       '#FFD700',
       '#FFD700',
       '#FFD700',
-      '#FFD700'
+      '#FFD700',
     ],
     [
       '#1a1a2e',
@@ -817,7 +817,7 @@ export const CROWN: Puzzle = {
       '#DAA520',
       '#DAA520',
       '#DAA520',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -829,7 +829,7 @@ export const CROWN: Puzzle = {
       '#DAA520',
       '#DAA520',
       '#DAA520',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -841,11 +841,11 @@ export const CROWN: Puzzle = {
       '#B8860B',
       '#B8860B',
       '#1a1a2e',
-      '#1a1a2e'
-    ]
+      '#1a1a2e',
+    ],
   ],
   rowClues: [[1, 1, 1, 1], [2, 1, 1, 2], [2, 1, 1, 2], [10], [10], [10], [10], [8], [8], [6]],
-  colClues: [[7], [8], [7], [10], [7], [7], [10], [7], [8], [7]]
+  colClues: [[7], [8], [7], [10], [7], [7], [10], [7], [8], [7]],
 };
 
 export const PIZZA_SLICE: Puzzle = {
@@ -863,7 +863,7 @@ export const PIZZA_SLICE: Puzzle = {
     [0, 0, 0, 1, 0, 0, 1, 0, 0, 0],
     [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ],
   colorSolution: [
     [
@@ -876,7 +876,7 @@ export const PIZZA_SLICE: Puzzle = {
       '#c8860a',
       '#c8860a',
       '#c8860a',
-      '#c8860a'
+      '#c8860a',
     ],
     [
       '#1a1a2e',
@@ -888,7 +888,7 @@ export const PIZZA_SLICE: Puzzle = {
       '#f4d03f',
       '#27ae60',
       '#f4d03f',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -900,7 +900,7 @@ export const PIZZA_SLICE: Puzzle = {
       '#f4d03f',
       '#f4d03f',
       '#c0392b',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -912,7 +912,7 @@ export const PIZZA_SLICE: Puzzle = {
       '#27ae60',
       '#f4d03f',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -924,7 +924,7 @@ export const PIZZA_SLICE: Puzzle = {
       '#f4d03f',
       '#f4d03f',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -936,7 +936,7 @@ export const PIZZA_SLICE: Puzzle = {
       '#27ae60',
       '#1a1a2e',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -948,7 +948,7 @@ export const PIZZA_SLICE: Puzzle = {
       '#c0392b',
       '#1a1a2e',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -960,7 +960,7 @@ export const PIZZA_SLICE: Puzzle = {
       '#1a1a2e',
       '#1a1a2e',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -972,7 +972,7 @@ export const PIZZA_SLICE: Puzzle = {
       '#1a1a2e',
       '#1a1a2e',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -984,11 +984,11 @@ export const PIZZA_SLICE: Puzzle = {
       '#1a1a2e',
       '#1a1a2e',
       '#1a1a2e',
-      '#1a1a2e'
-    ]
+      '#1a1a2e',
+    ],
   ],
   rowClues: [[10], [8], [1, 4, 1], [6], [1, 2, 1], [4], [1, 1], [2], [0], [0]],
-  colClues: [[1], [3], [2, 2], [4, 2], [6, 1], [6, 1], [4, 2], [2, 2], [3], [1]]
+  colClues: [[1], [3], [2, 2], [4, 2], [6, 1], [6, 1], [4, 2], [2, 2], [3], [1]],
 };
 
 export const PENGUIN: Puzzle = {
@@ -1006,7 +1006,7 @@ export const PENGUIN: Puzzle = {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-    [0, 0, 1, 1, 0, 0, 1, 1, 0, 0]
+    [0, 0, 1, 1, 0, 0, 1, 1, 0, 0],
   ],
   colorSolution: [
     [
@@ -1019,7 +1019,7 @@ export const PENGUIN: Puzzle = {
       '#2d3436',
       '#cce7f5',
       '#cce7f5',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#cce7f5',
@@ -1031,7 +1031,7 @@ export const PENGUIN: Puzzle = {
       '#2d3436',
       '#2d3436',
       '#cce7f5',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#cce7f5',
@@ -1043,7 +1043,7 @@ export const PENGUIN: Puzzle = {
       '#f5f6fa',
       '#2d3436',
       '#cce7f5',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#cce7f5',
@@ -1055,7 +1055,7 @@ export const PENGUIN: Puzzle = {
       '#2d3436',
       '#2d3436',
       '#cce7f5',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#cce7f5',
@@ -1067,7 +1067,7 @@ export const PENGUIN: Puzzle = {
       '#f5f6fa',
       '#2d3436',
       '#cce7f5',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#2d3436',
@@ -1079,7 +1079,7 @@ export const PENGUIN: Puzzle = {
       '#f5f6fa',
       '#2d3436',
       '#2d3436',
-      '#2d3436'
+      '#2d3436',
     ],
     [
       '#2d3436',
@@ -1091,7 +1091,7 @@ export const PENGUIN: Puzzle = {
       '#f5f6fa',
       '#2d3436',
       '#2d3436',
-      '#2d3436'
+      '#2d3436',
     ],
     [
       '#cce7f5',
@@ -1103,7 +1103,7 @@ export const PENGUIN: Puzzle = {
       '#f5f6fa',
       '#2d3436',
       '#cce7f5',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#dfe6e9',
@@ -1115,7 +1115,7 @@ export const PENGUIN: Puzzle = {
       '#2d3436',
       '#dfe6e9',
       '#dfe6e9',
-      '#dfe6e9'
+      '#dfe6e9',
     ],
     [
       '#dfe6e9',
@@ -1127,11 +1127,11 @@ export const PENGUIN: Puzzle = {
       '#f39c12',
       '#f39c12',
       '#dfe6e9',
-      '#dfe6e9'
-    ]
+      '#dfe6e9',
+    ],
   ],
   rowClues: [[4], [6], [6], [6], [6], [10], [10], [6], [4], [2, 2]],
-  colClues: [[2], [2], [7, 1], [10], [9], [9], [10], [7, 1], [2], [2]]
+  colClues: [[2], [2], [7, 1], [10], [9], [9], [10], [7, 1], [2], [2]],
 };
 
 export const BUTTERFLY: Puzzle = {
@@ -1149,7 +1149,7 @@ export const BUTTERFLY: Puzzle = {
     [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
-    [0, 1, 1, 1, 0, 0, 1, 1, 1, 0]
+    [0, 1, 1, 1, 0, 0, 1, 1, 1, 0],
   ],
   colorSolution: [
     [
@@ -1162,7 +1162,7 @@ export const BUTTERFLY: Puzzle = {
       '#1a1a2e',
       '#1a1a2e',
       '#1a1a2e',
-      '#dfe6e9'
+      '#dfe6e9',
     ],
     [
       '#1a1a2e',
@@ -1174,7 +1174,7 @@ export const BUTTERFLY: Puzzle = {
       '#1a1a2e',
       '#e67e22',
       '#e67e22',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1186,7 +1186,7 @@ export const BUTTERFLY: Puzzle = {
       '#f39c12',
       '#e67e22',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1198,7 +1198,7 @@ export const BUTTERFLY: Puzzle = {
       '#f39c12',
       '#1a1a2e',
       '#e67e22',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1210,7 +1210,7 @@ export const BUTTERFLY: Puzzle = {
       '#1a1a2e',
       '#e67e22',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1222,7 +1222,7 @@ export const BUTTERFLY: Puzzle = {
       '#1a1a2e',
       '#e67e22',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1234,7 +1234,7 @@ export const BUTTERFLY: Puzzle = {
       '#f39c12',
       '#1a1a2e',
       '#ffffff',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1246,7 +1246,7 @@ export const BUTTERFLY: Puzzle = {
       '#f39c12',
       '#e67e22',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1258,7 +1258,7 @@ export const BUTTERFLY: Puzzle = {
       '#1a1a2e',
       '#e67e22',
       '#e67e22',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#dfe6e9',
@@ -1270,8 +1270,8 @@ export const BUTTERFLY: Puzzle = {
       '#1a1a2e',
       '#1a1a2e',
       '#1a1a2e',
-      '#dfe6e9'
-    ]
+      '#dfe6e9',
+    ],
   ],
   rowClues: [
     [3, 3],
@@ -1283,9 +1283,9 @@ export const BUTTERFLY: Puzzle = {
     [1, 6, 1],
     [10],
     [4, 4],
-    [3, 3]
+    [3, 3],
   ],
-  colClues: [[8], [3, 2, 3], [4, 4], [10], [6], [6], [10], [4, 4], [3, 2, 3], [8]]
+  colClues: [[8], [3, 2, 3], [4, 4], [10], [6], [6], [10], [4, 4], [3, 2, 3], [8]],
 };
 
 export const TROPHY: Puzzle = {
@@ -1303,7 +1303,7 @@ export const TROPHY: Puzzle = {
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
     [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
     [0, 1, 1, 0, 0, 0, 0, 1, 1, 0],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ],
   colorSolution: [
     [
@@ -1316,7 +1316,7 @@ export const TROPHY: Puzzle = {
       '#f4d03f',
       '#f1c40f',
       '#d4af37',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
 
     [
@@ -1329,7 +1329,7 @@ export const TROPHY: Puzzle = {
       '#1a1a2e',
       '#f4d03f',
       '#f1c40f',
-      '#d4af37'
+      '#d4af37',
     ],
 
     [
@@ -1342,7 +1342,7 @@ export const TROPHY: Puzzle = {
       '#f7dc6f',
       '#f7dc6f',
       '#f1c40f',
-      '#d4af37'
+      '#d4af37',
     ],
 
     [
@@ -1355,7 +1355,7 @@ export const TROPHY: Puzzle = {
       '#f7dc6f',
       '#f1c40f',
       '#d4af37',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
 
     [
@@ -1368,7 +1368,7 @@ export const TROPHY: Puzzle = {
       '#f1c40f',
       '#d4af37',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
 
     [
@@ -1381,7 +1381,7 @@ export const TROPHY: Puzzle = {
       '#c0c0c0',
       '#1a1a2e',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
 
     [
@@ -1394,7 +1394,7 @@ export const TROPHY: Puzzle = {
       '#c0c0c0',
       '#1a1a2e',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
 
     [
@@ -1407,7 +1407,7 @@ export const TROPHY: Puzzle = {
       '#8b5e3c',
       '#8b5e3c',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
 
     [
@@ -1420,7 +1420,7 @@ export const TROPHY: Puzzle = {
       '#1a1a2e',
       '#8b5e3c',
       '#8b5e3c',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
 
     [
@@ -1433,8 +1433,8 @@ export const TROPHY: Puzzle = {
       '#c49a6c',
       '#c49a6c',
       '#8b5e3c',
-      '#8b5e3c'
-    ]
+      '#8b5e3c',
+    ],
   ],
   rowClues: [[8], [3, 3], [10], [8], [6], [4], [4], [6], [2, 2], [10]],
   colClues: [
@@ -1447,8 +1447,8 @@ export const TROPHY: Puzzle = {
     [1, 6, 1],
     [5, 3],
     [4, 2],
-    [2, 1]
-  ]
+    [2, 1],
+  ],
 };
 
 export const CAMPFIRE: Puzzle = {
@@ -1466,7 +1466,7 @@ export const CAMPFIRE: Puzzle = {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [0, 0, 1, 1, 1, 1, 1, 1, 0, 0]
+    [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
   ],
   colorSolution: [
     [
@@ -1479,7 +1479,7 @@ export const CAMPFIRE: Puzzle = {
       '#1a1a2e',
       '#1a1a2e',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1491,7 +1491,7 @@ export const CAMPFIRE: Puzzle = {
       '#c0392b',
       '#1a1a2e',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1503,7 +1503,7 @@ export const CAMPFIRE: Puzzle = {
       '#e55039',
       '#1a1a2e',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1515,7 +1515,7 @@ export const CAMPFIRE: Puzzle = {
       '#e55039',
       '#c0392b',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1527,7 +1527,7 @@ export const CAMPFIRE: Puzzle = {
       '#f0932b',
       '#e55039',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1539,7 +1539,7 @@ export const CAMPFIRE: Puzzle = {
       '#f0932b',
       '#e55039',
       '#c0392b',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#8b4513',
@@ -1551,7 +1551,7 @@ export const CAMPFIRE: Puzzle = {
       '#c0392b',
       '#8b4513',
       '#8b4513',
-      '#8b4513'
+      '#8b4513',
     ],
     [
       '#4a1c09',
@@ -1563,7 +1563,7 @@ export const CAMPFIRE: Puzzle = {
       '#8b4513',
       '#a0522d',
       '#8b4513',
-      '#4a1c09'
+      '#4a1c09',
     ],
     [
       '#1a1a2e',
@@ -1575,7 +1575,7 @@ export const CAMPFIRE: Puzzle = {
       '#8b4513',
       '#8b4513',
       '#4a1c09',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1587,11 +1587,11 @@ export const CAMPFIRE: Puzzle = {
       '#8b4513',
       '#4a1c09',
       '#1a1a2e',
-      '#1a1a2e'
-    ]
+      '#1a1a2e',
+    ],
   ],
   rowClues: [[2], [4], [5], [7], [6], [8], [10], [10], [8], [6]],
-  colClues: [[2], [1, 4], [8], [9], [10], [10], [9], [7], [4], [2]]
+  colClues: [[2], [1, 4], [8], [9], [10], [10], [9], [7], [4], [2]],
 };
 
 export const SNAIL: Puzzle = {
@@ -1609,7 +1609,7 @@ export const SNAIL: Puzzle = {
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
-    [0, 1, 1, 1, 1, 1, 1, 1, 0, 0]
+    [0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
   ],
   colorSolution: [
     [
@@ -1622,7 +1622,7 @@ export const SNAIL: Puzzle = {
       '#cfe0ef',
       '#cfe0ef',
       '#cfe0ef',
-      '#cfe0ef'
+      '#cfe0ef',
     ],
     [
       '#a7b58e',
@@ -1634,7 +1634,7 @@ export const SNAIL: Puzzle = {
       '#8a5a30',
       '#8a5a30',
       '#cfe0ef',
-      '#cfe0ef'
+      '#cfe0ef',
     ],
     [
       '#cfe0ef',
@@ -1646,7 +1646,7 @@ export const SNAIL: Puzzle = {
       '#b07a3e',
       '#b07a3e',
       '#b07a3e',
-      '#cfe0ef'
+      '#cfe0ef',
     ],
     [
       '#cfe0ef',
@@ -1658,7 +1658,7 @@ export const SNAIL: Puzzle = {
       '#d59f59',
       '#d59f59',
       '#b07a3e',
-      '#8a5a30'
+      '#8a5a30',
     ],
     [
       '#a7b58e',
@@ -1670,7 +1670,7 @@ export const SNAIL: Puzzle = {
       '#f0c48c',
       '#d59f59',
       '#b07a3e',
-      '#8a5a30'
+      '#8a5a30',
     ],
     [
       '#a7b58e',
@@ -1682,7 +1682,7 @@ export const SNAIL: Puzzle = {
       '#d59f59',
       '#d59f59',
       '#b07a3e',
-      '#8a5a30'
+      '#8a5a30',
     ],
     [
       '#cfe0ef',
@@ -1694,7 +1694,7 @@ export const SNAIL: Puzzle = {
       '#b07a3e',
       '#b07a3e',
       '#b07a3e',
-      '#8a5a30'
+      '#8a5a30',
     ],
     [
       '#cfe0ef',
@@ -1706,7 +1706,7 @@ export const SNAIL: Puzzle = {
       '#8a5a30',
       '#8a5a30',
       '#8a5a30',
-      '#cfe0ef'
+      '#cfe0ef',
     ],
     [
       '#8a9a72',
@@ -1718,7 +1718,7 @@ export const SNAIL: Puzzle = {
       '#8a9a72',
       '#8a9a72',
       '#8a9a72',
-      '#cfe0ef'
+      '#cfe0ef',
     ],
     [
       '#cfe0ef',
@@ -1730,11 +1730,11 @@ export const SNAIL: Puzzle = {
       '#8a9a72',
       '#8a9a72',
       '#cfe0ef',
-      '#cfe0ef'
-    ]
+      '#cfe0ef',
+    ],
   ],
   rowClues: [[1, 1], [1, 1, 3], [2, 5], [9], [10], [10], [9], [8], [9], [7]],
-  colClues: [[2, 2, 1], [8], [10], [7], [8], [9], [9], [9], [7], [4]]
+  colClues: [[2, 2, 1], [8], [10], [7], [8], [9], [9], [9], [7], [4]],
 };
 
 export const ALIEN: Puzzle = {
@@ -1752,7 +1752,7 @@ export const ALIEN: Puzzle = {
     [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
     [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
     [0, 1, 1, 1, 0, 0, 1, 1, 1, 0],
-    [0, 0, 1, 0, 0, 0, 0, 1, 0, 0]
+    [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
   ],
   colorSolution: [
     [
@@ -1765,7 +1765,7 @@ export const ALIEN: Puzzle = {
       '#1a1a2e',
       '#7bed9f',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1777,7 +1777,7 @@ export const ALIEN: Puzzle = {
       '#7bed9f',
       '#1a1a2e',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1789,7 +1789,7 @@ export const ALIEN: Puzzle = {
       '#2ed573',
       '#2ed573',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1801,7 +1801,7 @@ export const ALIEN: Puzzle = {
       '#2ed573',
       '#2ed573',
       '#2ed573',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#2ed573',
@@ -1813,7 +1813,7 @@ export const ALIEN: Puzzle = {
       '#2ed573',
       '#1a1a2e',
       '#2ed573',
-      '#2ed573'
+      '#2ed573',
     ],
     [
       '#2ed573',
@@ -1825,7 +1825,7 @@ export const ALIEN: Puzzle = {
       '#2ed573',
       '#2ed573',
       '#2ed573',
-      '#2ed573'
+      '#2ed573',
     ],
     [
       '#2ed573',
@@ -1837,7 +1837,7 @@ export const ALIEN: Puzzle = {
       '#2ed573',
       '#2ed573',
       '#1a1a2e',
-      '#2ed573'
+      '#2ed573',
     ],
     [
       '#2ed573',
@@ -1849,7 +1849,7 @@ export const ALIEN: Puzzle = {
       '#1a1a2e',
       '#2ed573',
       '#1a1a2e',
-      '#2ed573'
+      '#2ed573',
     ],
     [
       '#1a1a2e',
@@ -1861,7 +1861,7 @@ export const ALIEN: Puzzle = {
       '#27ae60',
       '#27ae60',
       '#27ae60',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1873,11 +1873,11 @@ export const ALIEN: Puzzle = {
       '#1a1a2e',
       '#27ae60',
       '#1a1a2e',
-      '#1a1a2e'
-    ]
+      '#1a1a2e',
+    ],
   ],
   rowClues: [[1, 1], [1, 1], [6], [8], [2, 4, 2], [10], [1, 6, 1], [1, 1, 1, 1], [3, 3], [1, 1]],
-  colClues: [[4], [3, 1], [1, 2, 5], [6, 1], [5], [5], [6, 1], [1, 2, 5], [3, 1], [4]]
+  colClues: [[4], [3, 1], [1, 2, 5], [6, 1], [5], [5], [6, 1], [1, 2, 5], [3, 1], [4]],
 };
 
 export const WHALE: Puzzle = {
@@ -1895,7 +1895,7 @@ export const WHALE: Puzzle = {
     [0, 0, 1, 1, 1, 1, 1, 0, 0, 0],
     [0, 0, 1, 1, 1, 0, 0, 0, 0, 0],
     [0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
-    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0]
+    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
   ],
   colorSolution: [
     [
@@ -1908,7 +1908,7 @@ export const WHALE: Puzzle = {
       '#cce7f5',
       '#cce7f5',
       '#cce7f5',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#cce7f5',
@@ -1920,7 +1920,7 @@ export const WHALE: Puzzle = {
       '#1a1a2e',
       '#1a1a2e',
       '#cce7f5',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#cce7f5',
@@ -1932,7 +1932,7 @@ export const WHALE: Puzzle = {
       '#1a1a2e',
       '#ffffff',
       '#1a1a2e',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#cce7f5',
@@ -1944,7 +1944,7 @@ export const WHALE: Puzzle = {
       '#1a1a2e',
       '#1a1a2e',
       '#1a1a2e',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#1a1a2e',
@@ -1956,7 +1956,7 @@ export const WHALE: Puzzle = {
       '#ffffff',
       '#ffffff',
       '#ffffff',
-      '#1a1a2e'
+      '#1a1a2e',
     ],
     [
       '#cce7f5',
@@ -1968,7 +1968,7 @@ export const WHALE: Puzzle = {
       '#ffffff',
       '#ffffff',
       '#1a1a2e',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#cce7f5',
@@ -1980,7 +1980,7 @@ export const WHALE: Puzzle = {
       '#1a1a2e',
       '#cce7f5',
       '#cce7f5',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#cce7f5',
@@ -1992,7 +1992,7 @@ export const WHALE: Puzzle = {
       '#cce7f5',
       '#cce7f5',
       '#cce7f5',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#cce7f5',
@@ -2004,7 +2004,7 @@ export const WHALE: Puzzle = {
       '#cce7f5',
       '#cce7f5',
       '#cce7f5',
-      '#cce7f5'
+      '#cce7f5',
     ],
     [
       '#1a1a2e',
@@ -2016,11 +2016,11 @@ export const WHALE: Puzzle = {
       '#cce7f5',
       '#cce7f5',
       '#cce7f5',
-      '#cce7f5'
-    ]
+      '#cce7f5',
+    ],
   ],
   rowClues: [[2], [5], [7], [9], [10], [8], [5], [3], [2], [3]],
-  colClues: [[1, 1], [3, 2], [8], [7], [8], [7], [6], [5], [4], [2]]
+  colClues: [[1, 1], [3, 2], [8], [7], [8], [7], [6], [5], [4], [2]],
 };
 
 export const ALL_PUZZLES: Puzzle[] = [
@@ -2047,5 +2047,5 @@ export const ALL_PUZZLES: Puzzle[] = [
   CAMPFIRE,
   SNAIL,
   ALIEN,
-  WHALE
+  WHALE,
 ];

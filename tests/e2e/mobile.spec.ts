@@ -5,7 +5,7 @@ import {
   CAT_INDEX,
   ROCKET_INDEX,
   firstEmptyCell,
-  firstFilledCell
+  firstFilledCell,
 } from './helpers';
 
 test.beforeEach(async ({ page }) => {
@@ -17,7 +17,7 @@ async function boardScrollSize(board: Locator) {
     scrollW: el.scrollWidth,
     clientW: el.clientWidth,
     scrollH: el.scrollHeight,
-    clientH: el.clientHeight
+    clientH: el.clientHeight,
   }));
 }
 
@@ -92,7 +92,7 @@ test('frozen clues render above the grid cells', async ({ page }) => {
       maxCell: Math.max(...cellZ),
       rowClues: z(document.querySelector('.row-clues')),
       colClues: z(document.querySelector('.col-clues')),
-      corner: z(document.querySelector('.corner'))
+      corner: z(document.querySelector('.corner')),
     };
   });
   expect(zIndexes.rowClues).toBeGreaterThan(zIndexes.maxCell);

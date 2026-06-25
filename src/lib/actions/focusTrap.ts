@@ -25,7 +25,7 @@ export const focusTrap: Action<HTMLElement, FocusTrapParams | undefined> = (node
 
   const getFocusable = () =>
     Array.from(node.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
-      (el) => el.offsetParent !== null
+      (el) => el.offsetParent !== null,
     );
 
   function handleKeydown(event: KeyboardEvent) {
@@ -74,6 +74,6 @@ export const focusTrap: Action<HTMLElement, FocusTrapParams | undefined> = (node
       // `inert` from the restore target's container in the same update, and
       // focus() is a no-op on a still-inert element.
       requestAnimationFrame(() => target?.focus?.());
-    }
+    },
   };
 };

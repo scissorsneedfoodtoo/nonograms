@@ -24,7 +24,11 @@ export function generatePossibleLines(clues: number[], length: number): number[]
     const currentClue = clues[clueIdx];
     const remainingCluesSum = clues.slice(clueIdx + 1).reduce((a, b) => a + b, 0);
     const remainingCluesCount = clues.length - (clueIdx + 1);
-    const minSpaceNeeded = currentClue + (remainingCluesCount > 0 ? 1 : 0) + remainingCluesSum + Math.max(0, remainingCluesCount - 1);
+    const minSpaceNeeded =
+      currentClue +
+      (remainingCluesCount > 0 ? 1 : 0) +
+      remainingCluesSum +
+      Math.max(0, remainingCluesCount - 1);
 
     // Try placing the current clue at every possible position
     for (let start = currentPos; start <= length - minSpaceNeeded; start++) {
@@ -90,10 +94,12 @@ export function countSolutions(rowClues: number[][], colClues: number[][]): numb
       if (compatible) {
         // Optimization: narrow down possibleCols for subsequent rows
         const originalPossibleCols = possibleCols.map((cols) => [...cols]);
-        
+
         let subCompatible = true;
         for (let c = 0; c < width; c++) {
-          possibleCols[c] = possibleCols[c].filter((colPattern) => colPattern[rowIdx] === rowPattern[c]);
+          possibleCols[c] = possibleCols[c].filter(
+            (colPattern) => colPattern[rowIdx] === rowPattern[c],
+          );
           if (possibleCols[c].length === 0) {
             subCompatible = false;
             break;

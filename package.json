@@ -15,10 +15,15 @@
     "check": "svelte-check --tsconfig ./tsconfig.json && tsc",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "pnpm test:unit && pnpm test:e2e",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui"
+    "test:e2e:ui": "playwright test --ui",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,ts,svelte,css,html,json,md,yaml,yml}": "prettier --write"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.11.3",
@@ -31,6 +36,8 @@
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-svelte": "3.17.1",
     "globals": "17.6.0",
+    "husky": "9.1.7",
+    "lint-staged": "17.0.8",
     "prettier": "3.8.3",
     "prettier-plugin-svelte": "3.5.1",
     "svelte": "5.55.4",

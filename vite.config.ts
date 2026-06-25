@@ -13,12 +13,12 @@ export default defineConfig(({ mode }) => {
     base: './',
     plugins: [svelte()],
     server: {
-      port: parseInt(env.PORT || '8080')
+      port: parseInt(env.PORT || '8080'),
     },
     test: {
       // Unit tests only. The Playwright e2e suite (tests/e2e/*.spec.ts) runs
       // under its own runner — keep Vitest from trying to execute it.
-      include: ['src/**/*.test.ts']
-    }
+      include: ['src/**/*.test.ts'],
+    },
   };
 });

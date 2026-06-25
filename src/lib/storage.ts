@@ -7,7 +7,7 @@ const STORAGE_KEY = 'fcc-nonograms-progress-v1';
 function emptyProgress(): UserProgress {
   return {
     stats: {},
-    inProgress: {}
+    inProgress: {},
   };
 }
 
@@ -31,7 +31,7 @@ export function saveBestTime(puzzleId: string, time: number) {
   if (!existing || time < existing.bestTime) {
     progress.stats[puzzleId] = {
       completed: true,
-      bestTime: time
+      bestTime: time,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
   }
@@ -42,14 +42,14 @@ export function savePuzzleProgress(
   grid: CellState[][],
   seconds: number,
   penalties: number,
-  locked: boolean[][]
+  locked: boolean[][],
 ) {
   const progress = getProgress();
   progress.inProgress[puzzleId] = {
     grid,
     locked,
     seconds,
-    penalties
+    penalties,
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }

@@ -13,7 +13,7 @@ import {
   getSolutionColumn,
   formatTime,
   totalPenaltySeconds,
-  penaltyForMistake
+  penaltyForMistake,
 } from './gameLogic';
 
 describe('gameLogic', () => {
@@ -22,7 +22,7 @@ describe('gameLogic', () => {
       const grid = createEmptyGrid(3, 2);
       expect(grid).toEqual([
         ['empty', 'empty', 'empty'],
-        ['empty', 'empty', 'empty']
+        ['empty', 'empty', 'empty'],
       ]);
     });
   });
@@ -33,7 +33,7 @@ describe('gameLogic', () => {
       expect(grid).toEqual([
         [false, false],
         [false, false],
-        [false, false]
+        [false, false],
       ]);
     });
   });
@@ -41,13 +41,13 @@ describe('gameLogic', () => {
   describe('checkWin', () => {
     const solution = [
       [1, 0],
-      [0, 1]
+      [0, 1],
     ];
 
     it('returns true when the grid matches the solution', () => {
       const grid = [
         ['filled', 'empty'],
-        ['empty', 'filled']
+        ['empty', 'filled'],
       ];
       // @ts-expect-error intentionally passing untyped test data
       expect(checkWin(grid, solution)).toBe(true);
@@ -56,7 +56,7 @@ describe('gameLogic', () => {
     it('returns false when the grid does not match (missing fill)', () => {
       const grid = [
         ['filled', 'empty'],
-        ['empty', 'empty']
+        ['empty', 'empty'],
       ];
       // @ts-expect-error intentionally passing untyped test data
       expect(checkWin(grid, solution)).toBe(false);
@@ -65,7 +65,7 @@ describe('gameLogic', () => {
     it('returns false when the grid has extra fill', () => {
       const grid = [
         ['filled', 'filled'],
-        ['empty', 'filled']
+        ['empty', 'filled'],
       ];
       // @ts-expect-error intentionally passing untyped test data
       expect(checkWin(grid, solution)).toBe(false);
@@ -74,7 +74,7 @@ describe('gameLogic', () => {
     it('returns true regardless of "marked" cells as long as fills are correct', () => {
       const grid = [
         ['filled', 'marked'],
-        ['empty', 'filled']
+        ['empty', 'filled'],
       ];
       // @ts-expect-error intentionally passing untyped test data
       expect(checkWin(grid, solution)).toBe(true);
@@ -85,7 +85,7 @@ describe('gameLogic', () => {
     it('returns false for an empty grid', () => {
       const grid = [
         ['empty', 'empty'],
-        ['empty', 'empty']
+        ['empty', 'empty'],
       ];
       // @ts-expect-error intentionally passing untyped test data
       expect(isPuzzleInProgress(grid)).toBe(false);
@@ -94,7 +94,7 @@ describe('gameLogic', () => {
     it('returns true if a cell is filled', () => {
       const grid = [
         ['empty', 'filled'],
-        ['empty', 'empty']
+        ['empty', 'empty'],
       ];
       // @ts-expect-error intentionally passing untyped test data
       expect(isPuzzleInProgress(grid)).toBe(true);
@@ -103,7 +103,7 @@ describe('gameLogic', () => {
     it('returns true if a cell is marked', () => {
       const grid = [
         ['empty', 'empty'],
-        ['marked', 'empty']
+        ['marked', 'empty'],
       ];
       // @ts-expect-error intentionally passing untyped test data
       expect(isPuzzleInProgress(grid)).toBe(true);
@@ -160,7 +160,7 @@ describe('gameLogic', () => {
     it('extracts a column from a grid', () => {
       const grid = [
         [1, 2, 3],
-        [4, 5, 6]
+        [4, 5, 6],
       ];
       // @ts-expect-error intentionally passing untyped test data
       expect(getColumn(grid, 1)).toEqual([2, 5]);
@@ -172,7 +172,7 @@ describe('gameLogic', () => {
       const solution = [
         [1, 0],
         [1, 1],
-        [0, 1]
+        [0, 1],
       ];
       expect(getSolutionColumn(solution, 0)).toEqual([1, 1, 0]);
     });
@@ -200,7 +200,7 @@ describe('gameLogic', () => {
     it('generates row clues for a 2x2 solution', () => {
       const solution = [
         [1, 0],
-        [1, 1]
+        [1, 1],
       ];
       expect(generateRowClues(solution)).toEqual([[1], [2]]);
     });
@@ -210,7 +210,7 @@ describe('gameLogic', () => {
     it('generates column clues for a 2x2 solution', () => {
       const solution = [
         [1, 0],
-        [1, 1]
+        [1, 1],
       ];
       expect(generateColClues(solution)).toEqual([[2], [1]]);
     });
