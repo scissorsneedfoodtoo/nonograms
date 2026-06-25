@@ -98,7 +98,7 @@ export function countSolutions(rowClues: number[][], colClues: number[][]): numb
         let subCompatible = true;
         for (let c = 0; c < width; c++) {
           possibleCols[c] = possibleCols[c].filter(
-            (colPattern) => colPattern[rowIdx] === rowPattern[c]
+            (colPattern) => colPattern[rowIdx] === rowPattern[c],
           );
           if (possibleCols[c].length === 0) {
             subCompatible = false;

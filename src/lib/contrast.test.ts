@@ -48,7 +48,7 @@ const pairs: Array<[string, string, number, string]> = [
   ['yellow-gold', 'gray-90', AA_TEXT, 'headings / active hints'],
   ['warning-orange', 'gray-85', AA_TEXT, 'mistake counter text'],
   ['gray-00', 'gray-85', AA_TEXT, 'default button text'],
-  ['gray-90', 'yellow-gold', AA_TEXT, 'active mode / primary button text']
+  ['gray-90', 'yellow-gold', AA_TEXT, 'active mode / primary button text'],
 ];
 
 describe('color token contrast', () => {

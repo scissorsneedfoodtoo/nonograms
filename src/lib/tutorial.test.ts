@@ -15,7 +15,7 @@ function forcedCells(
   colClues: number[][],
   width: number,
   height: number,
-  known: number[][]
+  known: number[][],
 ): number[][] {
   const grid = known.map((row) => [...row]);
   let changed = true;
@@ -25,10 +25,10 @@ function forcedCells(
       cells: number[],
       clue: number[],
       len: number,
-      set: (i: number, v: number) => void
+      set: (i: number, v: number) => void,
     ) => {
       const options = generatePossibleLines(clue, len).filter((p) =>
-        p.every((v, i) => cells[i] === -1 || cells[i] === v)
+        p.every((v, i) => cells[i] === -1 || cells[i] === v),
       );
       for (let i = 0; i < len; i++) {
         if (cells[i] !== -1) continue;
@@ -158,13 +158,13 @@ describe('tutorial steps', () => {
       for (const [r, c] of step.fills) {
         expect(
           determined[r][c],
-          `fill ${r},${c} in step ${k} ("${step.title}") is not forced yet`
+          `fill ${r},${c} in step ${k} ("${step.title}") is not forced yet`,
         ).toBe(1);
       }
       for (const [r, c] of step.crosses) {
         expect(
           determined[r][c],
-          `cross ${r},${c} in step ${k} ("${step.title}") is not forced yet`
+          `cross ${r},${c} in step ${k} ("${step.title}") is not forced yet`,
         ).toBe(0);
       }
       // Apply this step before checking the next one.

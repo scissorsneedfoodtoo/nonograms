@@ -20,7 +20,7 @@ test.describe('grid ARIA structure', () => {
 
     await expect(page.locator('.cell-0-0')).toHaveAttribute(
       'aria-describedby',
-      'row-clue-0 col-clue-0'
+      'row-clue-0 col-clue-0',
     );
     await expect(page.locator('#row-clue-0')).toHaveCount(1);
     await expect(page.locator('#col-clue-0')).toHaveCount(1);
@@ -104,7 +104,7 @@ test.describe('confirm dialog', () => {
 
 test.describe('win dialog', () => {
   test('makes the board inert, focuses the dialog, and returns focus on close', async ({
-    page
+    page,
   }) => {
     await openPuzzle(page, CAT_INDEX);
     await solvePuzzle(page, CAT_INDEX);
@@ -143,7 +143,7 @@ test.describe('announcements and decorative content', () => {
     // Win emoji is hidden from the heading name.
     await solvePuzzle(page, CAT_INDEX);
     await expect(
-      page.getByRole('heading', { name: 'Puzzle Completed!', exact: true })
+      page.getByRole('heading', { name: 'Puzzle Completed!', exact: true }),
     ).toBeVisible();
   });
 

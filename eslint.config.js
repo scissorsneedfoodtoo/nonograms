@@ -15,25 +15,25 @@ export default defineConfig(
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node
-      }
-    }
+        ...globals.node,
+      },
+    },
   },
   {
     files: ['**/*.svelte'],
     languageOptions: {
       parser: svelteParser,
       parserOptions: {
-        parser: tseslint.parser
-      }
+        parser: tseslint.parser,
+      },
     },
     rules: {
       // Note: you must disable the base rule as it can report incorrect errors
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': 'error'
-    }
+      '@typescript-eslint/no-unused-vars': 'error',
+    },
   },
   {
-    ignores: ['build/', '.svelte-kit/', 'dist/']
-  }
+    ignores: ['build/', '.svelte-kit/', 'dist/'],
+  },
 );

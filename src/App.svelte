@@ -21,7 +21,7 @@
 
   const totalPages = $derived(Math.ceil(ALL_PUZZLES.length / PUZZLES_PER_PAGE));
   const visiblePuzzles = $derived(
-    ALL_PUZZLES.slice(currentPage * PUZZLES_PER_PAGE, (currentPage + 1) * PUZZLES_PER_PAGE)
+    ALL_PUZZLES.slice(currentPage * PUZZLES_PER_PAGE, (currentPage + 1) * PUZZLES_PER_PAGE),
   );
 
   // Keep the document title in sync with the current view so screen-reader and

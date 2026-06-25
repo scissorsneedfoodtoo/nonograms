@@ -23,7 +23,7 @@
   const overlapColumns = [
     { label: 'Slid up', tone: 'up', cells: [true, true, true, true, false] },
     { label: 'Slid down', tone: 'down', cells: [false, true, true, true, true] },
-    { label: 'Always filled', tone: 'both', cells: [false, true, true, true, false] }
+    { label: 'Always filled', tone: 'both', cells: [false, true, true, true, false] },
   ];
 
   // "r-c" -> expected state for the cells the current step asks the player to act
@@ -56,7 +56,7 @@
     Object.entries(requiredCells).every(([key, expected]) => {
       const [r, c] = key.split('-').map(Number);
       return grid[r][c] === expected;
-    })
+    }),
   );
 
   // On the final step, filling the last image cell ends the tutorial right away —

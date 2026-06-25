@@ -11,14 +11,14 @@
     formatTime,
     isPuzzleInProgress,
     totalPenaltySeconds,
-    penaltyForMistake
+    penaltyForMistake,
   } from './lib/gameLogic';
   import type { CellState, Puzzle } from './lib/types';
   import {
     saveBestTime,
     savePuzzleProgress,
     getPuzzleProgress,
-    clearPuzzleProgress
+    clearPuzzleProgress,
   } from './lib/storage';
   import WinModal from './lib/components/WinModal.svelte';
 
@@ -63,14 +63,14 @@
   // Derived state for completed rows/cols
   // Use getters to ensure reactivity is tracked correctly
   let completedRows = $derived(
-    grid.length > 0 ? grid.map((row, i) => isLineCorrect(row, puzzle.solution[i])) : []
+    grid.length > 0 ? grid.map((row, i) => isLineCorrect(row, puzzle.solution[i])) : [],
   );
   let completedCols = $derived(
     grid.length > 0
       ? Array.from({ length: puzzle.width }, (_, i) =>
-          isLineCorrect(getColumn(grid, i), getSolutionColumn(puzzle.solution, i))
+          isLineCorrect(getColumn(grid, i), getSolutionColumn(puzzle.solution, i)),
         )
-      : []
+      : [],
   );
 
   let totalPenaltyTime = $derived(totalPenaltySeconds(penalties, PENALTY_STEP_SECONDS));

@@ -100,7 +100,7 @@ test('progress is saved on exit and restored on return', async ({ page }) => {
 
   await page.getByRole('button', { name: 'Exit to Menu' }).click();
   await expect(page.locator('.puzzle-square').first().locator('.status-hint')).toHaveText(
-    'In Progress'
+    'In Progress',
   );
 
   await openPuzzle(page, CAT_INDEX);

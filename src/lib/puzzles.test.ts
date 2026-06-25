@@ -9,14 +9,14 @@ describe('puzzles validation', () => {
       it('has row clues matching the solution', () => {
         const generatedRowClues = generateRowClues(puzzle.solution);
         expect(generatedRowClues, `Row clues mismatch in puzzle "${puzzle.name}"`).toEqual(
-          puzzle.rowClues
+          puzzle.rowClues,
         );
       });
 
       it('has column clues matching the solution', () => {
         const generatedColClues = generateColClues(puzzle.solution);
         expect(generatedColClues, `Column clues mismatch in puzzle "${puzzle.name}"`).toEqual(
-          puzzle.colClues
+          puzzle.colClues,
         );
       });
 
@@ -34,19 +34,19 @@ describe('puzzles validation', () => {
       // puzzle size, so larger puzzles can afford more empty lines.
       it('keeps any empty rows or columns limited and intentional', () => {
         const emptyRows = puzzle.rowClues.filter(
-          (clues) => clues.length === 1 && clues[0] === 0
+          (clues) => clues.length === 1 && clues[0] === 0,
         ).length;
         const emptyCols = puzzle.colClues.filter(
-          (clues) => clues.length === 1 && clues[0] === 0
+          (clues) => clues.length === 1 && clues[0] === 0,
         ).length;
 
         expect(
           emptyRows,
-          `Puzzle "${puzzle.name}" has too many empty rows (${emptyRows} of ${puzzle.height})`
+          `Puzzle "${puzzle.name}" has too many empty rows (${emptyRows} of ${puzzle.height})`,
         ).toBeLessThan(puzzle.height / 2);
         expect(
           emptyCols,
-          `Puzzle "${puzzle.name}" has too many empty columns (${emptyCols} of ${puzzle.width})`
+          `Puzzle "${puzzle.name}" has too many empty columns (${emptyCols} of ${puzzle.width})`,
         ).toBeLessThan(puzzle.width / 2);
       });
 
@@ -54,7 +54,7 @@ describe('puzzles validation', () => {
         const numSolutions = countSolutions(puzzle.rowClues, puzzle.colClues);
         expect(
           numSolutions,
-          `Puzzle "${puzzle.name}" should have exactly 1 solution, but found ${numSolutions}`
+          `Puzzle "${puzzle.name}" should have exactly 1 solution, but found ${numSolutions}`,
         ).toBe(1);
       });
     });
