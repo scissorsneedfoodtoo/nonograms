@@ -8,12 +8,16 @@ describe('puzzles validation', () => {
     describe(`Puzzle: ${puzzle.name} (id: ${puzzle.id})`, () => {
       it('has row clues matching the solution', () => {
         const generatedRowClues = generateRowClues(puzzle.solution);
-        expect(generatedRowClues, `Row clues mismatch in puzzle "${puzzle.name}"`).toEqual(puzzle.rowClues);
+        expect(generatedRowClues, `Row clues mismatch in puzzle "${puzzle.name}"`).toEqual(
+          puzzle.rowClues
+        );
       });
 
       it('has column clues matching the solution', () => {
         const generatedColClues = generateColClues(puzzle.solution);
-        expect(generatedColClues, `Column clues mismatch in puzzle "${puzzle.name}"`).toEqual(puzzle.colClues);
+        expect(generatedColClues, `Column clues mismatch in puzzle "${puzzle.name}"`).toEqual(
+          puzzle.colClues
+        );
       });
 
       it('has correct dimensions', () => {
@@ -29,8 +33,12 @@ describe('puzzles validation', () => {
       // fewer than half the rows and columns may be empty. This scales with the
       // puzzle size, so larger puzzles can afford more empty lines.
       it('keeps any empty rows or columns limited and intentional', () => {
-        const emptyRows = puzzle.rowClues.filter((clues) => clues.length === 1 && clues[0] === 0).length;
-        const emptyCols = puzzle.colClues.filter((clues) => clues.length === 1 && clues[0] === 0).length;
+        const emptyRows = puzzle.rowClues.filter(
+          (clues) => clues.length === 1 && clues[0] === 0
+        ).length;
+        const emptyCols = puzzle.colClues.filter(
+          (clues) => clues.length === 1 && clues[0] === 0
+        ).length;
 
         expect(
           emptyRows,
@@ -44,7 +52,10 @@ describe('puzzles validation', () => {
 
       it('has a unique solution', () => {
         const numSolutions = countSolutions(puzzle.rowClues, puzzle.colClues);
-        expect(numSolutions, `Puzzle "${puzzle.name}" should have exactly 1 solution, but found ${numSolutions}`).toBe(1);
+        expect(
+          numSolutions,
+          `Puzzle "${puzzle.name}" should have exactly 1 solution, but found ${numSolutions}`
+        ).toBe(1);
       });
     });
   });

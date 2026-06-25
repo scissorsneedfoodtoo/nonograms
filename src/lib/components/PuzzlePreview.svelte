@@ -20,8 +20,7 @@
     for (let r = 0; r < puzzle.height; r++) {
       for (let c = 0; c < puzzle.width; c++) {
         const color =
-          puzzle.colorSolution?.[r][c] ||
-          (puzzle.solution[r][c] === 1 ? '#4a4a4a' : null);
+          puzzle.colorSolution?.[r][c] || (puzzle.solution[r][c] === 1 ? '#4a4a4a' : null);
         if (color) {
           ctx.fillStyle = color;
           ctx.fillRect(c, r, 1, 1);

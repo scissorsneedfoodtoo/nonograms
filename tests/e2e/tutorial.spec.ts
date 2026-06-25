@@ -78,7 +78,10 @@ test('finishing reveals the colored picture', async ({ page }) => {
 
   await expect(page.locator('.reveal-name')).toContainText('Cardinal');
   // The beak is painted with its colorSolution color (#f39c12)...
-  await expect(page.locator('[data-cell="2-2"]')).toHaveCSS('background-color', 'rgb(243, 156, 18)');
+  await expect(page.locator('[data-cell="2-2"]')).toHaveCSS(
+    'background-color',
+    'rgb(243, 156, 18)'
+  );
   // ...and the X marks are hidden in favor of the picture.
   await expect(page.locator('[data-cell="0-0"]')).not.toContainText('×');
 });

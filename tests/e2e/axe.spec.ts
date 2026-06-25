@@ -6,7 +6,9 @@ import { openPuzzle, solvePuzzle, CAT_INDEX } from './helpers';
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
 // Derived from AxeBuilder so we don't depend on axe-core's types directly.
-type Violation = Awaited<ReturnType<InstanceType<typeof AxeBuilder>['analyze']>>['violations'][number];
+type Violation = Awaited<
+  ReturnType<InstanceType<typeof AxeBuilder>['analyze']>
+>['violations'][number];
 
 function summarize(violations: Violation[]): string {
   if (violations.length === 0) return 'no violations';

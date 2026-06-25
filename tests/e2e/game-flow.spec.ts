@@ -1,11 +1,5 @@
 import { test, expect } from '@playwright/test';
-import {
-  openPuzzle,
-  CAT_INDEX,
-  firstEmptyCell,
-  firstEmptyCells,
-  firstFilledCell
-} from './helpers';
+import { openPuzzle, CAT_INDEX, firstEmptyCell, firstEmptyCells, firstFilledCell } from './helpers';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');

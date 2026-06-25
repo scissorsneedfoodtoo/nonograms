@@ -14,11 +14,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.js",
-    "src/**/*.svelte",
-    "*.config.ts",
-    "tests/**/*.ts"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte", "*.config.ts", "tests/**/*.ts"]
 }
