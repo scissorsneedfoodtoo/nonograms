@@ -1,11 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { describe, it, expect } from 'vitest';
+import { contrastRatio } from './contrast';
 
 /**
  * Guards the color tokens behind the accessibility-audit contrast fixes against
  * regression. Parses the CSS custom properties straight out of app.css and
  * asserts each foreground/background pair clears its WCAG threshold, so changing
  * a token to something non-compliant fails here.
+ *
+ * The WCAG maths lives in ./contrast (shared with the puzzle reveal-art check).
  */
 
 const css = readFileSync(new URL('../app.css', import.meta.url), 'utf8');
@@ -15,23 +18,8 @@ for (const [, name, hex] of css.matchAll(/--([\w-]+):\s*(#[0-9a-fA-F]{6})\b/g)) 
   tokens[name] = hex;
 }
 
-function channel(c: number): number {
-  const s = c / 255;
-  return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
-}
-
-function luminance(hex: string): number {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
-}
-
 function ratio(fg: string, bg: string): number {
-  const l1 = luminance(tokens[fg]);
-  const l2 = luminance(tokens[bg]);
-  const [hi, lo] = l1 > l2 ? [l1, l2] : [l2, l1];
-  return (hi + 0.05) / (lo + 0.05);
+  return contrastRatio(tokens[fg], tokens[bg]);
 }
 
 const AA_TEXT = 4.5; // WCAG 1.4.3 normal-size text

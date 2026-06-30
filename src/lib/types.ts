@@ -6,7 +6,7 @@ export interface Puzzle {
   width: number;
   height: number;
   solution: number[][]; // 0 for empty, 1 for filled
-  colorSolution?: string[][]; // Hex codes or CSS colors for completed view
+  revealColors?: string[][]; // Decorative per-cell colors shown on completion; same dimensions as solution, not used to solve
   rowClues: number[][];
   colClues: number[][];
 }
