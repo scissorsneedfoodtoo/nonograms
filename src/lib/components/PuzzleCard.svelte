@@ -60,7 +60,7 @@
 
   .puzzle-square:hover {
     transform: scale(1.02);
-    background-color: var(--gray-80);
+    background-color: var(--gray-90);
   }
 
   .puzzle-square:active {
