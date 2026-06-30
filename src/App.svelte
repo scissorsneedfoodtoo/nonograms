@@ -241,26 +241,29 @@
   }
 
   .page-btn {
-    background: transparent;
-    border: 3px solid var(--gray-45);
-    color: var(--gray-15);
+    border-width: 2px;
     font-size: 0.9rem;
     font-weight: 700;
     padding: 8px 20px;
     cursor: pointer;
     transition:
+      background-color 0.1s,
       border-color 0.1s,
       color 0.1s;
   }
 
-  .page-btn:hover:not(:disabled) {
-    border-color: var(--yellow-gold);
-    color: var(--yellow-gold);
+  .page-btn:hover:not(:disabled),
+  .page-btn:focus-visible:not(:disabled) {
+    background: var(--gray-00);
+    border-color: var(--gray-00);
+    color: var(--gray-90);
   }
 
   .page-btn:disabled {
     opacity: 0.3;
     cursor: not-allowed;
+    background: var(--gray-85);
+    color: var(--gray-00);
   }
 
   .page-indicator {
