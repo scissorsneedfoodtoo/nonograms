@@ -3,12 +3,21 @@ import { ALL_PUZZLES } from '../../src/lib/puzzles';
 
 export const PUZZLES_PER_PAGE = 12;
 
+/** Total number of level-select pages, derived the same way the app does. */
+export const TOTAL_PAGES = Math.ceil(ALL_PUZZLES.length / PUZZLES_PER_PAGE);
+
 /** Index of the first 5x5 and first 10x10 puzzle in the level-select order. */
 export const CAT_INDEX = 0; // 5x5
 export const ROCKET_INDEX = 12; // 10x10 (first puzzle on page 2)
 
 export function puzzleAt(index: number) {
   return ALL_PUZZLES[index];
+}
+
+/** Size label as rendered on a puzzle card, e.g. "5x5". */
+export function puzzleSize(index: number): string {
+  const puzzle = puzzleAt(index);
+  return `${puzzle.width}x${puzzle.height}`;
 }
 
 /** Navigate from the level-select screen into the puzzle at the given index. */
