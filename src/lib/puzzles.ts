@@ -2040,7 +2040,7 @@ export const FOX: Puzzle = {
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
     [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#2d2d2d',
       '#2d2d2d',
@@ -2183,7 +2183,7 @@ export const ICE_CREAM: Puzzle = {
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
     [0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#2d3436',
       '#2d3436',
@@ -2326,7 +2326,7 @@ export const CRANE_GAME: Puzzle = {
     [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#95a5a6',
       '#95a5a6',
