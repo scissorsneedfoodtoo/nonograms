@@ -67,10 +67,10 @@ describe('tutorial puzzle', () => {
   });
 
   it('has a color for every cell of the reveal', () => {
-    const { colorSolution, width, height } = TUTORIAL_PUZZLE;
-    expect(colorSolution).toBeDefined();
-    expect(colorSolution).toHaveLength(height);
-    for (const row of colorSolution!) {
+    const { revealColors, width, height } = TUTORIAL_PUZZLE;
+    expect(revealColors).toBeDefined();
+    expect(revealColors).toHaveLength(height);
+    for (const row of revealColors!) {
       expect(row).toHaveLength(width);
       for (const color of row) expect(color).toMatch(/^#[0-9a-f]{6}$/i);
     }

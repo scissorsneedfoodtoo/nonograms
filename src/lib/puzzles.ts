@@ -12,7 +12,7 @@ export const CAT: Puzzle = {
     [1, 1, 1, 1, 1],
     [0, 1, 1, 1, 0],
   ],
-  colorSolution: [
+  revealColors: [
     ['#4a4a4a', '#aed9e0', '#aed9e0', '#aed9e0', '#4a4a4a'],
     ['#6e6e6e', '#6e6e6e', '#6e6e6e', '#6e6e6e', '#6e6e6e'],
     ['#6e6e6e', '#2ecc71', '#6e6e6e', '#2ecc71', '#6e6e6e'],
@@ -35,7 +35,7 @@ export const HEART: Puzzle = {
     [0, 1, 1, 1, 0],
     [0, 0, 1, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     ['#ffcccc', '#ff4757', '#ffcccc', '#ff4757', '#ffcccc'],
     ['#ff4757', '#ff6b81', '#ff6b81', '#ff6b81', '#ff4757'],
     ['#ff4757', '#ff6b81', '#ff6b81', '#ff6b81', '#ff4757'],
@@ -58,7 +58,7 @@ export const APPLE: Puzzle = {
     [1, 1, 1, 1, 1],
     [0, 1, 1, 1, 0],
   ],
-  colorSolution: [
+  revealColors: [
     ['#f1f2f6', '#f1f2f6', '#2ecc71', '#f1f2f6', '#f1f2f6'],
     ['#f1f2f6', '#ff4757', '#ff4757', '#ff4757', '#f1f2f6'],
     ['#ff4757', '#ff6b81', '#ff6b81', '#ff6b81', '#ff4757'],
@@ -81,7 +81,7 @@ export const TREE: Puzzle = {
     [0, 0, 1, 0, 0],
     [0, 0, 1, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     ['#eccc68', '#eccc68', '#2ed573', '#eccc68', '#eccc68'],
     ['#eccc68', '#2ed573', '#2ed573', '#2ed573', '#eccc68'],
     ['#2ed573', '#7bed9f', '#7bed9f', '#7bed9f', '#2ed573'],
@@ -104,7 +104,7 @@ export const HOUSE: Puzzle = {
     [1, 1, 0, 1, 1],
     [1, 1, 1, 1, 1],
   ],
-  colorSolution: [
+  revealColors: [
     ['#f1f2f6', '#f1f2f6', '#ff4757', '#f1f2f6', '#f1f2f6'],
     ['#f1f2f6', '#ff4757', '#ff4757', '#ff4757', '#f1f2f6'],
     ['#ff4757', '#ff4757', '#ff4757', '#ff4757', '#ff4757'],
@@ -127,7 +127,7 @@ export const STAR: Puzzle = {
     [1, 1, 0, 1, 1],
     [1, 0, 0, 0, 1],
   ],
-  colorSolution: [
+  revealColors: [
     ['#2f3542', '#2f3542', '#eccc68', '#2f3542', '#2f3542'],
     ['#eccc68', '#eccc68', '#eccc68', '#eccc68', '#eccc68'],
     ['#2f3542', '#eccc68', '#eccc68', '#eccc68', '#2f3542'],
@@ -150,7 +150,7 @@ export const DIAMOND: Puzzle = {
     [0, 1, 1, 1, 0],
     [0, 0, 1, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     ['#f1f2f6', '#f1f2f6', '#70a1ff', '#f1f2f6', '#f1f2f6'],
     ['#f1f2f6', '#70a1ff', '#1e90ff', '#70a1ff', '#f1f2f6'],
     ['#70a1ff', '#1e90ff', '#3742fa', '#1e90ff', '#70a1ff'],
@@ -173,7 +173,7 @@ export const SHIELD: Puzzle = {
     [0, 1, 1, 1, 0],
     [0, 0, 1, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     ['#535c68', '#535c68', '#535c68', '#535c68', '#535c68'],
     ['#535c68', '#70a1ff', '#70a1ff', '#70a1ff', '#535c68'],
     ['#535c68', '#535c68', '#70a1ff', '#535c68', '#535c68'],
@@ -196,7 +196,7 @@ export const BOAT: Puzzle = {
     [0, 1, 1, 1, 0],
     [1, 1, 1, 1, 1],
   ],
-  colorSolution: [
+  revealColors: [
     ['#aed9e0', '#aed9e0', '#ffffff', '#aed9e0', '#aed9e0'],
     ['#aed9e0', '#ffffff', '#ffffff', '#aed9e0', '#aed9e0'],
     ['#ff4757', '#ff4757', '#ff4757', '#ff4757', '#ff4757'],
@@ -219,7 +219,7 @@ export const DUCK: Puzzle = {
     [0, 1, 1, 1, 0],
     [1, 1, 1, 1, 1],
   ],
-  colorSolution: [
+  revealColors: [
     ['#f1f2f6', '#eccc68', '#eccc68', '#f1f2f6', '#f1f2f6'],
     ['#eccc68', '#eccc68', '#eccc68', '#f1f2f6', '#f1f2f6'],
     ['#f1f2f6', '#eccc68', '#eccc68', '#eccc68', '#eccc68'],
@@ -242,7 +242,7 @@ export const MUSHROOM: Puzzle = {
     [0, 1, 1, 1, 0],
     [0, 0, 1, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     ['#2870c0', '#ff4757', '#ff4757', '#ff4757', '#2870c0'],
     ['#ff4757', '#ffffff', '#ff4757', '#ffffff', '#ff4757'],
     ['#ff4757', '#ff4757', '#ff4757', '#ff4757', '#ff4757'],
@@ -265,7 +265,7 @@ export const COFFEE_MUG: Puzzle = {
     [1, 1, 1, 1, 0],
     [0, 1, 1, 1, 0],
   ],
-  colorSolution: [
+  revealColors: [
     ['#8b5e3c', '#8b5e3c', '#8b5e3c', '#8b5e3c', '#ffffff'],
     ['#8b5e3c', '#8b5e3c', '#8b5e3c', '#8b5e3c', '#8b5e3c'],
     ['#8b5e3c', '#c49a6c', '#8b5e3c', '#8b5e3c', '#8b5e3c'],
@@ -293,7 +293,7 @@ export const ROCKET: Puzzle = {
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
     [0, 0, 1, 0, 1, 1, 0, 1, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#0c2461',
       '#0c2461',
@@ -436,7 +436,7 @@ export const GHOST: Puzzle = {
     [1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
     [1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#1e272e',
       '#1e272e',
@@ -579,7 +579,7 @@ export const CACTUS: Puzzle = {
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#87ceeb',
       '#87ceeb',
@@ -722,7 +722,7 @@ export const CROWN: Puzzle = {
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
     [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#FFD700',
       '#1a1a2e',
@@ -865,7 +865,7 @@ export const PIZZA_SLICE: Puzzle = {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#c8860a',
       '#c8860a',
@@ -1008,7 +1008,7 @@ export const PENGUIN: Puzzle = {
     [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
     [0, 0, 1, 1, 0, 0, 1, 1, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#cce7f5',
       '#cce7f5',
@@ -1151,7 +1151,7 @@ export const BUTTERFLY: Puzzle = {
     [1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
     [0, 1, 1, 1, 0, 0, 1, 1, 1, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#dfe6e9',
       '#1a1a2e',
@@ -1305,7 +1305,7 @@ export const TROPHY: Puzzle = {
     [0, 1, 1, 0, 0, 0, 0, 1, 1, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#1a1a2e',
       '#d4af37',
@@ -1468,7 +1468,7 @@ export const CAMPFIRE: Puzzle = {
     [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
     [0, 0, 1, 1, 1, 1, 1, 1, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#1a1a2e',
       '#1a1a2e',
@@ -1611,7 +1611,7 @@ export const SNAIL: Puzzle = {
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
     [0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#2d2d3a',
       '#cfe0ef',
@@ -1754,7 +1754,7 @@ export const ALIEN: Puzzle = {
     [0, 1, 1, 1, 0, 0, 1, 1, 1, 0],
     [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#1a1a2e',
       '#1a1a2e',
@@ -1897,7 +1897,7 @@ export const WHALE: Puzzle = {
     [0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
     [1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [
       '#cce7f5',
       '#cce7f5',

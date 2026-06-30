@@ -235,7 +235,7 @@
               {@const expected = activeCells[`${r}-${c}`]}
               {@const isTarget = expected !== undefined}
               {@const pending = isTarget && cell !== expected}
-              {@const reveal = isDone ? puzzle.colorSolution?.[r][c] : undefined}
+              {@const reveal = isDone ? puzzle.revealColors?.[r][c] : undefined}
               <button
                 class="cell"
                 class:empty={cell === 'empty'}
@@ -448,7 +448,7 @@
     color: var(--gray-90);
   }
 
-  /* Final reveal: the colorSolution paints each cell, so soften the grid lines
+  /* Final reveal: the revealColors paints each cell, so soften the grid lines
      to near-invisible and let the picture read as a whole. */
   .cell.revealed {
     box-shadow:

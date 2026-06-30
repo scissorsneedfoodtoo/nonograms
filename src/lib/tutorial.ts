@@ -38,7 +38,7 @@ export const TUTORIAL_PUZZLE: Puzzle = {
     [0, 1, 1, 1, 0],
     [0, 1, 0, 1, 0],
   ],
-  colorSolution: [
+  revealColors: [
     [SKY, SKY, RED, SKY, SKY],
     [SKY, RED, FACE, RED, SKY],
     [RED, RED, BEAK, RED, RED],
