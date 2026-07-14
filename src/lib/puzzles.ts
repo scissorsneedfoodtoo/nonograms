@@ -237,7 +237,7 @@ export const MUSHROOM: Puzzle = {
   height: 5,
   solution: [
     [0, 1, 1, 1, 0],
-    [1, 1, 1, 1, 1],
+    [1, 0, 1, 0, 1],
     [1, 1, 1, 1, 1],
     [0, 1, 1, 1, 0],
     [0, 0, 1, 0, 0],
@@ -249,8 +249,8 @@ export const MUSHROOM: Puzzle = {
     ['#2870c0', '#ffffff', '#ffffff', '#ffffff', '#2870c0'],
     ['#2870c0', '#2870c0', '#ffffff', '#2870c0', '#2870c0'],
   ],
-  rowClues: [[3], [5], [5], [3], [1]],
-  colClues: [[2], [4], [5], [4], [2]],
+  rowClues: [[3], [1, 1, 1], [5], [3], [1]],
+  colClues: [[2], [1, 2], [5], [1, 2], [2]],
 };
 
 export const COFFEE_MUG: Puzzle = {
