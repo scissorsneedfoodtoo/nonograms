@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
+  import { SvelteMap } from 'svelte/reactivity';
   import {
     createEmptyGrid,
     createEmptyLockedGrid,
@@ -255,6 +256,172 @@
     handleMove(r, c, dragAction);
   }
 
+  // Touch: one finger over a cell paints (like the mouse drag above); one
+  // finger over a clue gutter scrolls natively (untouched — gutters keep the
+  // browser's default touch-action); two fingers anywhere over the grid pan
+  // it manually, since touch-action: none on cells (needed so a single-finger
+  // press-drag doesn't get hijacked as a scroll) also disables the browser's
+  // own pinch/pan there.
+  //
+  // Touch complicates the drag-paint approach in two ways the mouse path
+  // doesn't hit:
+  //   - touchmove keeps targeting the element from touchstart, not whatever is
+  //     currently under the finger, so cells entered mid-drag are found via
+  //     elementFromPoint instead of pointerenter.
+  //   - real two-finger placement is rarely simultaneous, so committing a
+  //     single touch's action is delayed briefly — long enough for a second
+  //     finger arriving just after to cancel it and start a pan instead,
+  //     short enough that a normal tap still feels instant.
+  const TOUCH_COMMIT_DELAY_MS = 120;
+
+  let boardEl = $state<HTMLDivElement | null>(null);
+
+  // Every touch currently down that started on a cell (gutter/corner touches
+  // are left alone so they keep scrolling natively), keyed by pointerId.
+  let activeTouches = new SvelteMap<number, { x: number; y: number }>();
+  // Sticky for the whole gesture: sets once 2 touches are down, only clears
+  // once ALL fingers lift. Stops a lone finger left over from a two-finger pan
+  // from starting a fresh paint the instant its twin lifts.
+  let multiTouchGesture = false;
+  let panActive = false;
+  let panStart: { scrollLeft: number; scrollTop: number; midX: number; midY: number } | null = null;
+
+  let pendingTouchCommit: {
+    pointerId: number;
+    r: number;
+    c: number;
+    action: 'fill' | 'mark';
+    adding: boolean;
+    timer: ReturnType<typeof setTimeout>;
+  } | null = null;
+
+  function cellCoords(el: Element): { r: number; c: number } {
+    const cellEl = el as HTMLElement;
+    return { r: Number(cellEl.dataset.row), c: Number(cellEl.dataset.col) };
+  }
+
+  function touchMidpoint(): { x: number; y: number } {
+    let sx = 0;
+    let sy = 0;
+    let n = 0;
+    for (const p of activeTouches.values()) {
+      sx += p.x;
+      sy += p.y;
+      n++;
+    }
+    return n ? { x: sx / n, y: sy / n } : { x: 0, y: 0 };
+  }
+
+  function beginPan() {
+    if (!boardEl) return;
+    const mid = touchMidpoint();
+    panStart = {
+      scrollLeft: boardEl.scrollLeft,
+      scrollTop: boardEl.scrollTop,
+      midX: mid.x,
+      midY: mid.y,
+    };
+  }
+
+  function updatePan() {
+    if (!boardEl || !panStart) return;
+    const mid = touchMidpoint();
+    boardEl.scrollLeft = panStart.scrollLeft - (mid.x - panStart.midX);
+    boardEl.scrollTop = panStart.scrollTop - (mid.y - panStart.midY);
+  }
+
+  function cancelPendingTouchCommit() {
+    if (pendingTouchCommit) {
+      clearTimeout(pendingTouchCommit.timer);
+      pendingTouchCommit = null;
+    }
+  }
+
+  function commitPendingTouch() {
+    if (!pendingTouchCommit) return;
+    const { r, c, action, adding } = pendingTouchCommit;
+    pendingTouchCommit = null;
+    dragAction = action;
+    dragAdding = adding;
+    suppressNextClick = true; // the tap's synthetic click follows shortly after
+    handleMove(r, c, action);
+  }
+
+  function handleBoardPointerDown(event: PointerEvent) {
+    if (event.pointerType !== 'touch') return;
+    const cellEl = (event.target as HTMLElement).closest('.cell');
+    if (!cellEl) return; // gutter/corner touch — leave it to native scrolling
+
+    activeTouches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+    if (activeTouches.size >= 2) {
+      cancelPendingTouchCommit();
+      dragAction = null; // abort any in-progress single-finger paint drag
+      multiTouchGesture = true;
+      panActive = true;
+      beginPan();
+      return;
+    }
+
+    if (multiTouchGesture) return; // leftover finger from a pan; stay inert till it lifts
+
+    const { r, c } = cellCoords(cellEl);
+    if (isWon || locked[r]?.[c] || errorState[r]?.[c]) return;
+
+    const action = actionForEvent(event);
+    const current = grid[r][c];
+    const adding = action === 'fill' ? current !== 'filled' : current !== 'marked';
+
+    pendingTouchCommit = {
+      pointerId: event.pointerId,
+      r,
+      c,
+      action,
+      adding,
+      timer: setTimeout(commitPendingTouch, TOUCH_COMMIT_DELAY_MS),
+    };
+  }
+
+  function handleBoardPointerMove(event: PointerEvent) {
+    if (event.pointerType !== 'touch') return;
+    if (!activeTouches.has(event.pointerId)) return;
+    activeTouches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+    if (panActive) {
+      updatePan();
+      return;
+    }
+
+    if (dragAction === null) return;
+    const el = document.elementFromPoint(event.clientX, event.clientY);
+    const cellEl = el?.closest('.cell');
+    if (!cellEl) return;
+    const { r, c } = cellCoords(cellEl);
+    handlePointerEnter(r, c);
+  }
+
+  function handleBoardPointerEnd(event: PointerEvent) {
+    if (event.pointerType !== 'touch') return;
+    if (!activeTouches.has(event.pointerId)) return;
+
+    // Fast tap: its pointerup arrived before the commit delay elapsed.
+    if (pendingTouchCommit?.pointerId === event.pointerId) {
+      clearTimeout(pendingTouchCommit.timer);
+      commitPendingTouch();
+    }
+
+    activeTouches.delete(event.pointerId);
+
+    if (activeTouches.size < 2) {
+      panActive = false;
+      panStart = null;
+    }
+    if (activeTouches.size === 0) {
+      multiTouchGesture = false;
+      dragAction = null;
+    }
+  }
+
   function handleCellClick(r: number, c: number, event: MouseEvent) {
     if (suppressNextClick) {
       suppressNextClick = false;
@@ -380,6 +547,11 @@
       class="nonogram-board"
       style="--cols: {puzzle.width}; --rows: {puzzle.height};"
       oncontextmenu={handleContextMenu}
+      onpointerdown={handleBoardPointerDown}
+      onpointermove={handleBoardPointerMove}
+      onpointerup={handleBoardPointerEnd}
+      onpointercancel={handleBoardPointerEnd}
+      bind:this={boardEl}
       role="presentation"
     >
       <div class="corner"></div>
@@ -429,6 +601,8 @@
               <button
                 class="cell {cell} cell-{r}-{c}"
                 role="gridcell"
+                data-row={r}
+                data-col={c}
                 class:error={errorState[r] && errorState[r][c]}
                 class:locked={locked[r] && locked[r][c]}
                 class:thick-border-right={(c + 1) % 5 === 0 && c + 1 !== puzzle.width}
@@ -459,8 +633,9 @@
 
     <div class="instructions">
       <p class="touch-controls">
-        <strong>Touch:</strong> Pick <strong>Fill</strong> or <strong>Mark</strong> above, then tap cells.
-        Drag to scroll larger puzzles — the clues stay pinned.
+        <strong>Touch:</strong> Pick <strong>Fill</strong> or <strong>Mark</strong> above, then tap or
+        drag across cells. Drag along the row/column labels with one finger, or use two fingers on the
+        grid, to scroll larger puzzles — the clues stay pinned.
       </p>
       <p class="desktop-controls">
         <strong>Desktop:</strong> Left Click / Space / Enter to Fill | Right Click / Shift+Click / X to
@@ -728,9 +903,12 @@
     box-sizing: border-box;
     position: relative;
     z-index: 0;
-    /* Prevent the browser from hijacking taps with double-tap-zoom / text selection */
-    touch-action: manipulation;
+    /* Cells own single-finger touch entirely (paint-drag / tap), so the browser
+       must not intercept it for scrolling, pinch, double-tap-zoom, or text
+       selection — two-finger panning is reimplemented manually in script. */
+    touch-action: none;
     -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
     user-select: none;
   }
 
