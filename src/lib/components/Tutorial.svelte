@@ -657,8 +657,8 @@
   }
 
   .btn.primary:hover:not(:disabled) {
-    background: var(--yellow-hover);
-    border-color: var(--yellow-hover);
+    background: var(--fcc-yellow);
+    border-color: var(--fcc-yellow);
     color: var(--gray-90);
   }
 

@@ -1,5 +1,14 @@
 import { test, expect } from '@playwright/test';
-import { openPuzzle, CAT_INDEX, firstEmptyCell, firstEmptyCells, firstFilledCell } from './helpers';
+import {
+  openPuzzle,
+  CAT_INDEX,
+  ROCKET_INDEX,
+  TOTAL_PAGES,
+  puzzleSize,
+  firstEmptyCell,
+  firstEmptyCells,
+  firstFilledCell,
+} from './helpers';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
@@ -15,15 +24,19 @@ test('selecting a puzzle opens the board and Exit returns to the menu', async ({
 });
 
 test('pagination moves between pages of puzzles', async ({ page }) => {
-  await expect(page.locator('.page-indicator')).toHaveText('Page 1 / 2');
-  await expect(page.locator('.puzzle-square').first().locator('.puzzle-size')).toHaveText('5x5');
+  await expect(page.locator('.page-indicator')).toHaveText(`Page 1 / ${TOTAL_PAGES}`);
+  await expect(page.locator('.puzzle-square').first().locator('.puzzle-size')).toHaveText(
+    puzzleSize(CAT_INDEX),
+  );
 
   await page.getByRole('button', { name: 'Next' }).click();
-  await expect(page.locator('.page-indicator')).toHaveText('Page 2 / 2');
-  await expect(page.locator('.puzzle-square').first().locator('.puzzle-size')).toHaveText('10x10');
+  await expect(page.locator('.page-indicator')).toHaveText(`Page 2 / ${TOTAL_PAGES}`);
+  await expect(page.locator('.puzzle-square').first().locator('.puzzle-size')).toHaveText(
+    puzzleSize(ROCKET_INDEX),
+  );
 
   await page.getByRole('button', { name: 'Prev' }).click();
-  await expect(page.locator('.page-indicator')).toHaveText('Page 1 / 2');
+  await expect(page.locator('.page-indicator')).toHaveText(`Page 1 / ${TOTAL_PAGES}`);
 });
 
 test('a wrong move adds a penalty and locks the cell', async ({ page }) => {

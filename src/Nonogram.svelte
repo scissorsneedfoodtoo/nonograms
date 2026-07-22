@@ -518,6 +518,13 @@
     border-right-width: 0;
   }
 
+  .mode-btn:hover,
+  .mode-btn:focus-visible {
+    background: var(--gray-00);
+    border-color: var(--gray-00);
+    color: var(--gray-90);
+  }
+
   .mode-btn.active {
     background: var(--yellow-gold);
     border-color: var(--yellow-gold);
@@ -526,8 +533,8 @@
 
   .mode-btn.active:hover,
   .mode-btn.active:focus-visible {
-    background: var(--yellow-hover);
-    border-color: var(--yellow-hover);
+    background: var(--fcc-yellow);
+    border-color: var(--fcc-yellow);
     color: var(--gray-90);
   }
 

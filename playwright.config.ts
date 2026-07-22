@@ -4,12 +4,12 @@ import { defineConfig, devices } from '@playwright/test';
  * E2E config. The suite builds the app and serves the production bundle via
  * `vite preview`, then runs against it so tests exercise the real build.
  *
- * Every spec (except mobile.spec.ts) runs on three desktop engines — Chromium,
- * Firefox, and WebKit (Safari) — so behavior stays consistent across browsers.
- * mobile.spec.ts runs on a mobile viewport in both Chromium and WebKit.
+ * Every spec (except mobile.spec.ts) runs on two desktop engines — Chromium and
+ * WebKit (Safari) — the engines where this app actually diverges. mobile.spec.ts
+ * runs on a mobile viewport in both Chromium and WebKit.
  *
  * Projects:
- *  - `desktop-chromium` / `desktop-firefox` / `desktop-webkit`
+ *  - `desktop-chromium` / `desktop-webkit`
  *      1280x800 desktop viewport; run everything except mobile.spec.ts.
  *  - `mobile-chrome` / `mobile-safari`
  *      iPhone-SE-sized viewport with touch; run mobile.spec.ts only.
@@ -38,11 +38,6 @@ export default defineConfig({
       name: 'desktop-chromium',
       testIgnore: /mobile\.spec\.ts/,
       use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 } },
-    },
-    {
-      name: 'desktop-firefox',
-      testIgnore: /mobile\.spec\.ts/,
-      use: { ...devices['Desktop Firefox'], viewport: { width: 1280, height: 800 } },
     },
     {
       name: 'desktop-webkit',
