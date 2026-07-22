@@ -194,10 +194,73 @@
     savePuzzleProgress(puzzle.id, grid, seconds, penalties, locked);
   }
 
-  function handleCellClick(r: number, c: number, event: MouseEvent) {
-    // Shift-click always marks (desktop power users); otherwise follow the active tap mode.
-    const action = event.shiftKey || event.button === 2 ? 'mark' : mode;
+  function actionForEvent(event: MouseEvent): 'fill' | 'mark' {
+    // Shift-click / right-click always marks (desktop power users); otherwise follow the active tap mode.
+    return event.shiftKey || event.button === 2 ? 'mark' : mode;
+  }
+
+  // Mouse drag-to-paint: mousedown on a cell starts a drag whose action and
+  // "adding vs. erasing" direction are fixed by that first cell, so every other
+  // cell the pointer enters is pushed toward the same target state rather than
+  // re-toggled (which would flicker back and forth as the drag revisits cells).
+  // Scoped to pointerType 'mouse' for now — touch gets its own gesture handling
+  // later since one-finger drag is already used to pan large puzzles there.
+  let dragAction: 'fill' | 'mark' | null = null;
+  let dragAdding = true;
+
+  // Set on a mouse pointerdown that already applied its action, so the click
+  // event that follows a same-cell press-release doesn't re-apply it. A plain
+  // click's pointerdown and its trailing click are one synchronous dispatch
+  // cascade, so the flag is safe to consume there — but press and release are
+  // separate browser tasks, so a timer to auto-clear it would race the real
+  // click (it reliably fires before the click on an actual human click, which
+  // silently cancels the action back out). Instead every new pointerdown
+  // (any pointer type) clears stale state up front, before deciding whether to
+  // set it again, so it can never leak into an unrelated later click.
+  let suppressNextClick = false;
+
+  function handlePointerDown(r: number, c: number, event: PointerEvent) {
+    suppressNextClick = false;
+    if (event.pointerType !== 'mouse') return;
+    if (isWon || locked[r][c] || errorState[r][c]) return;
+
+    const action = actionForEvent(event);
+    const current = grid[r][c];
+    dragAction = action;
+    dragAdding = action === 'fill' ? current !== 'filled' : current !== 'marked';
+
+    suppressNextClick = true;
+
     handleMove(r, c, action);
+
+    const stopDragging = () => {
+      dragAction = null;
+      window.removeEventListener('pointerup', stopDragging);
+      window.removeEventListener('pointercancel', stopDragging);
+      window.removeEventListener('blur', stopDragging);
+    };
+    window.addEventListener('pointerup', stopDragging);
+    window.addEventListener('pointercancel', stopDragging);
+    window.addEventListener('blur', stopDragging);
+  }
+
+  function handlePointerEnter(r: number, c: number) {
+    if (dragAction === null) return;
+    if (isWon || locked[r][c] || errorState[r][c]) return;
+
+    const current = grid[r][c];
+    const currentMatches = dragAction === 'fill' ? current === 'filled' : current === 'marked';
+    if (currentMatches === dragAdding) return; // already in the drag's target state
+
+    handleMove(r, c, dragAction);
+  }
+
+  function handleCellClick(r: number, c: number, event: MouseEvent) {
+    if (suppressNextClick) {
+      suppressNextClick = false;
+      return;
+    }
+    handleMove(r, c, actionForEvent(event));
   }
 
   function handleKeyDown(event: KeyboardEvent, r: number, c: number) {
@@ -371,12 +434,10 @@
                 class:thick-border-right={(c + 1) % 5 === 0 && c + 1 !== puzzle.width}
                 class:thick-border-bottom={(r + 1) % 5 === 0 && r + 1 !== puzzle.height}
                 onclick={(e) => handleCellClick(r, c, e)}
+                onpointerdown={(e) => handlePointerDown(r, c, e)}
+                onpointerenter={() => handlePointerEnter(r, c)}
                 onkeydown={(e) => handleKeyDown(e, r, c)}
                 onfocus={() => (focusedCell = { r, c })}
-                oncontextmenu={(e) => {
-                  e.preventDefault();
-                  handleMove(r, c, 'mark');
-                }}
                 aria-label="Row {r + 1}, Column {c + 1}: {cell}"
                 aria-describedby="row-clue-{r} col-clue-{c}"
                 aria-disabled={isWon || (locked[r] && locked[r][c])}
@@ -403,7 +464,7 @@
       </p>
       <p class="desktop-controls">
         <strong>Desktop:</strong> Left Click / Space / Enter to Fill | Right Click / Shift+Click / X to
-        Mark
+        Mark | Click and drag to paint multiple cells
       </p>
       <p class="desktop-controls">Use Arrow Keys to navigate the grid</p>
       <p class="penalty-notice">
