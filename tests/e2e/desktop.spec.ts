@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { openPuzzle, CAT_INDEX, firstEmptyCell } from './helpers';
+import { openPuzzle, CAT_INDEX, firstEmptyCell, puzzleAt } from './helpers';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
@@ -24,6 +24,52 @@ test('Space fills and X marks via the keyboard', async ({ page }) => {
   await page.locator(`.cell-${er}-${ec}`).focus();
   await page.keyboard.press('x');
   await expect(page.locator(`.cell-${er}-${ec}`)).toHaveClass(/marked/);
+});
+
+test('holding Space and moving with arrow keys paints a run of fills', async ({ page }) => {
+  await openPuzzle(page, CAT_INDEX);
+  const puzzle = puzzleAt(CAT_INDEX);
+  const row = puzzle.solution.findIndex((r) => r.every((cell) => cell === 1));
+
+  await page.locator(`.cell-${row}-0`).focus();
+  await page.keyboard.down(' ');
+  for (let c = 1; c < puzzle.width; c++) {
+    await page.keyboard.press('ArrowRight');
+  }
+  await page.keyboard.up(' ');
+
+  for (let c = 0; c < puzzle.width; c++) {
+    await expect(page.locator(`.cell-${row}-${c}`)).toHaveClass(/filled/);
+  }
+});
+
+test('holding X and moving with arrow keys paints a run of marks', async ({ page }) => {
+  await openPuzzle(page, CAT_INDEX);
+  const [er, ec] = firstEmptyCell(CAT_INDEX);
+
+  await page.locator(`.cell-${er}-${ec}`).focus();
+  await page.keyboard.down('x');
+  await page.keyboard.press('ArrowRight');
+  await page.keyboard.up('x');
+
+  await expect(page.locator(`.cell-${er}-${ec}`)).toHaveClass(/marked/);
+  await expect(page.locator(`.cell-${er}-${ec + 1}`)).toHaveClass(/marked/);
+});
+
+test('releasing the paint key stops the run', async ({ page }) => {
+  await openPuzzle(page, CAT_INDEX);
+  const puzzle = puzzleAt(CAT_INDEX);
+  const row = puzzle.solution.findIndex((r) => r.every((cell) => cell === 1));
+
+  await page.locator(`.cell-${row}-0`).focus();
+  await page.keyboard.down(' ');
+  await page.keyboard.press('ArrowRight');
+  await page.keyboard.up(' ');
+  await page.keyboard.press('ArrowRight'); // just navigation now, no held key
+
+  await expect(page.locator(`.cell-${row}-0`)).toHaveClass(/filled/);
+  await expect(page.locator(`.cell-${row}-1`)).toHaveClass(/filled/);
+  await expect(page.locator(`.cell-${row}-2`)).not.toHaveClass(/filled/);
 });
 
 test('right-click and shift-click mark cells', async ({ page }) => {

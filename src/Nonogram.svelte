@@ -267,6 +267,44 @@
     handleMove(r, c, dragAction);
   }
 
+  // Keyboard hold-to-paint: holding Space (fill) or X (mark) down and moving
+  // with the arrow keys paints a run instead of toggling one cell at a time —
+  // the same "hold A, move with the d-pad" control other nonogram games use.
+  // Reuses the mouse/touch drag's dragAction/dragAdding state directly, since
+  // handlePointerEnter's "push this cell toward the held target state" logic
+  // is exactly what arrow-key movement should do while a paint key is down.
+  function keyPaintAction(key: string): 'fill' | 'mark' | null {
+    if (key === ' ' || key === 'Enter') return 'fill';
+    if (key === 'x' || key === 'X') return 'mark';
+    return null;
+  }
+
+  function startKeyboardPaint(r: number, c: number, action: 'fill' | 'mark') {
+    if (dragAction !== null) return; // a paint key is already held
+    if (isWon || locked[r][c] || errorState[r][c]) return;
+
+    const current = grid[r][c];
+    dragAction = action;
+    dragAdding = action === 'fill' ? current !== 'filled' : current !== 'marked';
+    handleMove(r, c, action);
+
+    // Keyup on the *held* key ends the paint. Tracked at the window level
+    // (rather than the focused cell's own keyup) because focus keeps moving
+    // to new cells as the user arrows around, and because the key can be
+    // released off-window (e.g. alt-tab) without ever firing keyup.
+    const stopPainting = () => {
+      dragAction = null;
+      window.removeEventListener('keyup', handleStopKeyup);
+      window.removeEventListener('blur', stopPainting);
+    };
+    const handleStopKeyup = (event: KeyboardEvent) => {
+      if (keyPaintAction(event.key) !== action) return; // a different key released
+      stopPainting();
+    };
+    window.addEventListener('keyup', handleStopKeyup);
+    window.addEventListener('blur', stopPainting);
+  }
+
   // Touch: one finger over a cell paints (like the mouse drag above); one
   // finger over a clue gutter scrolls natively (untouched — gutters keep the
   // browser's default touch-action); two fingers anywhere over the grid pan
@@ -462,12 +500,12 @@
         break;
       case 'x':
       case 'X':
-        handleMove(r, c, 'mark');
+        if (!event.repeat) startKeyboardPaint(r, c, 'mark');
         return;
       case ' ':
       case 'Enter':
         event.preventDefault();
-        handleMove(r, c, 'fill');
+        if (!event.repeat) startKeyboardPaint(r, c, 'fill');
         return;
       default:
         return;
@@ -478,6 +516,7 @@
       focusedCell = { r: nextR, c: nextC };
       const nextBtn = document.querySelector(`.cell-${nextR}-${nextC}`) as HTMLButtonElement;
       nextBtn?.focus();
+      handlePointerEnter(nextR, nextC);
     }
   }
 
@@ -650,7 +689,7 @@
       </p>
       <p class="desktop-controls">
         <strong>Desktop:</strong> Left Click / Space / Enter to Fill | Right Click / Shift+Click / X to
-        Mark | Click and drag to paint multiple cells
+        Mark | Click and drag, or hold Space / X and use Arrow Keys, to paint multiple cells
       </p>
       <p class="desktop-controls">Use Arrow Keys to navigate the grid</p>
       <p class="penalty-notice">
