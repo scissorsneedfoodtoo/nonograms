@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
+  import { SvelteMap } from 'svelte/reactivity';
   import {
     createEmptyGrid,
     createEmptyLockedGrid,
@@ -194,10 +195,288 @@
     savePuzzleProgress(puzzle.id, grid, seconds, penalties, locked);
   }
 
-  function handleCellClick(r: number, c: number, event: MouseEvent) {
-    // Shift-click always marks (desktop power users); otherwise follow the active tap mode.
-    const action = event.shiftKey || event.button === 2 ? 'mark' : mode;
+  function actionForEvent(event: MouseEvent): 'fill' | 'mark' {
+    // Shift-click / right-click always marks (desktop power users); otherwise follow the active tap mode.
+    return event.shiftKey || event.button === 2 ? 'mark' : mode;
+  }
+
+  // Mouse drag-to-paint: mousedown on a cell starts a drag whose action and
+  // "adding vs. erasing" direction are fixed by that first cell, so every other
+  // cell the pointer enters is pushed toward the same target state rather than
+  // re-toggled (which would flicker back and forth as the drag revisits cells).
+  // Scoped to pointerType 'mouse' for now — touch gets its own gesture handling
+  // later since one-finger drag is already used to pan large puzzles there.
+  let dragAction: 'fill' | 'mark' | null = null;
+  let dragAdding = true;
+
+  // Set on a mouse pointerdown that already applied its action, so the click
+  // event that follows a same-cell press-release doesn't re-apply it. A plain
+  // click's pointerdown and its trailing click are one synchronous dispatch
+  // cascade, so the flag is safe to consume there — but press and release are
+  // separate browser tasks, so a timer to auto-clear it would race the real
+  // click (it reliably fires before the click on an actual human click, which
+  // silently cancels the action back out). Instead every new pointerdown
+  // (any pointer type) clears stale state up front, before deciding whether to
+  // set it again, so it can never leak into an unrelated later click.
+  let suppressNextClick = false;
+
+  function handlePointerDown(r: number, c: number, event: PointerEvent) {
+    suppressNextClick = false;
+    if (event.pointerType !== 'mouse') return;
+    // The browser's default mousedown action is to focus this cell, but that
+    // default fires *after* this handler returns — so when the move below
+    // wins the puzzle and makes this cell's container inert, the browser ends
+    // up trying to focus a target that's no longer focusable and blurs to
+    // <body> instead, stealing focus back out of the win dialog. Replacing it
+    // with an explicit, synchronous focus() call sidesteps the race: it either
+    // lands here (normal move) or gets immediately superseded by the dialog's
+    // own focus trap (winning move), and either way there's no leftover
+    // default action still pending to fire afterward.
+    event.preventDefault();
+    (event.currentTarget as HTMLElement).focus();
+    if (isWon || locked[r][c] || errorState[r][c]) return;
+
+    const action = actionForEvent(event);
+    const current = grid[r][c];
+    dragAction = action;
+    dragAdding = action === 'fill' ? current !== 'filled' : current !== 'marked';
+
+    suppressNextClick = true;
+
     handleMove(r, c, action);
+
+    const stopDragging = () => {
+      dragAction = null;
+      window.removeEventListener('pointerup', stopDragging);
+      window.removeEventListener('pointercancel', stopDragging);
+      window.removeEventListener('blur', stopDragging);
+    };
+    window.addEventListener('pointerup', stopDragging);
+    window.addEventListener('pointercancel', stopDragging);
+    window.addEventListener('blur', stopDragging);
+  }
+
+  function handlePointerEnter(r: number, c: number) {
+    if (dragAction === null) return;
+    if (isWon || locked[r][c] || errorState[r][c]) return;
+
+    const current = grid[r][c];
+    const currentMatches = dragAction === 'fill' ? current === 'filled' : current === 'marked';
+    if (currentMatches === dragAdding) return; // already in the drag's target state
+
+    handleMove(r, c, dragAction);
+  }
+
+  // Keyboard hold-to-paint: holding Space (fill) or X (mark) down and moving
+  // with the arrow keys paints a run instead of toggling one cell at a time —
+  // the same "hold A, move with the d-pad" control other nonogram games use.
+  // Reuses the mouse/touch drag's dragAction/dragAdding state directly, since
+  // handlePointerEnter's "push this cell toward the held target state" logic
+  // is exactly what arrow-key movement should do while a paint key is down.
+  function keyPaintAction(key: string): 'fill' | 'mark' | null {
+    if (key === ' ' || key === 'Enter') return 'fill';
+    if (key === 'x' || key === 'X') return 'mark';
+    return null;
+  }
+
+  function startKeyboardPaint(r: number, c: number, action: 'fill' | 'mark') {
+    if (dragAction !== null) return; // a paint key is already held
+    if (isWon || locked[r][c] || errorState[r][c]) return;
+
+    const current = grid[r][c];
+    dragAction = action;
+    dragAdding = action === 'fill' ? current !== 'filled' : current !== 'marked';
+    handleMove(r, c, action);
+
+    // Keyup on the *held* key ends the paint. Tracked at the window level
+    // (rather than the focused cell's own keyup) because focus keeps moving
+    // to new cells as the user arrows around, and because the key can be
+    // released off-window (e.g. alt-tab) without ever firing keyup.
+    const stopPainting = () => {
+      dragAction = null;
+      window.removeEventListener('keyup', handleStopKeyup);
+      window.removeEventListener('blur', stopPainting);
+    };
+    const handleStopKeyup = (event: KeyboardEvent) => {
+      if (keyPaintAction(event.key) !== action) return; // a different key released
+      stopPainting();
+    };
+    window.addEventListener('keyup', handleStopKeyup);
+    window.addEventListener('blur', stopPainting);
+  }
+
+  // Touch: one finger over a cell paints (like the mouse drag above); one
+  // finger over a clue gutter scrolls natively (untouched — gutters keep the
+  // browser's default touch-action); two fingers anywhere over the grid pan
+  // it manually, since touch-action: none on cells (needed so a single-finger
+  // press-drag doesn't get hijacked as a scroll) also disables the browser's
+  // own pinch/pan there.
+  //
+  // Touch complicates the drag-paint approach in two ways the mouse path
+  // doesn't hit:
+  //   - touchmove keeps targeting the element from touchstart, not whatever is
+  //     currently under the finger, so cells entered mid-drag are found via
+  //     elementFromPoint instead of pointerenter.
+  //   - real two-finger placement is rarely simultaneous, so committing a
+  //     single touch's action is delayed briefly — long enough for a second
+  //     finger arriving just after to cancel it and start a pan instead,
+  //     short enough that a normal tap still feels instant.
+  const TOUCH_COMMIT_DELAY_MS = 120;
+
+  let boardEl = $state<HTMLDivElement | null>(null);
+
+  // Every touch currently down that started on a cell (gutter/corner touches
+  // are left alone so they keep scrolling natively), keyed by pointerId.
+  let activeTouches = new SvelteMap<number, { x: number; y: number }>();
+  // Sticky for the whole gesture: sets once 2 touches are down, only clears
+  // once ALL fingers lift. Stops a lone finger left over from a two-finger pan
+  // from starting a fresh paint the instant its twin lifts.
+  let multiTouchGesture = false;
+  let panActive = false;
+  let panStart: { scrollLeft: number; scrollTop: number; midX: number; midY: number } | null = null;
+
+  let pendingTouchCommit: {
+    pointerId: number;
+    r: number;
+    c: number;
+    action: 'fill' | 'mark';
+    adding: boolean;
+    timer: ReturnType<typeof setTimeout>;
+  } | null = null;
+
+  function cellCoords(el: Element): { r: number; c: number } {
+    const cellEl = el as HTMLElement;
+    return { r: Number(cellEl.dataset.row), c: Number(cellEl.dataset.col) };
+  }
+
+  function touchMidpoint(): { x: number; y: number } {
+    let sx = 0;
+    let sy = 0;
+    let n = 0;
+    for (const p of activeTouches.values()) {
+      sx += p.x;
+      sy += p.y;
+      n++;
+    }
+    return n ? { x: sx / n, y: sy / n } : { x: 0, y: 0 };
+  }
+
+  function beginPan() {
+    if (!boardEl) return;
+    const mid = touchMidpoint();
+    panStart = {
+      scrollLeft: boardEl.scrollLeft,
+      scrollTop: boardEl.scrollTop,
+      midX: mid.x,
+      midY: mid.y,
+    };
+  }
+
+  function updatePan() {
+    if (!boardEl || !panStart) return;
+    const mid = touchMidpoint();
+    boardEl.scrollLeft = panStart.scrollLeft - (mid.x - panStart.midX);
+    boardEl.scrollTop = panStart.scrollTop - (mid.y - panStart.midY);
+  }
+
+  function cancelPendingTouchCommit() {
+    if (pendingTouchCommit) {
+      clearTimeout(pendingTouchCommit.timer);
+      pendingTouchCommit = null;
+    }
+  }
+
+  function commitPendingTouch() {
+    if (!pendingTouchCommit) return;
+    const { r, c, action, adding } = pendingTouchCommit;
+    pendingTouchCommit = null;
+    dragAction = action;
+    dragAdding = adding;
+    suppressNextClick = true; // the tap's synthetic click follows shortly after
+    handleMove(r, c, action);
+  }
+
+  function handleBoardPointerDown(event: PointerEvent) {
+    if (event.pointerType !== 'touch') return;
+    const cellEl = (event.target as HTMLElement).closest('.cell');
+    if (!cellEl) return; // gutter/corner touch — leave it to native scrolling
+
+    activeTouches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+    if (activeTouches.size >= 2) {
+      cancelPendingTouchCommit();
+      dragAction = null; // abort any in-progress single-finger paint drag
+      multiTouchGesture = true;
+      panActive = true;
+      beginPan();
+      return;
+    }
+
+    if (multiTouchGesture) return; // leftover finger from a pan; stay inert till it lifts
+
+    const { r, c } = cellCoords(cellEl);
+    if (isWon || locked[r]?.[c] || errorState[r]?.[c]) return;
+
+    const action = actionForEvent(event);
+    const current = grid[r][c];
+    const adding = action === 'fill' ? current !== 'filled' : current !== 'marked';
+
+    pendingTouchCommit = {
+      pointerId: event.pointerId,
+      r,
+      c,
+      action,
+      adding,
+      timer: setTimeout(commitPendingTouch, TOUCH_COMMIT_DELAY_MS),
+    };
+  }
+
+  function handleBoardPointerMove(event: PointerEvent) {
+    if (event.pointerType !== 'touch') return;
+    if (!activeTouches.has(event.pointerId)) return;
+    activeTouches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+    if (panActive) {
+      updatePan();
+      return;
+    }
+
+    if (dragAction === null) return;
+    const el = document.elementFromPoint(event.clientX, event.clientY);
+    const cellEl = el?.closest('.cell');
+    if (!cellEl) return;
+    const { r, c } = cellCoords(cellEl);
+    handlePointerEnter(r, c);
+  }
+
+  function handleBoardPointerEnd(event: PointerEvent) {
+    if (event.pointerType !== 'touch') return;
+    if (!activeTouches.has(event.pointerId)) return;
+
+    // Fast tap: its pointerup arrived before the commit delay elapsed.
+    if (pendingTouchCommit?.pointerId === event.pointerId) {
+      clearTimeout(pendingTouchCommit.timer);
+      commitPendingTouch();
+    }
+
+    activeTouches.delete(event.pointerId);
+
+    if (activeTouches.size < 2) {
+      panActive = false;
+      panStart = null;
+    }
+    if (activeTouches.size === 0) {
+      multiTouchGesture = false;
+      dragAction = null;
+    }
+  }
+
+  function handleCellClick(r: number, c: number, event: MouseEvent) {
+    if (suppressNextClick) {
+      suppressNextClick = false;
+      return;
+    }
+    handleMove(r, c, actionForEvent(event));
   }
 
   function handleKeyDown(event: KeyboardEvent, r: number, c: number) {
@@ -221,12 +500,12 @@
         break;
       case 'x':
       case 'X':
-        handleMove(r, c, 'mark');
+        if (!event.repeat) startKeyboardPaint(r, c, 'mark');
         return;
       case ' ':
       case 'Enter':
         event.preventDefault();
-        handleMove(r, c, 'fill');
+        if (!event.repeat) startKeyboardPaint(r, c, 'fill');
         return;
       default:
         return;
@@ -237,6 +516,7 @@
       focusedCell = { r: nextR, c: nextC };
       const nextBtn = document.querySelector(`.cell-${nextR}-${nextC}`) as HTMLButtonElement;
       nextBtn?.focus();
+      handlePointerEnter(nextR, nextC);
     }
   }
 
@@ -317,6 +597,11 @@
       class="nonogram-board"
       style="--cols: {puzzle.width}; --rows: {puzzle.height};"
       oncontextmenu={handleContextMenu}
+      onpointerdown={handleBoardPointerDown}
+      onpointermove={handleBoardPointerMove}
+      onpointerup={handleBoardPointerEnd}
+      onpointercancel={handleBoardPointerEnd}
+      bind:this={boardEl}
       role="presentation"
     >
       <div class="corner"></div>
@@ -366,17 +651,17 @@
               <button
                 class="cell {cell} cell-{r}-{c}"
                 role="gridcell"
+                data-row={r}
+                data-col={c}
                 class:error={errorState[r] && errorState[r][c]}
                 class:locked={locked[r] && locked[r][c]}
                 class:thick-border-right={(c + 1) % 5 === 0 && c + 1 !== puzzle.width}
                 class:thick-border-bottom={(r + 1) % 5 === 0 && r + 1 !== puzzle.height}
                 onclick={(e) => handleCellClick(r, c, e)}
+                onpointerdown={(e) => handlePointerDown(r, c, e)}
+                onpointerenter={() => handlePointerEnter(r, c)}
                 onkeydown={(e) => handleKeyDown(e, r, c)}
                 onfocus={() => (focusedCell = { r, c })}
-                oncontextmenu={(e) => {
-                  e.preventDefault();
-                  handleMove(r, c, 'mark');
-                }}
                 aria-label="Row {r + 1}, Column {c + 1}: {cell}"
                 aria-describedby="row-clue-{r} col-clue-{c}"
                 aria-disabled={isWon || (locked[r] && locked[r][c])}
@@ -398,12 +683,13 @@
 
     <div class="instructions">
       <p class="touch-controls">
-        <strong>Touch:</strong> Pick <strong>Fill</strong> or <strong>Mark</strong> above, then tap cells.
-        Drag to scroll larger puzzles — the clues stay pinned.
+        <strong>Touch:</strong> Pick <strong>Fill</strong> or <strong>Mark</strong> above, then tap or
+        drag across cells. Drag along the row/column labels with one finger, or use two fingers on the
+        grid, to scroll larger puzzles — the clues stay pinned.
       </p>
       <p class="desktop-controls">
         <strong>Desktop:</strong> Left Click / Space / Enter to Fill | Right Click / Shift+Click / X to
-        Mark
+        Mark | Click and drag, or hold Space / X and use Arrow Keys, to paint multiple cells
       </p>
       <p class="desktop-controls">Use Arrow Keys to navigate the grid</p>
       <p class="penalty-notice">
@@ -667,9 +953,12 @@
     box-sizing: border-box;
     position: relative;
     z-index: 0;
-    /* Prevent the browser from hijacking taps with double-tap-zoom / text selection */
-    touch-action: manipulation;
+    /* Cells own single-finger touch entirely (paint-drag / tap), so the browser
+       must not intercept it for scrolling, pinch, double-tap-zoom, or text
+       selection — two-finger panning is reimplemented manually in script. */
+    touch-action: none;
     -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
     user-select: none;
   }
 

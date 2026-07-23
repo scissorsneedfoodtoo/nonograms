@@ -1,5 +1,6 @@
 <script lang="ts">
   import { focusTrap } from '../actions/focusTrap';
+  import { scrollLock } from '../actions/scrollLock';
 
   interface Props {
     title: string;
@@ -14,7 +15,7 @@
   let { title, message, confirmLabel, onConfirm, onCancel, returnFocus = null }: Props = $props();
 </script>
 
-<div class="modal-backdrop">
+<div class="modal-backdrop" use:scrollLock>
   <div
     class="modal-content"
     role="dialog"
@@ -47,6 +48,21 @@
     align-items: center;
     z-index: 1000;
     padding: 20px;
+    /* Lets the dialog scroll into view (and stay reachable, including its
+       action buttons) when it's taller than the viewport — otherwise the
+       overflow is unreachable since a fixed-position element isn't itself
+       a page-scroll target. */
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
+  /* Progressive enhancement: plain `center` is the fallback for browsers that
+     don't understand `safe center` (an invalid value is ignored, leaving the
+     declaration above it in place). With `safe`, oversized content aligns to
+     the start instead of overflowing equally in both directions, so scrolling
+     up always reaches the top of the dialog instead of clipping it. */
+  .modal-backdrop {
+    align-items: safe center;
   }
 
   .modal-content {
@@ -56,6 +72,7 @@
     max-width: 500px;
     width: 100%;
     text-align: center;
+    margin: auto;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   }
 

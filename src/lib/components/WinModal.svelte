@@ -2,6 +2,7 @@
   import PuzzlePreview from './PuzzlePreview.svelte';
   import { formatTime } from '../gameLogic';
   import { focusTrap } from '../actions/focusTrap';
+  import { scrollLock } from '../actions/scrollLock';
   import type { Puzzle } from '../types';
 
   interface Props {
@@ -16,7 +17,7 @@
   let { puzzle, seconds, penalties, totalPenaltyTime, totalTime, onClose }: Props = $props();
 </script>
 
-<div class="modal-backdrop" aria-live="polite">
+<div class="modal-backdrop" aria-live="polite" use:scrollLock>
   <div
     class="win-message"
     role="dialog"
@@ -53,6 +54,22 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    /* Lets the dialog scroll into view (and stay reachable, including its
+       closing button) when it's taller than the viewport — otherwise the
+       overflow is unreachable since a fixed-position element isn't itself
+       a page-scroll target. */
+    overflow-y: auto;
+    padding: 40px 0;
+    box-sizing: border-box;
+  }
+
+  /* Progressive enhancement: plain `center` is the fallback for browsers that
+     don't understand `safe center` (an invalid value is ignored, leaving the
+     declaration above it in place). With `safe`, oversized content aligns to
+     the start instead of overflowing equally in both directions, so scrolling
+     up always reaches the top of the dialog instead of clipping it. */
+  .modal-backdrop {
+    align-items: safe center;
   }
 
   .win-message {
@@ -65,6 +82,7 @@
     text-align: center;
     max-width: 500px;
     width: 90%;
+    margin: auto;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   }
 
