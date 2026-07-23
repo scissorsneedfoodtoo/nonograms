@@ -223,6 +223,17 @@
   function handlePointerDown(r: number, c: number, event: PointerEvent) {
     suppressNextClick = false;
     if (event.pointerType !== 'mouse') return;
+    // The browser's default mousedown action is to focus this cell, but that
+    // default fires *after* this handler returns — so when the move below
+    // wins the puzzle and makes this cell's container inert, the browser ends
+    // up trying to focus a target that's no longer focusable and blurs to
+    // <body> instead, stealing focus back out of the win dialog. Replacing it
+    // with an explicit, synchronous focus() call sidesteps the race: it either
+    // lands here (normal move) or gets immediately superseded by the dialog's
+    // own focus trap (winning move), and either way there's no leftover
+    // default action still pending to fire afterward.
+    event.preventDefault();
+    (event.currentTarget as HTMLElement).focus();
     if (isWon || locked[r][c] || errorState[r][c]) return;
 
     const action = actionForEvent(event);
